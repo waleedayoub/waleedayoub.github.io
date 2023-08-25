@@ -1,0 +1,4 @@
+baseURL = 'https://waleedayoub.com'
+languageCode = 'en-us'
+title = 'Waled Ayoub'
+theme = 'ananke'
