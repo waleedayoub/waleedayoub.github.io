@@ -20,18 +20,19 @@ metaDataFormat= "yaml"
 
 [taxonomies]
   tag      = "tags"
+  category = "categories"
 
 [params.main]
   enabled = true
   enableKatex = true
   metaKeywords = "fast, hugo, theme, minimal, gruvbox"
   headerTitle = "Waleed Ayoub"
-  name = "waleedayoub"
+  name = "waleed"
   img = "images/headshot-waleed.png"
   img_title = "It's me!"
   icon = "images/logo.png"
   quote = "Let's build something together!"
-  description= "Hi there, I’m Waleed Ayoub and I’ve spent 20 years working at the intersection of data, analytics, software development and product / technology leadership. I have a real passion for data-driven products and scaling teams – and have done a fair bit of hands on building, especially in enterprise b2b domains. I’m motivated by curiousity, good vibes and I’m always on the look out for interesting challenges. If you think we'd have something in common, please reach out!"
+  description= "Hi there, I’m Waleed Ayoub and I’ve spent 20 years working at the intersection of data, analytics, software development and product / technology leadership. I have a real passion for data-driven products and scaling teams – and have done a fair bit of hands on building, especially in enterprise b2b domains. I’m motivated by curiousity, good vibes and I’m always on the look out for interesting challenges. Check out my <a href=\"https://www.linkedin.com/in/waleedayoub\">Linkedin</a> and if you think we'd have something in common, please <a href=\"mailto:info@waleedayoub.com\">reach out!</a>"
   licenseUrl = ""
 
  # Social icons

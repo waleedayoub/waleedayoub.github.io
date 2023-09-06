@@ -2,4 +2,4 @@ themes/
 themes/gruvhugo
 themes/ananke
 
-.DS_Store
+*.DS_Store

@@ -1,3 +1,4 @@
-+++
-author = "Hugo Authors"
-+++
+---
+title: "Homepage"
+author: "Waleed Ayoub"
+---
