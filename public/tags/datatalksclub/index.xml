@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Waleed Ayoub</title>
-    <link>https://waleedayoub.com/post/</link>
-    <description>Recent content in Posts on Waleed Ayoub</description>
+    <title>datatalksclub on Waleed Ayoub</title>
+    <link>https://waleedayoub.com/tags/datatalksclub/</link>
+    <description>Recent content in datatalksclub on Waleed Ayoub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 Sep 2023 22:40:29 -0400</lastBuildDate><atom:link href="https://waleedayoub.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Sep 2023 22:40:29 -0400</lastBuildDate><atom:link href="https://waleedayoub.com/tags/datatalksclub/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Git set up for datatalksclub zoomcamp</title>
       <link>https://waleedayoub.com/post/git-setup-datatalksclub/</link>

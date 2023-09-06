@@ -1,8 +1,8 @@
 ---
 title: "About me"
-description: "Hugo, the world's fastest framework for building websites"
+description: "This is me"
 date: "2023-09-05"
 author: "Waleed Ayoub"
 ---
 
-A little about me!
+I'll eventually populate this with information about me.
