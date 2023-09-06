@@ -1,1 +1,5 @@
+themes/
 themes/gruvhugo
+themes/ananke
+
+.DS_Store
