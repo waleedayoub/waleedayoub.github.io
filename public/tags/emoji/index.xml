@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>emoji on Waleed Ayoub</title>
+    <link>https://waleedayoub.com/tags/emoji/</link>
+    <description>Recent content in emoji on Waleed Ayoub</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 05 Sep 2023 22:40:29 -0400</lastBuildDate><atom:link href="https://waleedayoub.com/tags/emoji/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My First Post</title>
+      <link>https://waleedayoub.com/post/my-first-post/</link>
+      <pubDate>Tue, 05 Sep 2023 22:40:29 -0400</pubDate>
+      
+      <guid>https://waleedayoub.com/post/my-first-post/</guid>
+      <description>test test test</description>
+    </item>
+    
+    <item>
+      <title>Emoji Support</title>
+      <link>https://waleedayoub.com/blog/emoji-support/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://waleedayoub.com/blog/emoji-support/</guid>
+      <description>&lt;p&gt;Emoji can be enabled in a Hugo project in a number of ways.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Emoji Support</title>
+      <link>https://waleedayoub.com/post/emoji-support/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://waleedayoub.com/post/emoji-support/</guid>
+      <description>&lt;p&gt;Emoji can be enabled in a Hugo project in a number of ways.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

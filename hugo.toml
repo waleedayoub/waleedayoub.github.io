@@ -1,7 +1,6 @@
 baseURL = 'https://waleedayoub.com'
 languageCode = 'en-us'
 title = 'Waleed Ayoub'
-
 paginate = "10" # Number of posts per page
 #disqusShortname = "" # Enable comments by entering your Disqus shortname
 #googleAnalytics = "" # Enable Google Analytics by entering your tracking id
@@ -21,8 +20,6 @@ metaDataFormat= "yaml"
 
 [taxonomies]
   tag      = "tags"
-  category = "categories"
-  series   = "series"
 
 [params.main]
   enabled = true
@@ -30,22 +27,18 @@ metaDataFormat= "yaml"
   metaKeywords = "fast, hugo, theme, minimal, gruvbox"
   headerTitle = "Waleed Ayoub"
   name = "waleedayoub"
-  img = "img/author.jpg"
+  img = "images/headshot-waleed.png"
   img_title = "It's me!"
-  icon = "img/logo.png"
+  icon = "images/logo.png"
   quote = "Let's build something together!"
-  description= "Hi there, I’m Waleed Ayoub and I’ve spent 20 years working at the intersection of data, analytics, software development and product / technology leadership. I have a real passion for data-driven products and scaling teams – and have done a fair bit of hands on building, especially in enterprise b2b domains. I’m motivated by curiousity, good vibes and I’m always on the look out for interesting challenges. Take a look at my [linkedin](https://www.linkedin.com/in/waleedayoub/) page, and if you think we’d have some things in common, please [reach out](https://www.waleedayoub.com/contact-me/)!"
+  description= "Hi there, I’m Waleed Ayoub and I’ve spent 20 years working at the intersection of data, analytics, software development and product / technology leadership. I have a real passion for data-driven products and scaling teams – and have done a fair bit of hands on building, especially in enterprise b2b domains. I’m motivated by curiousity, good vibes and I’m always on the look out for interesting challenges. If you think we'd have something in common, please reach out!"
   licenseUrl = ""
 
  # Social icons
 
   [[params.social]]
     name = "email"
-    url  = "info@waleedayoub.com"
-
-  [[params.social]]
-    name = "twitter"
-    url  = "https://twitter.com/"
+    url  = "mailto:info@waleedayoub.com"
 
   [[params.social]]
     name = "github"
@@ -71,11 +64,6 @@ metaDataFormat= "yaml"
     identifier = "posts"
     name       = "Posts"
     url        = "post/"
-
-  [[menu.main]]
-    identifier = "wiki"
-    name       = "Wiki"
-    url        = "none"
 
 [markup]
   defaultMarkdownHandler = "goldmark"

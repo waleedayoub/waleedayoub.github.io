@@ -1,10 +1,83 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Waled Ayoub</title>
+    <title>Tags on Waleed Ayoub</title>
     <link>https://waleedayoub.com/tags/</link>
-    <description>Recent content in Tags on Waled Ayoub</description>
+    <description>Recent content in Tags on Waleed Ayoub</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://waleedayoub.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Tue, 05 Sep 2023 22:40:29 -0400</lastBuildDate><atom:link href="https://waleedayoub.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>emoji</title>
+      <link>https://waleedayoub.com/tags/emoji/</link>
+      <pubDate>Tue, 05 Sep 2023 22:40:29 -0400</pubDate>
+      
+      <guid>https://waleedayoub.com/tags/emoji/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>css</title>
+      <link>https://waleedayoub.com/tags/css/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://waleedayoub.com/tags/css/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>html</title>
+      <link>https://waleedayoub.com/tags/html/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://waleedayoub.com/tags/html/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>markdown</title>
+      <link>https://waleedayoub.com/tags/markdown/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://waleedayoub.com/tags/markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>privacy</title>
+      <link>https://waleedayoub.com/tags/privacy/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://waleedayoub.com/tags/privacy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shortcodes</title>
+      <link>https://waleedayoub.com/tags/shortcodes/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://waleedayoub.com/tags/shortcodes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>text</title>
+      <link>https://waleedayoub.com/tags/text/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://waleedayoub.com/tags/text/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>index</title>
+      <link>https://waleedayoub.com/tags/index/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://waleedayoub.com/tags/index/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
