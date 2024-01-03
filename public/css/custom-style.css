@@ -1,0 +1,31 @@
+/* Header Styling */
+h1,
+h2,
+h3 {
+    color: #333333;
+    font-weight: bold;
+}
+
+/* Code Block Styling */
+pre,
+code {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Link Styling */
+a {
+    color: #1a0dab;
+    text-decoration: none;
+}
+
+/* Note Styling */
+strong {
+    color: #ff5722;
+}

@@ -3,11 +3,11 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-    <title>Git set up for datatalksclub zoomcamp | Waleed Ayoub</title>
-    <meta name="description" content="Git set up for datatalksclub zoomcamp">
-    <meta property="og:site_name" content="Git set up for datatalksclub zoomcamp" />
+    <title>synology | Waleed Ayoub</title>
+    <meta name="description" content="synology">
+    <meta property="og:site_name" content="synology" />
     <meta property="og:title" content="Waleed Ayoub" />
-    <meta property="og:description" content="Requirements Original course repo as read-only that gets updated throughout the duration of the course My own repo in my github account that is used to get updates from original course repo and for me to write my own assignments / work Solution What I&amp;rsquo;m looking to do is essentially maintain a fork of the original course repository, while also adding your own work to it. Here&amp;rsquo;s a step-by-step guide to help you set this up:" />
+    <meta property="og:description" content="" />
     <meta property="og:image" content="https://waleedayoub.com/images/headshot-waleed.png" />
     <meta name="keywords"
           content="" />
@@ -42,6 +42,8 @@
     
 
     
+    
+    <link rel="alternate" type="application/rss+xml" href="https://waleedayoub.com/tags/synology/index.xml" title="Waleed Ayoub" />
     </head>
 <body>
       <div class="line" id="scrollIndicator"></div>
@@ -96,118 +98,46 @@
   });
 </script>
 
-<section class="intro">
-  
-  <div class="post-header">
-    <a class="go-back" href="https://waleedayoub.com"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
-    <h2 class="post-title">Git set up for datatalksclub zoomcamp</h2>
-</div>
-
-<p>By <a href="">waleed</a></p>
-
-<p class="post-dets">Published on: September 5, 2023
-  | Reading Time: 2 min | Last Modified: September 5, 2023
-  <br>
-</p>
-<span class="tags">
-  
-  <h5><a class="tag" href='https://waleedayoub.com/tags/datatalksclub'>datatalksclub</a></h5>
-  
-  <h5><a class="tag" href='https://waleedayoub.com/tags/git'>git</a></h5>
-  
-</span>
-
-<div class="content">
-  <h2 id="requirements">Requirements</h2>
-<ul>
-<li>Original course repo as read-only that gets updated throughout the duration of the course</li>
-<li>My own repo in my github account that is used to get updates from original course repo and for me to write my own assignments / work</li>
-</ul>
-<h2 id="solution">Solution</h2>
-<p>What I&rsquo;m looking to do is essentially maintain a fork of the original course repository, while also adding your own work to it. Here&rsquo;s a step-by-step guide to help you set this up:</p>
-<ol>
-<li>
-<p><strong>Fork the Original Repository</strong>:</p>
-<ul>
-<li>Go to the GitHub page of the course repository.</li>
-<li>Click the &ldquo;Fork&rdquo; button on the top right. This will create a copy of the repository under your GitHub account.</li>
-</ul>
-</li>
-<li>
-<p><strong>Clone Your Forked Repository</strong>:</p>
-<ul>
-<li>On your forked repository&rsquo;s GitHub page, click the &ldquo;Code&rdquo; button and copy the URL.</li>
-<li>In your terminal or command prompt, navigate to where you want to store the project and run:
-<pre tabindex="0"><code>git clone [URL]
-</code></pre>Replace <code>[URL]</code> with the URL you copied.</li>
-</ul>
-</li>
-<li>
-<p><strong>Set Up a Remote to Track the Original Repository</strong>:</p>
-<ul>
-<li>Navigate to your cloned directory:
-<pre tabindex="0"><code>cd [repository-name]
-</code></pre></li>
-<li>Add the original repository as a remote named <code>upstream</code>:
-<pre tabindex="0"><code>git remote add class [original-repo-URL]
-</code></pre></li>
-</ul>
-</li>
-<li>
-<p><strong>Syncing Your Fork</strong>:
-Whenever you want to pull updates from the original course repository:</p>
-<ul>
-<li>Fetch the changes:
-<pre tabindex="0"><code>git fetch class
-</code></pre></li>
-<li>Make sure you&rsquo;re on your main branch (or whichever branch you want to update):
-<pre tabindex="0"><code>git checkout main
-</code></pre></li>
-<li>Merge the changes from the <code>upstream</code>&rsquo;s main branch:
-<pre tabindex="0"><code>git merge class/main
-</code></pre></li>
-</ul>
-</li>
-<li>
-<p><strong>Adding Your Own Work</strong>:</p>
-<ul>
-<li>Create a new branch for your work to keep things organized:
-<pre tabindex="0"><code>git checkout -b my-feature-branch
-</code></pre></li>
-<li>Make your changes, add them, and commit:
-<pre tabindex="0"><code>git add .
-git commit -m &#34;Description of my changes&#34;
-</code></pre></li>
-<li>Push your changes to your forked repository:
-<pre tabindex="0"><code>git push origin my-feature-branch
-</code></pre></li>
-</ul>
-</li>
-<li>
-<p><strong>Merging Your Work into Your Main Branch</strong>:
-If you&rsquo;re satisfied with your work and want to merge it into your main branch:</p>
-<ul>
-<li>Switch to your main branch:
-<pre tabindex="0"><code>git checkout main
-</code></pre></li>
-<li>Merge your feature branch:
-<pre tabindex="0"><code>git merge my-feature-branch
-</code></pre></li>
-<li>Push the merged changes to your forked repository:
-<pre tabindex="0"><code>git push origin main
-</code></pre></li>
-</ul>
-</li>
-<li>
-<p><strong>Keeping Your Work Updated</strong>:
-Periodically, you&rsquo;ll want to pull updates from the original course repository (as described in step 4) to ensure you have the latest content. Just be cautious when merging if you&rsquo;ve made extensive changes to your fork, as there may be merge conflicts. Resolve any conflicts as needed.</p>
-</li>
-</ol>
-<p>Remember, the key is to treat the <code>upstream</code> as read-only. You&rsquo;ll never push changes to it. All your work will be done in your forked repository (<code>origin</code>). This setup allows you to both keep up with updates from the course and maintain your own changes.</p>
-
-</div>
-
-</section>
+<br>
+	<div style="display:flex;align-items:center;">
+		<a class="go-back" href="https://waleedayoub.com"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5
+						21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6
+						6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+	<h2 class="post-title">synology</h2>
+	</div>
+        
+        
+          
+            <div class="post-item">
+              
+                <well class="well">
+                  <h3><a class="link" href="https://waleedayoub.com/post/synology-media-centre-setup/">Synology Media Centre Setup</a>
+                    
+                    by <a class="link" href="">waleed</a></h3>
+                  
+                    <h4>December 11, 2023 | Reading Time: 9 min </h4>
+                    <span class="tags">
+                        
+                        <h5><a class="tag" href='https://waleedayoub.com/tags/synology'>synology</a></h5>
+                        
+                        <h5><a class="tag" href='https://waleedayoub.com/tags/radarr'>radarr</a></h5>
+                        
+                        <h5><a class="tag" href='https://waleedayoub.com/tags/sonarr'>sonarr</a></h5>
+                        
+                        <h5><a class="tag" href='https://waleedayoub.com/tags/plex'>plex</a></h5>
+                        
+                        <h5><a class="tag" href='https://waleedayoub.com/tags/jackett'>jackett</a></h5>
+                        
+                        <h5><a class="tag" href='https://waleedayoub.com/tags/VPN'>VPN</a></h5>
+                        
+                    </span>
+                    <p>Synology Media Configuration This is my attempt at publishing a write up on a rough timeliens of my journey setting up an open source media centre on my Synology DSM713+. It includes a configuration guide and links to scripts that should help others work through their own setups.
+Table of Contents Introduction The Setup Applications System details What is OpenVPN? Ok, so now What is tun? UnRar-ing files after download Attempt 1 - Unrar script Switching to qBittorrent The VPN challenge - some options Making life easy - SOCKS5 Important - remote path mapping Attempt 2 - Another failed Unrar script That didn&rsquo;t work either - no more scripts Final docker-compose Further Resources Introduction So a while back, motivated by a desire to make more use out of my Synology DSM713+ NAS, I decided to explore ways to turn it into a self-managed but highly automated media centre.</p>
+                </well>
+                            
+            </div><br>
+          
+        
 <footer id="footer">
     <strong></strong>
     <div class="social">

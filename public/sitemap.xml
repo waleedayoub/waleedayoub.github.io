@@ -3,7 +3,34 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://waleedayoub.com/</loc>
-    <lastmod>2023-09-05T22:40:29-04:00</lastmod>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+  </url><url>
+    <loc>https://waleedayoub.com/tags/jackett/</loc>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+  </url><url>
+    <loc>https://waleedayoub.com/tags/plex/</loc>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+  </url><url>
+    <loc>https://waleedayoub.com/post/</loc>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+  </url><url>
+    <loc>https://waleedayoub.com/tags/radarr/</loc>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+  </url><url>
+    <loc>https://waleedayoub.com/tags/sonarr/</loc>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+  </url><url>
+    <loc>https://waleedayoub.com/tags/synology/</loc>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+  </url><url>
+    <loc>https://waleedayoub.com/post/synology-media-centre-setup/</loc>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+  </url><url>
+    <loc>https://waleedayoub.com/tags/</loc>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+  </url><url>
+    <loc>https://waleedayoub.com/tags/vpn/</loc>
+    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
   </url><url>
     <loc>https://waleedayoub.com/tags/datatalksclub/</loc>
     <lastmod>2023-09-05T22:40:29-04:00</lastmod>
@@ -14,17 +41,10 @@
     <loc>https://waleedayoub.com/post/git-setup-datatalksclub/</loc>
     <lastmod>2023-09-05T22:40:29-04:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/post/</loc>
-    <lastmod>2023-09-05T22:40:29-04:00</lastmod>
-  </url><url>
-    <loc>https://waleedayoub.com/tags/</loc>
-    <lastmod>2023-09-05T22:40:29-04:00</lastmod>
-  </url><url>
     <loc>https://waleedayoub.com/about/</loc>
     <lastmod>2023-09-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/archives/</loc>
-    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
+    <loc>https://waleedayoub.com/categories/</loc>
   </url><url>
     <loc>https://waleedayoub.com/tags/index/</loc>
   </url>

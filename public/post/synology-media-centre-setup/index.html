@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang=""><head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>Synology Media Centre Setup | Waleed Ayoub</title>
+    <meta name="description" content="Synology Media Centre Setup">
+    <meta property="og:site_name" content="Synology Media Centre Setup" />
+    <meta property="og:title" content="Waleed Ayoub" />
+    <meta property="og:description" content="Synology Media Configuration This is my attempt at publishing a write up on a rough timeliens of my journey setting up an open source media centre on my Synology DSM713&#43;. It includes a configuration guide and links to scripts that should help others work through their own setups.
+Table of Contents Introduction The Setup Applications System details What is OpenVPN? Ok, so now What is tun? UnRar-ing files after download Attempt 1 - Unrar script Switching to qBittorrent The VPN challenge - some options Making life easy - SOCKS5 Important - remote path mapping Attempt 2 - Another failed Unrar script That didn&amp;rsquo;t work either - no more scripts Final docker-compose Further Resources Introduction So a while back, motivated by a desire to make more use out of my Synology DSM713&#43; NAS, I decided to explore ways to turn it into a self-managed but highly automated media centre." />
+    <meta property="og:image" content="https://waleedayoub.com/images/headshot-waleed.png" />
+    <meta name="keywords"
+          content="" />
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+        integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI"
+          crossorigin="anonymous">
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+        integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t"
+        crossorigin="anonymous">
+    </script>
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);">
+    </script>
+    
+    <meta name="keywords" content="fast, hugo, theme, minimal, gruvbox">
+    <link rel="icon" type="image/svg" href='https://waleedayoub.com/images/logo.png' />
+    <meta name="author" content='waleed'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.119.0">
+    
+    <link rel="stylesheet" href="https://waleedayoub.com/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+
+    
+
+    
+
+    
+    </head>
+<body>
+      <div class="line" id="scrollIndicator"></div>
+      <div class="main"><div class="title">
+  <div class="name">
+    <h2><a href="https://waleedayoub.com"
+	   style="text-decoration: none; color: inherit;">Waleed Ayoub</a></h2>
+  </div>
+  <div class="color-scheme">
+    <input type="checkbox" class="checkbox" id="chk" />
+    <label class="label" for="chk">
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"></path></svg>
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 160c-52.9 0-96 43.1-96
+										96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z"></path></svg>
+      <div class="ball"></div>
+    </label>
+  </div>
+</div>
+<script>
+  const themeSetter = (theme) => {
+      document.body.classList.toggle('dark')
+      localStorage.setItem('theme', theme)
+      blockSwitcher()
+  }
+
+  const blockSwitcher = () => [...document.getElementsByTagName("BLOCKQUOTE")]
+	.forEach(b => b.classList.toggle('dark'))
+
+  const styleSwapper = () => {
+      document.body.classList.add('back-transition')
+      if (localStorage.getItem('theme') === 'dark') themeSetter('light')
+      else if (localStorage.getItem('theme') === 'light') themeSetter('dark')
+  }
+
+  if (localStorage.getItem('theme') === 'dark'){
+      themeSetter('dark')
+      document.addEventListener("DOMContentLoaded", blockSwitcher)
+  }
+ else localStorage.setItem('theme', 'light')
+
+  document.getElementById('chk').addEventListener('change',styleSwapper);
+
+  window.addEventListener("scroll", () => {
+      let height = document.documentElement.scrollHeight
+          - document.documentElement.clientHeight;
+      if(height >= 500){
+	  let winScroll = document.body.scrollTop
+              || document.documentElement.scrollTop;
+	  let scrolled = (winScroll / height) * 100;
+	  document.getElementById("scrollIndicator").style.width = scrolled + "%";
+      }
+  });
+</script>
+
+<section class="intro">
+  
+  <div class="post-header">
+    <a class="go-back" href="https://waleedayoub.com"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+    <h2 class="post-title">Synology Media Centre Setup</h2>
+</div>
+
+<p>By <a href="">waleed</a></p>
+
+<p class="post-dets">Published on: December 11, 2023
+  | Reading Time: 9 min | Last Modified: December 11, 2023
+  <br>
+</p>
+<span class="tags">
+  
+  <h5><a class="tag" href='https://waleedayoub.com/tags/synology'>synology</a></h5>
+  
+  <h5><a class="tag" href='https://waleedayoub.com/tags/radarr'>radarr</a></h5>
+  
+  <h5><a class="tag" href='https://waleedayoub.com/tags/sonarr'>sonarr</a></h5>
+  
+  <h5><a class="tag" href='https://waleedayoub.com/tags/plex'>plex</a></h5>
+  
+  <h5><a class="tag" href='https://waleedayoub.com/tags/jackett'>jackett</a></h5>
+  
+  <h5><a class="tag" href='https://waleedayoub.com/tags/VPN'>VPN</a></h5>
+  
+</span>
+
+<div class="content">
+  <h1 id="synology-media-configuration">Synology Media Configuration</h1>
+<p>This is my attempt at publishing a write up on a rough timeliens of my journey setting up an open source media centre on my Synology DSM713+.
+It includes a configuration guide and links to scripts that should help others work through their own setups.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#the-setup">The Setup</a>
+<ul>
+<li><a href="#applications">Applications</a></li>
+<li><a href="#system-details">System details</a></li>
+<li><a href="#what-is-openvpn">What is OpenVPN?</a></li>
+<li><a href="#ok-so-now-what-is-tun">Ok, so now What is tun?</a></li>
+</ul>
+</li>
+<li><a href="#running-a-script-to-extract-rard-or-zipd-files">UnRar-ing files after download</a>
+<ul>
+<li><a href="#the-first-unrar-script">Attempt 1 - Unrar script</a></li>
+</ul>
+</li>
+<li><a href="#switching-to-qbittorrent">Switching to qBittorrent</a>
+<ul>
+<li><a href="#some-options">The VPN challenge - some options</a></li>
+<li><a href="#using-socks5-proxy---torguard-and-qbittorrent">Making life easy - SOCKS5</a></li>
+<li><a href="#remote-path-mapping-between-sonarr-and-qbittorrent">Important - remote path mapping</a></li>
+<li><a href="#the-second-failed-unrar-script">Attempt 2 - Another failed Unrar script</a></li>
+<li><a href="#that-didnt-actually-work">That didn&rsquo;t work either - no more scripts</a></li>
+</ul>
+</li>
+<li><a href="#final-docker-compose">Final docker-compose</a></li>
+<li><a href="#further-resources">Further Resources</a></li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<p>So a while back, motivated by a desire to make more use out of my <a href="https://www.synology.com/en-global/support/download/DS713+?version=7.1#system">Synology DSM713+ NAS</a>, I decided to explore ways to turn it into a self-managed but highly automated media centre.
+It must have been at most four years ago when I started this project because <a href="https://www.reddit.com/r/synology/comments/eahndo/synology_media_advanced_setup_guide/">this Reddit post</a> from December 2019 was my original starting point. It also explains why I started off using Transmission as a my client instead of qbittorrent.</p>
+<p>So let&rsquo;s dive in!</p>
+<h2 id="the-setup">The Setup</h2>
+<h3 id="applications">Applications</h3>
+<p>Originally, the set up included the following applications:</p>
+<ul>
+<li><a href="https://radarr.video/">Radarr</a></li>
+<li><a href="https://sonarr.tv/">Sonarr</a></li>
+<li><a href="https://transmissionbt.com/">Transmission</a>
+<ul>
+<li>Importantly here, I am not using vanilla transmission image</li>
+<li>I was using a custom image with openvpn capabilities, found <a href="https://haugene.github.io/docker-transmission-openvpn/">here</a></li>
+</ul>
+</li>
+</ul>
+<p>As of June 2023, I added <a href="https://github.com/Jackett/Jackett">Jackett</a> for better management of indexers and swapped Transmission out for <a href="https://docs.linuxserver.io/images/docker-qbittorrent/">qbittorrent</a>. This was prompted by <a href="https://www.reddit.com/r/CrackWatch/comments/13wj1bp/rarbg_down_seemingly_for_good/">rarbg finally deciding to hang its boots up</a>.</p>
+<p>December 2023 note: looks like rarbg is back?</p>
+<h3 id="system-details">System Details</h3>
+<p>Lastly, the hardware I&rsquo;m running this on, as mentioned, is a Synology DSM713+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>waleed@seventhirteen:/volume1/docker/mediacentre$ uname -a
+</span></span><span style="display:flex;"><span>Linux seventhirteen 3.10.108 <span style="color:#75715e">#42962 SMP Fri Mar 24 00:28:47 CST 2023 x86_64 GNU/Linux synology_cedarview_713+</span>
+</span></span></code></pre></div><p>My setup has always relied on docker for managing these applications and I don&rsquo;t have an automated way of keeping the images updated just yet.</p>
+<p>The trickiest part of this set up, and the one that I forget every time I go through an upgrade cycle is the requirements to get VPN working with transmission.</p>
+<p>June 2023 NOTE:</p>
+<ul>
+<li>Ever since I upgraded my synology DSM firmware to the latest version, the need to do all this tunneling below has gone away!</li>
+</ul>
+<p>Thankfully, my VPN provider of choice has config files provided by huagene. What isn&rsquo;t as clear is the role /dev/tun plays.</p>
+<h3 id="what-is-openvpn">What is OpenVPN?</h3>
+<ul>
+<li>TODO</li>
+</ul>
+<h3 id="ok-so-now-what-is-tun">Ok, so now what is tun?</h3>
+<ul>
+<li>TODO</li>
+</ul>
+<p>And here&rsquo;s the bash script I use to check if /dev/tun exists, and if it doesn&rsquo;t, to create it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create the necessary file structure for /dev/net/tun</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span> <span style="color:#f92672">[</span> ! -c /dev/net/tun <span style="color:#f92672">]</span> <span style="color:#f92672">)</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span> <span style="color:#f92672">[</span> ! -d /dev/net <span style="color:#f92672">]</span> <span style="color:#f92672">)</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>            mkdir -m <span style="color:#ae81ff">755</span> /dev/net
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>        mknod /dev/net/tun c <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">200</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load the tun module if not already loaded</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span> !<span style="color:#f92672">(</span>lsmod | grep -q <span style="color:#e6db74">&#34;^tun\s&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">)</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    insmod /lib/modules/tun.ko
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><h2 id="running-a-script-to-extract-rard-or-zipd-files">Running a script to extract rar&rsquo;d or zip&rsquo;d files</h2>
+<p>As of June 2023, I also added an unrar script to the post download instructions to transmission</p>
+<h3 id="the-first-unrar-script">The first Unrar script</h3>
+<p>The only real mention of how to get an unrar script going when a torrent is completed can be found <a href="https://github.com/haugene/docker-transmission-openvpn/issues/75">here</a>.</p>
+<p>The main things you need to do are:</p>
+<ul>
+<li>In the environment options:
+<ul>
+<li>enable the flag to run a script when a torrent is done</li>
+<li>point to where the script is</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span>-e <span style="color:#e6db74">&#34;TRANSMISSION_SCRIPT_TORRENT_DONE_ENABLED=true&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e <span style="color:#e6db74">&#34;TRANSMISSION_SCRIPT_TORRENT_DONE_FILENAME=/data/extract_torrent.sh&#34;</span> <span style="color:#960050;background-color:#1e0010">\
+</span></span></span></code></pre></div><ul>
+<li>Since I keep my scripts in <code>$(PATH_TO_DOCKER_DIR)/mediacentre/transmission/scripts</code> you also need to mount this:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span>-v /volume1/docker/mediacentre/transmission/scripts:/scripts<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><ul>
+<li>The contents of the script <code>unrar-torrent.sh</code> would make use of $TR_TORRENT_NAME and TR_TORRENT_DIR which I&rsquo;m assuming as environment variables set by transmission containing the specific torrent downloaded and the name of the torrent file</li>
+<li>In my setup, the directory with torrents in it is actually this: TRANSMISSION_DOWNLOAD_DIR=/data/downloads/torrents/downloads
+<ul>
+<li>The var I don&rsquo;t understand is $TR_TORRENT_NAME &lt;- where does this get set???</li>
+</ul>
+</li>
+</ul>
+<p>#!/bin/bash
+CUR_DIR=<code>pwd</code>
+cd $TR_TORRENT_DIR
+test -d &ldquo;$TR_TORRENT_NAME&rdquo; &amp;&amp; cd &ldquo;$TR_TORRENT_NAME&rdquo;
+unrar e -inul *.rar
+7z e *.zip &gt; /dev/null 2&gt;&amp;1
+cd $CUR_DIR</p>
+<p><strong>THE SCRIPT DOESN&rsquo;T WORK WITH THE CONFIGURATION</strong></p>
+<p><strong>SO LET&rsquo;S MOVE TO QBITTORRENT FINALLY</strong></p>
+<ul>
+<li>The challenge with qBittorrent is going to be VPN setup, as always. The way I overcame this with transmission was to use huagene&rsquo;s docker container that had VPN configurations for various providers baked in and so I didn&rsquo;t have to mess around with certs, wireguard and a bunch of stuff I don&rsquo;t fully comprehend.</li>
+</ul>
+<h2 id="time-to-switch-to-qbittorrent">Time to switch to qBittorrent</h2>
+<ul>
+<li>The first thing I tried, obviously, is just a vanilla docker compose with VPN settings filled in:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span><span style="color:#66d9ef">env</span>ironment:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - PUID<span style="color:#f92672">=</span><span style="color:#ae81ff">1032</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - PGID<span style="color:#f92672">=</span><span style="color:#ae81ff">65537</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - TZ<span style="color:#f92672">=</span>America/Toronto<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - WEBUI_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - WEBUI_USERNAME<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - WEBUI_PASSWORD<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - VPN_ENABLED<span style="color:#f92672">=</span>yes<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - VPN_PROV<span style="color:#f92672">=</span>custom<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - VPN_CLIENT<span style="color:#f92672">=</span>openvpn<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - VPN_USER<span style="color:#f92672">=</span>vpnusername<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - VPN_PASS<span style="color:#f92672">=</span>vpnpassword<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - VPN_OPTIONS<span style="color:#f92672">=</span>--inactive <span style="color:#ae81ff">3600</span> --ping <span style="color:#ae81ff">10</span> --ping-exit <span style="color:#ae81ff">60</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><ul>
+<li>This didn&rsquo;t work out of the box with torguard. I&rsquo;m not sure whether the base qBittorrent container knows how to parse random VPN providers and their certificates</li>
+<li>So while this deployed and the client was running, the VPN connection wasn&rsquo;t working</li>
+</ul>
+<h3 id="some-options">Some options</h3>
+<ol>
+<li>One alternative would be to, like with transmission, use a qBittorrent image configured for VPN and with capability to handle torguard
+<ul>
+<li>Something like this, for example: <a href="https://hub.docker.com/r/dyonr/qbittorrentvpn/">https://hub.docker.com/r/dyonr/qbittorrentvpn/</a></li>
+</ul>
+</li>
+<li>Using something like <a href="https://github.com/qdm12/gluetun-wiki">gluetun</a>, deploy it to a container and then use the <code>network_mode: &quot;service:gluetun&quot;</code> parameter in the containers that need it
+<ul>
+<li>Since gluetun has support for torguard, this would surely be an easy solution</li>
+<li>It wasn&rsquo;t. I kept getting this error when it was trying to authenticate the VPN connection to torguard&rsquo;s IPs:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>gluetun    | 2023-09-01T12:38:58Z INFO <span style="color:#f92672">[</span>vpn<span style="color:#f92672">]</span> stopping
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:38:58Z INFO <span style="color:#f92672">[</span>vpn<span style="color:#f92672">]</span> starting
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:38:58Z INFO <span style="color:#f92672">[</span>firewall<span style="color:#f92672">]</span> allowing VPN connection...
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:38:58Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> OpenVPN 2.5.8 x86_64-alpine-linux-musl <span style="color:#f92672">[</span>SSL <span style="color:#f92672">(</span>OpenSSL<span style="color:#f92672">)]</span> <span style="color:#f92672">[</span>LZO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>LZ4<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>EPOLL<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>MH/PKTINFO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>AEAD<span style="color:#f92672">]</span> built on Nov  <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:38:58Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> library versions: OpenSSL 3.1.2 <span style="color:#ae81ff">1</span> Aug 2023, LZO 2.10
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:38:58Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> TCP/UDP: Preserving recently used remote address: <span style="color:#f92672">[</span>AF_INET<span style="color:#f92672">]</span>146.70.137.74:1912
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:38:58Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> UDP link local: <span style="color:#f92672">(</span>not bound<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:38:58Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> UDP link remote: <span style="color:#f92672">[</span>AF_INET<span style="color:#f92672">]</span>146.70.137.74:1912
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:39:58Z WARN <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> TLS Error: TLS key negotiation failed to occur within <span style="color:#ae81ff">60</span> seconds <span style="color:#f92672">(</span>check your network connectivity<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>gluetun    | 🚒🚒🚒🚒🚒🚨🚨🚨🚨🚨🚨🚒🚒🚒🚒🚒
+</span></span><span style="display:flex;"><span>gluetun    | That error usually happens because either:
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 1. The VPN server IP address you are trying to connect to is no longer valid 🔌
+</span></span><span style="display:flex;"><span>gluetun    |    Check out https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 2. The VPN server crashed 💥, try changing your VPN servers filtering options such as SERVER_REGIONS
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 3. Your Internet connection is not working 🤯, ensure it works
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 4. Something <span style="color:#66d9ef">else</span> ➡️ https://github.com/qdm12/gluetun/issues/new/choose
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:39:58Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> TLS Error: TLS handshake failed
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:39:58Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> SIGTERM received, sending exit notification to peer
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:39:58Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> SIGTERM<span style="color:#f92672">[</span>soft,tls-error<span style="color:#f92672">]</span> received, process exiting
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:39:58Z INFO <span style="color:#f92672">[</span>vpn<span style="color:#f92672">]</span> retrying in 15s
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:39:59Z INFO <span style="color:#f92672">[</span>healthcheck<span style="color:#f92672">]</span> program has been unhealthy <span style="color:#66d9ef">for</span> 1m1s: restarting VPN <span style="color:#f92672">(</span>see https://github.com/qdm12/gluetun-wiki/blob/main/faq/healthcheck.md<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:40:13Z INFO <span style="color:#f92672">[</span>firewall<span style="color:#f92672">]</span> allowing VPN connection...
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:40:14Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> OpenVPN 2.5.8 x86_64-alpine-linux-musl <span style="color:#f92672">[</span>SSL <span style="color:#f92672">(</span>OpenSSL<span style="color:#f92672">)]</span> <span style="color:#f92672">[</span>LZO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>LZ4<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>EPOLL<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>MH/PKTINFO<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>AEAD<span style="color:#f92672">]</span> built on Nov  <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:40:14Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> library versions: OpenSSL 3.1.2 <span style="color:#ae81ff">1</span> Aug 2023, LZO 2.10
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:40:14Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> TCP/UDP: Preserving recently used remote address: <span style="color:#f92672">[</span>AF_INET<span style="color:#f92672">]</span>146.70.34.186:1912
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:40:14Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> UDP link local: <span style="color:#f92672">(</span>not bound<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:40:14Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> UDP link remote: <span style="color:#f92672">[</span>AF_INET<span style="color:#f92672">]</span>146.70.34.186:1912
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:41:15Z WARN <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> TLS Error: TLS key negotiation failed to occur within <span style="color:#ae81ff">60</span> seconds <span style="color:#f92672">(</span>check your network connectivity<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>gluetun    | 🚒🚒🚒🚒🚒🚨🚨🚨🚨🚨🚨🚒🚒🚒🚒🚒
+</span></span><span style="display:flex;"><span>gluetun    | That error usually happens because either:
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 1. The VPN server IP address you are trying to connect to is no longer valid 🔌
+</span></span><span style="display:flex;"><span>gluetun    |    Check out https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 2. The VPN server crashed 💥, try changing your VPN servers filtering options such as SERVER_REGIONS
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 3. Your Internet connection is not working 🤯, ensure it works
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 4. Something <span style="color:#66d9ef">else</span> ➡️ https://github.com/qdm12/gluetun/issues/new/choose
+</span></span><span style="display:flex;"><span>gluetun    | 
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:41:15Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> TLS Error: TLS handshake failed
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:41:15Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> SIGTERM received, sending exit notification to peer
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:41:15Z INFO <span style="color:#f92672">[</span>openvpn<span style="color:#f92672">]</span> SIGTERM<span style="color:#f92672">[</span>soft,tls-error<span style="color:#f92672">]</span> received, process exiting
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:41:15Z INFO <span style="color:#f92672">[</span>vpn<span style="color:#f92672">]</span> retrying in 15s
+</span></span><span style="display:flex;"><span>gluetun    | 2023-09-01T12:41:19Z INFO <span style="color:#f92672">[</span>healthcheck<span style="color:#f92672">]</span> program has been unhealthy <span style="color:#66d9ef">for</span> 1m6s: restarting VPN <span style="color:#f92672">(</span>see https://github.com/qdm12/gluetun-wiki/blob/main
+</span></span></code></pre></div><ol start="3">
+<li>As it turns out, torguard has a SOCKS5 proxy you can use: <a href="https://torguard.net/article/241/how-to-setup-a-socks-proxy-in-qbittorrent-on-windows.html">https://torguard.net/article/241/how-to-setup-a-socks-proxy-in-qbittorrent-on-windows.html</a></li>
+</ol>
+</li>
+</ol>
+<h3 id="using-socks5-proxy---torguard-and-qbittorrent">Using SOCKS5 Proxy - Torguard and qBittorrent</h3>
+<ul>
+<li>Follow the guide above</li>
+<li>Then use their helpful &ldquo;Check my Torrent IP&rdquo; tool. Since the VPN connection isn&rsquo;t set at the container level, you can&rsquo;t just docker exec into the container and check its IP</li>
+<li>When you run it, it shows up like this in the download client:</li>
+</ul>
+<p><img src="/images/image.png" alt="qBittorrent check my ip"></p>
+<ul>
+<li>And it displays the IP your torrent appears to be downloading to like this:</li>
+</ul>
+<p><img src="/images/image-1.png" alt="Report from torguard"></p>
+<ul>
+<li>This isn&rsquo;t my IP! So it works!!!</li>
+</ul>
+<h3 id="remote-path-mapping-between-sonarr-and-qbittorrent">Remote Path Mapping between Sonarr and qBittorrent</h3>
+<ul>
+<li>One very important thing to be aware of is the remote path mapping:</li>
+</ul>
+<p><img src="/images/image-2.png" alt="qbt check my ip"></p>
+<ul>
+<li>The way this reads:
+<ul>
+<li>When qBittorrent reports a file has been downloaded to <code>/downloads</code> (which is where you map the volume in the docker compose), it tells sonarr to look for that in its own local directory structure at <code>/data/downloads/torrents/downloads</code></li>
+</ul>
+</li>
+<li>If you don&rsquo;t do this, sonarr won&rsquo;t know where to find the files and it will just report an error: <code>&quot;No files found are eligible for import at /downloads/&lt;FILE&gt;&quot;</code></li>
+</ul>
+<h3 id="the-second-failed-unrar-script">The second, failed unrar script</h3>
+<ul>
+<li>Last but not least, the whole reason we switched to qBittorrent: running a post-processing script to unrar files</li>
+<li>Here&rsquo;s the script:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>cd <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> f in <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span>/*.rar
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">[</span> -e <span style="color:#e6db74">&#34;</span>$f<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> unrar x <span style="color:#e6db74">&#34;</span>$f<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><ul>
+<li>I saved it in the top level config dir in the volume mapping here: <code>- /volume1/docker/mediacentre/qbittorrent:/config</code></li>
+<li>And then in qbittorrent, I set the following under settings:</li>
+</ul>
+<h3 id="that-didnt-actually-work">That didn&rsquo;t actually work!</h3>
+<ul>
+<li>Ok so after monitoring a few torrent downloads, it turns out the script the way I&rsquo;ve included it doesn&rsquo;t actually run or unrar anything</li>
+<li>So what I&rsquo;ve done instead is just invoking unrar directly from the &ldquo;run external program after torrent is finished&rdquo; box, like this:</li>
+</ul>
+<!-- raw HTML omitted -->
+<p>&hellip;</p>
+<ul>
+<li>Let&rsquo;s break down what this is doing:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>unrar x <span style="color:#e6db74">&#34;%F/*.r*&#34;</span> <span style="color:#e6db74">&#34;%F/&#34;</span>
+</span></span></code></pre></div><ul>
+<li>The <code>unrar x</code> part is obvious. It just means &ldquo;extract contents of an archive&rdquo;</li>
+<li>The <code>&quot;%F/*.r*&quot;</code> breaks down into <code>%F/</code> which refers to the current directory in qbittorrent land and the <code>*.r*</code> just references any file with a <code>r*</code> extension.</li>
+<li>Lastly, the final parameter is where to unrar the files, which in this case is just the current directory again</li>
+<li>After monitoring this for a few torrents, it looks like it finally works!!!</li>
+</ul>
+<h2 id="final-docker-composeyml">Final docker-compose.yml</h2>
+<ul>
+<li>TODO: Add link to a gist</li>
+</ul>
+<h2 id="final-thoughts--resources">Final thoughts &amp; resources</h2>
+<ul>
+<li>Resources</li>
+<li>TODO:</li>
+</ul>
+
+</div>
+
+</section>
+<footer id="footer">
+    <strong></strong>
+    <div class="social">
+        &nbsp;
+<a href="mailto:info@waleedayoub.com" target="_blank" rel="me" title="Email" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+	<polyline points="22,6 12,13 2,6"></polyline>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://github.com/waleedayoub" target="_blank" rel="me" title="Github" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path
+		d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+	</path>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://www.linkedin.com/in/waleedayoub/" target="_blank" rel="me" title="Linkedin" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+	<rect x="2" y="9" width="4" height="12"></rect>
+	<circle cx="4" cy="4" r="2"></circle>
+</svg>
+</a>
+&nbsp;
+    </div><strong></strong>
+    <p style="color:grey;"></p>
+</footer>
+</div>
+    </body>
+</html>

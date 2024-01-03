@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Waleed Ayoub</title>
-    <link>https://waleedayoub.com/post/</link>
-    <description>Recent content in Posts on Waleed Ayoub</description>
+    <title>radarr on Waleed Ayoub</title>
+    <link>https://waleedayoub.com/tags/radarr/</link>
+    <description>Recent content in radarr on Waleed Ayoub</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Dec 2023 09:56:51 -0500</lastBuildDate><atom:link href="https://waleedayoub.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Dec 2023 09:56:51 -0500</lastBuildDate><atom:link href="https://waleedayoub.com/tags/radarr/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Synology Media Centre Setup</title>
       <link>https://waleedayoub.com/post/synology-media-centre-setup/</link>
@@ -15,15 +15,6 @@
       <guid>https://waleedayoub.com/post/synology-media-centre-setup/</guid>
       <description>Synology Media Configuration This is my attempt at publishing a write up on a rough timeliens of my journey setting up an open source media centre on my Synology DSM713+. It includes a configuration guide and links to scripts that should help others work through their own setups.
 Table of Contents Introduction The Setup Applications System details What is OpenVPN? Ok, so now What is tun? UnRar-ing files after download Attempt 1 - Unrar script Switching to qBittorrent The VPN challenge - some options Making life easy - SOCKS5 Important - remote path mapping Attempt 2 - Another failed Unrar script That didn&amp;rsquo;t work either - no more scripts Final docker-compose Further Resources Introduction So a while back, motivated by a desire to make more use out of my Synology DSM713+ NAS, I decided to explore ways to turn it into a self-managed but highly automated media centre.</description>
-    </item>
-    
-    <item>
-      <title>Git set up for datatalksclub zoomcamp</title>
-      <link>https://waleedayoub.com/post/git-setup-datatalksclub/</link>
-      <pubDate>Tue, 05 Sep 2023 22:40:29 -0400</pubDate>
-      
-      <guid>https://waleedayoub.com/post/git-setup-datatalksclub/</guid>
-      <description>Requirements Original course repo as read-only that gets updated throughout the duration of the course My own repo in my github account that is used to get updates from original course repo and for me to write my own assignments / work Solution What I&amp;rsquo;m looking to do is essentially maintain a fork of the original course repository, while also adding your own work to it. Here&amp;rsquo;s a step-by-step guide to help you set this up:</description>
     </item>
     
   </channel>
