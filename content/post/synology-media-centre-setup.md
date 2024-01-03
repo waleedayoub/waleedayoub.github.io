@@ -241,7 +241,7 @@ done
 ### That didn't actually work!
 - Ok so after monitoring a few torrent downloads, it turns out the script the way I've included it doesn't actually run or unrar anything
 - So what I've done instead is just invoking unrar directly from the "run external program after torrent is finished" box, like this:
-![unrar](../../static/images/image-4.png)
+![unrar](images/image-4.png)
 - Let's break down what this is doing:
 ```shell
 unrar x "%F/*.r*" "%F/"
@@ -254,6 +254,6 @@ unrar x "%F/*.r*" "%F/"
 ## Final docker-compose.yml
 - TODO: Add link to a gist
 
-## Further resources
+## Final thoughts & resources
 - Resources
-- Additional things to try later
+- TODO:
