@@ -15,14 +15,20 @@ It includes a configuration guide and links to scripts that should help others w
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [The Setup](#the-setup)
-3. [Original docker-compose](#original-docker-compose)
-4. [Script for Extracting Files - transmission edition](#script-for-extracting-files)
-4. [What is OpenVPN???](#what-is-openvpn)
-5. [Ok, so now what is tun?](#openvpn-and-tun)
-6. [Switching to qBittorrent](#switching-to-qbittorrent)
-7. [Script for Extracting Files - qbittorrent edition](#script-for-extracting-files)
-8. [Final docker-compose](#final-docker-compose)
-7. [Further Resources](#further-resources)
+    - [Applications](#applications)
+    - [System details](#system-details)
+    - [What is OpenVPN?](#what-is-openvpn)
+    - [Ok, so now What is tun?](#ok-so-now-what-is-tun)
+3. [UnRar-ing files after download](#running-a-script-to-extract-rard-or-zipd-files)
+    - [Attempt 1 - Unrar script](#the-first-unrar-script)
+4. [Switching to qBittorrent](#switching-to-qbittorrent)
+    - [The VPN challenge - some options](#some-options)
+    - [Making life easy - SOCKS5](#using-socks5-proxy---torguard-and-qbittorrent)
+    - [Important - remote path mapping](#remote-path-mapping-between-sonarr-and-qbittorrent)
+    - [Attempt 2 - Another failed Unrar script](#the-second-failed-unrar-script)
+    - [That didn't work either - no more scripts](#that-didnt-actually-work)
+5. [Final docker-compose](#final-docker-compose)
+6. [Further Resources](#further-resources)
 
 ## Introduction
 So a while back, motivated by a desire to make more use out of my [Synology DSM713+ NAS](https://www.synology.com/en-global/support/download/DS713+?version=7.1#system), I decided to explore ways to turn it into a self-managed but highly automated media centre.
@@ -54,7 +60,6 @@ Linux seventhirteen 3.10.108 #42962 SMP Fri Mar 24 00:28:47 CST 2023 x86_64 GNU/
 My setup has always relied on docker for managing these applications and I don't have an automated way of keeping the images updated just yet.
 
 
-
 The trickiest part of this set up, and the one that I forget every time I go through an upgrade cycle is the requirements to get VPN working with transmission.
 
 June 2023 NOTE:
@@ -63,10 +68,11 @@ June 2023 NOTE:
 Thankfully, my VPN provider of choice has config files provided by huagene. What isn't as clear is the role /dev/tun plays.
 
 
-
 ### What is OpenVPN?
+- TODO
 
 ### Ok, so now what is tun?
+- TODO
 
 And here's the bash script I use to check if /dev/tun exists, and if it doesn't, to create it:
 
@@ -90,7 +96,7 @@ fi
 ## Running a script to extract rar'd or zip'd files
 As of June 2023, I also added an unrar script to the post download instructions to transmission
 
-### The Unrar script
+### The first Unrar script
 The only real mention of how to get an unrar script going when a torrent is completed can be found [here](https://github.com/haugene/docker-transmission-openvpn/issues/75).
 
 The main things you need to do are:
@@ -140,8 +146,9 @@ environment:
       - VPN_PASS=vpnpassword
       - VPN_OPTIONS=--inactive 3600 --ping 10 --ping-exit 60
 ```
-- This didn't work out of the box with torguard. I'm not sure whether the base qBittorrent container knows how to parse random VPN providers
+- This didn't work out of the box with torguard. I'm not sure whether the base qBittorrent container knows how to parse random VPN providers and their certificates
 - So while this deployed and the client was running, the VPN connection wasn't working
+
 ### Some options
 1. One alternative would be to, like with transmission, use a qBittorrent image configured for VPN and with capability to handle torguard
     - Something like this, for example: https://hub.docker.com/r/dyonr/qbittorrentvpn/
@@ -202,21 +209,21 @@ environment:
     ``` 
     3. As it turns out, torguard has a SOCKS5 proxy you can use: https://torguard.net/article/241/how-to-setup-a-socks-proxy-in-qbittorrent-on-windows.html
 
-    ### Using SOCKS5 Proxy - Torguard and qBittorrent
-    - Follow the guide above
-    - Then use their helpful "Check my Torrent IP" tool. Since this isn't using a hard VPN connection, you can't just, say, docker exec into the container and check its IP
-    - When you run it, it shows up like this in the download client:
-    ![qBittorrent check my ip](../../static/images/image.png)
-    - And it displays the IP your torrent appears to be downloading to like this: ![Report from torguard](image-1.png)
-        - This isn't my IP! So it works!!!
+### Using SOCKS5 Proxy - Torguard and qBittorrent
+- Follow the guide above
+- Then use their helpful "Check my Torrent IP" tool. Since the VPN connection isn't set at the container level, you can't just docker exec into the container and check its IP
+- When you run it, it shows up like this in the download client:
+![qBittorrent check my ip](../../static/images/image.png)
+- And it displays the IP your torrent appears to be downloading to like this: ![Report from torguard](../../static/images/image-1.png)
+    - This isn't my IP! So it works!!!
 
 ### Remote Path Mapping between Sonarr and qBittorrent
-- One very important thing to be aware of is the remote path mapping: ![Alt text](image-2.png)
+- One very important thing to be aware of is the remote path mapping: ![qbt check my ip](../../static/images/image-2.png)
 - The way this reads:
     - When qBittorrent reports a file has been downloaded to ```/downloads``` (which is where you map the volume in the docker compose), it tells sonarr to look for that in its own local directory structure at ```/data/downloads/torrents/downloads```
 - If you don't do this, sonarr won't know where to find the files and it will just report an error: ```"No files found are eligible for import at /downloads/<FILE>```
 
-### The unrar script
+### The second, failed unrar script
 - Last but not least, the whole reason we switched to qBittorrent: running a post-processing script to unrar files
 - Here's the script:
 ```shell
@@ -229,12 +236,12 @@ do
 done
 ```
 - I saved it in the top level config dir in the volume mapping here: ```- /volume1/docker/mediacentre/qbittorrent:/config```
-- And then in qbittorrent, I set the following under settings: ![Alt text](images/image-3.png)
+- And then in qbittorrent, I set the following under settings: 
 
 ### That didn't actually work!
 - Ok so after monitoring a few torrent downloads, it turns out the script the way I've included it doesn't actually run or unrar anything
-- So what I've done instead is just run unrar as a script directly from the "run external program after torrent is finished" box, like this:
-![Alt text](image-4.png)
+- So what I've done instead is just invoking unrar directly from the "run external program after torrent is finished" box, like this:
+![unrar](../../static/images/image-4.png)
 - Let's break down what this is doing:
 ```shell
 unrar x "%F/*.r*" "%F/"
@@ -243,3 +250,10 @@ unrar x "%F/*.r*" "%F/"
 - The ```"%F/*.r*"``` breaks down into ```%F/``` which refers to the current directory in qbittorrent land and the ```*.r*``` just references any file with a ```r*``` extension.
 - Lastly, the final parameter is where to unrar the files, which in this case is just the current directory again
 - After monitoring this for a few torrents, it looks like it finally works!!!
+
+## Final docker-compose.yml
+- TODO: Add link to a gist
+
+## Further resources
+- Resources
+- Additional things to try later
