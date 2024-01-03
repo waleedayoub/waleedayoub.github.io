@@ -4,7 +4,7 @@ title: "Synology Media Centre Setup"
 description: Documenting my media centre setup on a synology DS713+
 tags: ["synology", "radarr", "sonarr", "plex", "jackett", "VPN"]
 date: 2023-12-11T09:56:51-05:00
-draft: true
+draft: false
 ---
 
 # Synology Media Configuration
