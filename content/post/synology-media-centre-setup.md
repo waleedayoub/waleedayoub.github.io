@@ -213,12 +213,12 @@ environment:
 - Follow the guide above
 - Then use their helpful "Check my Torrent IP" tool. Since the VPN connection isn't set at the container level, you can't just docker exec into the container and check its IP
 - When you run it, it shows up like this in the download client:
-![qBittorrent check my ip](../../static/images/image.png)
-- And it displays the IP your torrent appears to be downloading to like this: ![Report from torguard](../../static/images/image-1.png)
+![qBittorrent check my ip](/images/image.png)
+- And it displays the IP your torrent appears to be downloading to like this: ![Report from torguard](/images/image-1.png)
     - This isn't my IP! So it works!!!
 
 ### Remote Path Mapping between Sonarr and qBittorrent
-- One very important thing to be aware of is the remote path mapping: ![qbt check my ip](../../static/images/image-2.png)
+- One very important thing to be aware of is the remote path mapping: ![qbt check my ip](/images/image-2.png)
 - The way this reads:
     - When qBittorrent reports a file has been downloaded to ```/downloads``` (which is where you map the volume in the docker compose), it tells sonarr to look for that in its own local directory structure at ```/data/downloads/torrents/downloads```
 - If you don't do this, sonarr won't know where to find the files and it will just report an error: ```"No files found are eligible for import at /downloads/<FILE>```
@@ -241,7 +241,7 @@ done
 ### That didn't actually work!
 - Ok so after monitoring a few torrent downloads, it turns out the script the way I've included it doesn't actually run or unrar anything
 - So what I've done instead is just invoking unrar directly from the "run external program after torrent is finished" box, like this:
-![unrar](images/image-4.png)
+![unrar](/images/image-4.png)
 - Let's break down what this is doing:
 ```shell
 unrar x "%F/*.r*" "%F/"
