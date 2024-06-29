@@ -32,6 +32,30 @@ The first week is all about setting up a basic RAG (Retrieval Augmented Generati
 - A prompt builder: This composes the question, some user prompts and the source document into a string that gets passed to the LLM
 - LLM: This is just an API call to the LLM of choice that takes the prompt from the previous step as an input
 
+This is what we'll be implementing:
+```mermaid
+graph TD
+    A[User] -->|Q| B[Knowledge DB]
+    B -->|Relevant Documents D1, D2, ..., DN| C[Context = Prompt + Q + Documents]
+    A -->|Q| C
+    C -->|Q| D[LLM]
+    D -->|Answer| A
+    subgraph Context
+        direction LR
+        D1
+        D2
+        D3
+        D4
+        ...
+        DN
+    end
+    B -.-> D1
+    B -.-> D2
+    B -.-> D3
+    B -.-> D4
+    B -.-> ...
+    B -.-> DN
+```
 Let's start by importing a bunch of things:
 
 ```python
@@ -138,9 +162,6 @@ index.fit(documents)
 
 
     <minsearch.Index at 0x7beed7782170>
-
-
-
 
 ```python
 boost = {
