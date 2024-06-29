@@ -5,8 +5,7 @@
     <title>{{.Site.Title}}</title>
     <meta name="description" content="{{ .Site.Params.main.description  }}">
     <meta property="og:title" content="{{ .Site.Title }}" />
-    <meta property="og:description"
-          content="{{.Site.Params.main.description | plainify }}" />
+    <meta property="og:description" content="{{.Site.Params.main.description | plainify }}" />
     <meta property="og:image" content="{{ .Site.Params.main.img | absURL }}" />
     <meta name="keywords" content="{{ $.Site.Params.main.Keywords }}" />
     {{else}}
@@ -16,25 +15,22 @@
     <meta property="og:title" content="{{ .Site.Title }}" />
     <meta property="og:description" content="{{ .Summary | plainify}}" />
     <meta property="og:image" content="{{ .Site.Params.main.img | absURL }}" />
-    <meta name="keywords"
-          content="{{ with .Params.Keywords }}{{ else }}{{ $.Site.Params.Keywords }}{{ end }}" />
+    <meta name="keywords" content="{{ with .Params.Keywords }}{{ else }}{{ $.Site.Params.Keywords }}{{ end }}" />
     {{end}}
     {{ if .Site.Params.main.enableKatex }}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
-        integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI"
-          crossorigin="anonymous">
+        integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
 
     <!-- The loading of KaTeX is deferred to speed up page rendering -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
-        integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t"
-        crossorigin="anonymous">
-    </script>
+        integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous">
+        </script>
 
     <!-- To automatically render math in text elements, include the auto-render extension: -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
         integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
         onload="renderMathInElement(document.body);">
-    </script>
+        </script>
     {{end}}
     <meta name="keywords" content="{{ .Site.Params.main.metaKeywords }}">
     <link rel="icon" type="image/svg" href='{{ .Site.Params.main.icon | absURL }}' />
@@ -58,4 +54,17 @@
     {{ printf `
     <link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
     {{ end -}}
+
+    <!-- Include Mermaid.js from a CDN -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+
+    <!-- Initialize Mermaid.js -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({ startOnLoad: true });
+        });
+    </script>
 </head>
