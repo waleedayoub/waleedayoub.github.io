@@ -1,5 +1,6 @@
 ---
 title: "LLM zoomcamp week1- Intro notes"
+author: waleed
 date: 2024-06-29T08:11:46-04:00
 description: Datatalksclub LLM Zoomcamp Week 1 Notes
 tags: ["datatalksclub", "LLM","python"]
@@ -55,6 +56,7 @@ graph TD
     B -.-> D4
     B -.-> ...
     B -.-> DN
+    classDef entity fill:#f9f,stroke:#333,stroke-width:4px;
 ```
 Let's start by importing a bunch of things:
 
