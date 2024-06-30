@@ -29,3 +29,66 @@ a {
 strong {
     color: #ff5722;
 }
+
+/* Mermaid Diagram Styling */
+.mermaid-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+    background-color: #f8f9fa;
+    /* Light grey background */
+    padding: 1rem;
+    border-radius: 4px;
+    /* Optional: adds rounded corners */
+}
+
+.mermaid {
+    max-width: 100%;
+    overflow-x: scroll;
+    background-color: white !important;
+    /* Ensure a white background */
+    color: black !important;
+    /* Ensure black text */
+}
+
+/* Additional Mermaid styling */
+.mermaid .node rect {
+    fill: #ffffff;
+    /* White background for nodes */
+    stroke: #333333;
+    /* Dark border for nodes */
+}
+
+.mermaid .node text {
+    fill: #333333;
+    /* Dark text for nodes */
+    text-anchor: middle;
+    /* Center text horizontally */
+    alignment-baseline: middle;
+    /* Center text vertically */
+}
+
+.mermaid .edgePath path {
+    stroke: #333333;
+    /* Dark arrows */
+}
+
+.mermaid .edgeLabel text {
+    fill: #333333;
+    /* Dark text for edge labels */
+}
+
+.mermaid .cluster rect {
+    fill: #f4f4f4;
+    /* Light grey background for clusters */
+    stroke: #333333;
+    /* Dark border for clusters */
+}
+
+.mermaid .cluster text {
+    fill: #333333;
+    /* Dark text for clusters */
+    text-anchor: middle;
+    /* Center text horizontally */
+    alignment-baseline: middle;
+    /* Center text vertically */
+}

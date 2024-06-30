@@ -1,10 +1,11 @@
 ---
-title: "LLM zoomcamp week1- Intro notes"
+title: "LLM Zoomcamp Week 1 - Intro Notes"
 author: waleed
 date: 2024-06-29T08:11:46-04:00
 description: Datatalksclub LLM Zoomcamp Week 1 Notes
 tags: ["datatalksclub", "LLM","python"]
 series: ["llm-zoomcamp-2024"]
+hasMermaid: true
 draft: false
 ---
 
