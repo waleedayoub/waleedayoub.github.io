@@ -10,6 +10,7 @@ paginate = "10" # Number of posts per page
 
 # Default Theme
 theme= "gruvhugo"
+# theme= "hugo-sustain"
 
 # Default Post Extension
 defaultExtension= "html"
@@ -21,6 +22,7 @@ metaDataFormat= "yaml"
 [taxonomies]
   tag      = "tags"
   category = "categories"
+  series = "series"
 
 [params.main]
   enabled = true
