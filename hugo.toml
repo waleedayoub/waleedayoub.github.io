@@ -22,12 +22,12 @@ metaDataFormat= "yaml"
 [taxonomies]
   tag      = "tags"
   category = "categories"
-  series = "series"
+  series   = "series"
 
 [params.main]
   enabled = true
   enableKatex = true
-  metaKeywords = "fast, hugo, theme, minimal, gruvbox"
+  metaKeywords = "waleed, data, python"
   headerTitle = "Waleed Ayoub"
   name = "waleed"
   img = "images/headshot-waleed.png"
