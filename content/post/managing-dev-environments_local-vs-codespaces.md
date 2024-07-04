@@ -58,8 +58,8 @@ Depending on your shell, you can define environment variables directly in your `
 1. Open your `.bash_profile` or `.zshrc` file in a text editor:
 
     ```shell
-    nano ~/.bash_profile  # for bash
-    nano ~/.zshrc         # for zsh
+    touch ~/.bash_profile  # for bash
+    touch ~/.zshrc         # for zsh
     ```
 
 2. Add your environment variables at the end of the file:
