@@ -4,7 +4,7 @@ description: "The various options to running python development environments and
 author: waleed
 tags: ["python", "github", "codespaces", "secrets"]
 date: 2024-07-04T07:28:08-04:00
-draft: true
+draft: false
 ---
 
 # Managing Development Environments: Local Machine vs. GitHub Codespaces
