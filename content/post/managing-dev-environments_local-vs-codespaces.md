@@ -11,7 +11,7 @@ draft: false
 
 Since I don't really do development on a regular basis, especially not for my day-to-day at work, I find that one of the most annoying parts of picking up projects is getting environments set up, making sure libraries are up-to-date if needed and managing any environment variables and secrets to 3rd party services.
 
-So this post really is me capturing the patterns I'm used and find the most useful so I can refer to them in the future (instead of fumbling through half-written notes in Obsidian).
+So this post really is me capturing the patterns I've used and find the most useful so I can refer to them in the future (instead of fumbling through half-written notes in Obsidian).
 
 Moreover, I generally dislike running services (e.g. Docker, Elasticsearch, etc.) locally, and prefer hosting them somewhere else. For now, that usually means I go with two options for convenience and cost reasons:
 
