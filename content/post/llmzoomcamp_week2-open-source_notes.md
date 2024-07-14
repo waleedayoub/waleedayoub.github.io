@@ -1075,3 +1075,98 @@ if __name__ == "__main__":
 ```bash
 streamlit run app.py
 ```
+## Bonus Ollama + OpenWebUI + Elastic in Docker with GPU
+- So now, since I actually *do* have a GPU on a gaming rig called `gaming`, I'm going to rebuild my docker containers to do a few things:
+1. Enable GPU support on the running instance of docker on that machine
+2. Add OpenWebUI for a slick ChatGPT-like interface
+3. Deploy it!
+
+So let's go through these step by step:
+1. To enable GPU support in Docker, I need to install the [Nvidia container toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installation)
+    - The instructions in the link above are comprehensive but I just followed Ollama's provided instructions [here](https://github.com/ollama/ollama/blob/main/docs/docker.md) using `apt`
+    - To restart Docker, I had to actually go do it on my windows machine since `restart` and `systemctl` commands didn't seem to work in WSL
+    - The last thing you need to do is ensure the `docker run` or `docker-compose` specify GPUs as part of the resources the ollama service needs to deploy (see docker-compose below):
+    ```docker
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+    ```
+2. To add OpenWebUI, add a service in the docker-compose for OpenWebUI, specificying the ollama service in the `OLLAMA_BASE_URL` environment variable
+3. Lastly, we deploy using the following docker-compose:
+    ```docker
+    version: '3.8'
+
+    services:
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
+        container_name: elasticsearch
+        environment:
+        - discovery.type=single-node
+        - xpack.security.enabled=false
+        ports:
+        - "9200:9200"
+        - "9300:9300"
+
+    ollama:
+        image: ollama/ollama
+        container_name: ollama
+        deploy:
+        resources:
+            reservations:
+            devices:
+                - capabilities: [ gpu ]
+        volumes:
+        - ollama:/root/.ollama
+        ports:
+        - "11434:11434"
+        restart: unless-stopped
+
+    open-webui:
+        image: ghcr.io/open-webui/open-webui:main
+        container_name: open-webui
+        environment:
+        - OLLAMA_BASE_URL=http://192.168.50.49:11434
+        volumes:
+        - open-webui:/app/backend/data
+        ports:
+        - "3000:8080"
+        depends_on:
+        - ollama
+        deploy:
+        restart_policy:
+            condition: always
+
+    volumes:
+    ollama:
+    open-webui:
+    ```
+
+  - And there we have it, we've got ollama and openwebui running using the full power of my Nvidia RTX 3080!
+  - You'll know it's working in two ways: 1. The instruct/completion models return their responses way faster and 2. You'll be using way more RAM, especially when the models are churning their responses:
+  ```bash
+  Every 2.0s: nvidia-smi                                                                                                                                                                                            gaming: Sun Jul 14 07:48:15 2024
+
+Sun Jul 14 07:48:15 2024
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 555.58.02              Driver Version: 556.12         CUDA Version: 12.5     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 3080        On  |   00000000:2B:00.0 Off |                  N/A |
+|  0%   33C    P8             28W /  380W |    1018MiB /  10240MiB |      8%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A        24      G   /Xwayland                                   N/A      |
+|    0   N/A  N/A        39      G   /Xwayland                                   N/A      |
++-----------------------------------------------------------------------------------------+
+```
