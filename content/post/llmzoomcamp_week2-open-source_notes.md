@@ -42,6 +42,7 @@ A few important call outs for this section:
     - [Setting Up Elasticsearch and Ollama](#setting-up-elasticsearch-and-ollama)
     - [Building the RAG System](#building-the-rag-system)
 - [2.9 Creating a Streamlit UI](#29-creating-a-streamlit-ui)
+- [Bonus Ollama + OpenWebUI + Elastic in Docker with GPU](#bonus-ollama--openwebui--elastic-in-docker-with-gpu)
 
 ```python
 import os
