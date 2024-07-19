@@ -44,7 +44,9 @@ In this section the focus is on the following:
 - Vector databases are databases that index and store vector embeddings
     - Which means you can easily store them, reference them, compare different vectors semantically (using various distance measures, etc.)
 - Here's what it would look like when put together with an LLM:
-![image.png](03-vector-search_notes_files/image.png)
+<div style="max-width: 100%; overflow: hidden;">
+    <img src="/images/sbert.png" alt="List of SBERT original models" style="width: 100%; height: auto;">
+</div>
 
 ## 3.2 How to do Vectorized Search with Elasticsearch
 - Let's start with the architecture of the Semantic Search system we're going to build:
