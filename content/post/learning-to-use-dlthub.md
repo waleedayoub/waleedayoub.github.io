@@ -9,5 +9,8 @@ draft: true
 
 ## Outline
 ### Quick intro to what is dlthub
+- Start with the notebook from the data eng zoomcamp as an intro
+- Work through it and take notes as you're going through each section
 ### Using toronto bicycle data live stream json using dictionaries and lists
+
 ### Doing the same using dlthub
