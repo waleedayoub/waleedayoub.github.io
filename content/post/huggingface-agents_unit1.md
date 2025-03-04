@@ -5,7 +5,7 @@ date: 2025-03-03T12:29:19-05:00
 description: Datatalksclub LLM Zoomcamp Week 2 Notes
 tags: ["huggingface", "LLM","agents","python"]
 series: ["huggingface-agents"]
-draft: true
+draft: false
 ---
 
 I have recently started a new course focused on building agents provided by huggingface.co
