@@ -2,13 +2,15 @@
 title: "Huggingface Agents - Unit 1 Exploration"
 author: waleed
 date: 2025-03-03T12:29:19-05:00
-description: Datatalksclub LLM Zoomcamp Week 2 Notes
-tags: ["huggingface", "LLM","agents","python"]
+description: "Deep dive into huggingface's CodeAgent framework: exploring how AI agents work with prompts.yaml, manage context evolution, and make decisions through LLM interactions. Includes practical insights on agent observability using Langfuse."
+tags: ["huggingface", "llm","agents","python"]
 series: ["huggingface-agents"]
 draft: false
 ---
 
-I have recently started a new course focused on building agents provided by huggingface.co
+
+
+I have recently started a [new course](https://huggingface.co/learn/agents-course/unit0/introduction) focused on building agents provided by huggingface.co
 Here's an overview of all the things that I'll be learning:
 
 - 📖 Study AI Agents in theory, design, and practice.

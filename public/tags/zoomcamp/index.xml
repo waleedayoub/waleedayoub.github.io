@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zoomcamp on Waleed Ayoub</title>
+    <link>http://localhost:1313/tags/zoomcamp/</link>
+    <description>Recent content in Zoomcamp on Waleed Ayoub</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Jun 2023 11:42:00 -0400</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/zoomcamp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LLM Zoomcamp Week 1 - Introduction Notes</title>
+      <link>http://localhost:1313/post/llmzoomcamp_week1-intro_notes/</link>
+      <pubDate>Fri, 30 Jun 2023 11:42:00 -0400</pubDate>
+      <guid>http://localhost:1313/post/llmzoomcamp_week1-intro_notes/</guid>
+      <description>&lt;h1 id=&#34;llm-zoomcamp---week-1-notes&#34;&gt;LLM Zoomcamp - Week 1 Notes&lt;/h1&gt;&#xA;&lt;p&gt;This is the first week of the new &lt;a href=&#34;https://github.com/DataTalksClub/llm-zoomcamp/tree/main&#34;&gt;LLM Zoomcamp&lt;/a&gt; hosted by &lt;a href=&#34;https://datatalks.club/&#34;&gt;DataTalksClub&lt;/a&gt;.&#xA;I&amp;rsquo;ve found their content really helpful in the past, having completed the Data Engineering Zoomcamp a year ago and successively attempted (but never finished!) the other two zoomcamps they offer.&lt;/p&gt;&#xA;&lt;p&gt;In order to give me the best chance of completing this one, I&amp;rsquo;ve decided to publish my notes on my blog. Hope that helps me see this one through!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

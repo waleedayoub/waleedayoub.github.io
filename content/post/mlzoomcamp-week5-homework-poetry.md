@@ -1,7 +1,8 @@
 ---
 title: "ML Zoomcamp Week 5 Homework Using Poetry and Pyenv"
+author: waleed
 date: 2023-10-16T19:08:29-04:00
-description: "How do use poetry and pyenv instead of pipenv"
+description: "Alternative approach to MLZoomcamp's Week 5 homework using Poetry and Pyenv instead of Pipenv, with step-by-step instructions for Python package and version management."
 tags: ["datatalksclub","git","mlzoomcamp","poetry","pyenv"]
 draft: true
 ---

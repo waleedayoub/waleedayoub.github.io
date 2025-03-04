@@ -1,6 +1,7 @@
 ---
 title: "Managing Dev Environments - Local vs Codespaces"
-description: "The various options to running python development environments and managing secrets"
+author: waleed
+description: "Comprehensive guide comparing local development environments with GitHub Codespaces, including best practices for environment setup, secrets management, and virtual environment configuration across different platforms."
 author: waleed
 tags: ["python", "github", "codespaces", "secrets"]
 date: 2024-07-04T07:28:08-04:00
@@ -53,7 +54,7 @@ The one I use more often is the 3rd option:
 
 #### Using `.bash_profile` or `.zshrc`
 
-Depending on your shell, you can define environment variables directly in your `.bash_profile` or `.zshrc` file. Here’s how you can do it:
+Depending on your shell, you can define environment variables directly in your `.bash_profile` or `.zshrc` file. Here's how you can do it:
 
 1. Open your `.bash_profile` or `.zshrc` file in a text editor:
 
@@ -80,7 +81,7 @@ This method is simple but may not be ideal for managing multiple projects with d
 
 #### Using [`direnv`](https://direnv.net/)
 
-`direnv` is a great tool for managing environment variables on a per-project basis. Here’s how you can set it up on MacOS:
+`direnv` is a great tool for managing environment variables on a per-project basis. Here's how you can set it up on MacOS:
 
 1. Install `direnv` using Homebrew:
 

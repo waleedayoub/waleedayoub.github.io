@@ -1,7 +1,7 @@
 ---
 author: waleed
 title: "Synology Media Centre Setup"
-description: Documenting my media centre setup on a synology DS713+
+description: "Step-by-step guide to setting up a comprehensive media center on Synology NAS, including configuration of Radarr, Sonarr, Plex, Jackett, and VPN services, with detailed troubleshooting tips and automation scripts."
 tags: ["synology", "radarr", "sonarr", "plex", "jackett", "VPN"]
 date: 2023-12-11T09:56:51-05:00
 draft: false
@@ -246,7 +246,7 @@ cd "$1"
 
 for f in "$1"/*.rar
 do
-  [ -e "$f" ] && unrar x "$f"
+  [ -e "$f" ] && unrar x "$f"
 done
 ```
 - I saved it in the top level config dir in the volume mapping here: ```- /volume1/docker/mediacentre/qbittorrent:/config```

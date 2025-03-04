@@ -32,7 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.145.0">
     
-    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.031f9c469cadc99c459cd8cb297998cb9c2bb3969ab84d5fe809146471835389.css" type="text/css" media="screen">
 
     <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
 
@@ -97,7 +97,7 @@
 
 <br>
 	<div style="display:flex;align-items:center;">
-		<a class="go-back" href="http://localhost:1313/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5
+		<a class="go-back" href="/post/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5
 						21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6
 						6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
 	<h2 class="post-title">Prefect</h2>
@@ -130,77 +130,7 @@
                         <h5><a class="tag" href='http://localhost:1313/tags/bigquery'>bigquery</a></h5>
                         
                     </span>
-                    <p><h1 id="toronto-bicycle-data-engineering">Toronto Bicycle Data Engineering</h1>
-<ul>
-<li>You can find all the code for this project here: <a href="https://github.com/waleedayoub/toronto-bicycle-data">https://github.com/waleedayoub/toronto-bicycle-data</a></li>
-<li>This was a project I explored as part of the <a href="https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_7_project/README.md">final project</a> of the datatalks club data engineering zoomcamp</li>
-</ul>
-<h2 id="project-description">Project Description</h2>
-<ul>
-<li>The goal of this project is to examine historical bike share ridership going as far back as 2016 in the city of Toronto, Ontario.</li>
-<li>The city of Toronto has an open data sharing mandate, and all bike share data can be found here: <a href="https://open.toronto.ca/dataset/bike-share-toronto/">https://open.toronto.ca/dataset/bike-share-toronto/</a></li>
-<li>Unfortunately, the data is not consistently named or labeled across years (2014-2022, inclusively), so there is a need to perform quite a bit of processing to handle it.
-<ul>
-<li>For example, in some years, data is stored in tabs in XLSX files, whereas in other years, they are CSVs broken down by quarters, or in other cases, by months, in CSV files</li>
-</ul>
-</li>
-<li>Given that this analysis focuses on historical ridership, a batch processing pipeline is sufficient, and can be scheduled to run monthly or quarterly.</li>
-<li>It is unclear how often the data refreshes, but the following program handles edge cases and checks whether data has been updated before triggering pipelines</li>
-</ul>
-<h2 id="architecture">Architecture</h2>
-<ul>
-<li>The architecture for this project is kept fairly simple:</li>
-</ul>
-<div style="max-width: 100%; overflow: hidden;">
-    <img src="/images/bikedataarch.png" alt="Data arch for toronto bicycle data" style="width: 100%; height: auto;">
-</div>
-<h2 id="data-sources">Data sources</h2>
-<h3 id="toronto">Toronto</h3>
-<ul>
-<li>Ridership data: <a href="https://open.toronto.ca/dataset/bike-share-toronto-ridership-data/">https://open.toronto.ca/dataset/bike-share-toronto-ridership-data/</a></li>
-<li>For batch data, here&rsquo;s an example of how to access the ridership data API:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>base_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://ckan0.cf.opendata.inter.prod-toronto.ca&#34;</span>
-</span></span><span style="display:flex;"><span>package_url <span style="color:#f92672">=</span> base_url <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/api/3/action/package_show&#34;</span>
-</span></span><span style="display:flex;"><span>params <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;bike-share-toronto-ridership-data&#34;</span>}
-</span></span></code></pre></div></li>
-<li>If you do a GET request on the package_url with params provided like this:
-<code>resource = requests.get(url, params=params).json()</code>
-<ul>
-<li>You can then grab the url where the data is stored like this:
-<code>resource[&quot;result&quot;][&quot;resources&quot;][&quot;url&quot;]</code></li>
-<li>And the url will be something like this:
-<a href="https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/7e876c24-177c-4605-9cef-e50dd74c617f/resource/85326868-508c-497e-b139-b698aaf27bbf/download/bikeshare-ridership-2014-2015.xlsx">https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/7e876c24-177c-4605-9cef-e50dd74c617f/resource/85326868-508c-497e-b139-b698aaf27bbf/download/bikeshare-ridership-2014-2015.xlsx</a></li>
-<li>You can then do another GET request on that URL and write to a file in Python</li>
-</ul>
-</li>
-</ul>
-<h2 id="deployment-instructions">Deployment instructions</h2>
-<h3 id="technologies-used">Technologies used</h3>
-<ul>
-<li>GCP / Cloud Storage / BigQuery / Looker</li>
-<li>Terraform</li>
-<li>Prefect / DBT</li>
-<li>Python 3.9.16 / virtualenv</li>
-</ul>
-<h3 id="things-you-need-to-install--versions">Things you need to install + versions</h3>
-<ul>
-<li>Google cloud SDK: <a href="https://cloud.google.com/sdk/docs/install">https://cloud.google.com/sdk/docs/install</a></li>
-<li>Terraform 1.4.5: <a href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli">https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli</a></li>
-<li>Python: make sure you&rsquo;re running 3.9.16</li>
-<li>Prefect 2.10.4: <a href="https://docs.prefect.io/latest/getting-started/installation/">https://docs.prefect.io/latest/getting-started/installation/</a>
-<ul>
-<li>It is <em>very</em> important to get the prefect version right as GCS block&rsquo;s <code>upload_from_dataframe()</code> <a href="https://prefecthq.github.io/prefect-gcp/cloud_storage/#prefect_gcp.cloud_storage.GcsBucket.upload_from_dataframe">method</a> doesn&rsquo;t work in older versions</li>
-</ul>
-</li>
-</ul>
-<h3 id="step-0">Step 0</h3>
-<ul>
-<li>Clone or copy this repo: <code>git clone git@github.com:waleedayoub/toronto-bicycle-data.git</code></li>
-</ul>
-<h3 id="step-1---initial-setup--gcp">Step 1 - Initial Setup + GCP</h3>
-<ol>
-<li>
-<p>Create a service account in GCP and download the service account json (In the IAM &amp; Admin section of the GCP console)</p></p>
+                    <p class="post-description">Experimenting with prefect using open toronto bicycle data</p>
                 </well>
                             
             </div><br>

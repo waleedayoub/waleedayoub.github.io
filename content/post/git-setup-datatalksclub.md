@@ -2,7 +2,7 @@
 author: waleed
 title: "Git set up for datatalksclub zoomcamp"
 date: 2023-09-05T22:40:29-04:00
-description: "How to set up your git repo for zoomcamp classes"
+description: "Step-by-step guide to setting up a git repository for DataTalksClub courses, including how to fork, clone, and sync with the original course repo while maintaining your own work."
 tags: ["datatalksclub","git"]
 draft: false
 ---

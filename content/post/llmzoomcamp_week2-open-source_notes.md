@@ -1,9 +1,9 @@
 ---
-title: "LLM Zoomcamp Week 2 - Open Source LLMs Notes"
+title: "LLM Zoomcamp Week 2 - Open Source Notes"
 author: waleed
-date: 2024-07-10T16:56:37-04:00
-description: Datatalksclub LLM Zoomcamp Week 2 Notes
-tags: ["datatalksclub", "LLM","python"]
+date: 2024-07-10T13:33:00-04:00
+description: "Deep dive into open-source LLMs, exploring model architectures, training approaches, and practical implementation using popular frameworks and libraries."
+tags: ["datatalksclub", "llm", "zoomcamp"]
 series: ["llm-zoomcamp-2024"]
 hasMermaid: true
 draft: false
@@ -86,11 +86,11 @@ Let's start by pulling in the minsearch engine we're going to use in our RAG
     Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
     HTTP request sent, awaiting response... 200 OK
     Length: 3832 (3.7K) [text/plain]
-    Saving to: ‘minsearch.py’
+    Saving to: 'minsearch.py'
     
     minsearch.py        100%[===================>]   3.74K  --.-KB/s    in 0s      
     
-    2024-07-08 01:20:41 (83.2 MB/s) - ‘minsearch.py’ saved [3832/3832]
+    2024-07-08 01:20:41 (83.2 MB/s) - 'minsearch.py' saved [3832/3832]
     
 
 
@@ -183,7 +183,7 @@ model = T5ForConditionalGeneration.from_pretrained("google/flan-t5-xl", device_m
     tokenizer.json:   0%|          | 0.00/2.42M [00:00<?, ?B/s]
 
 
-    You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+    You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. This is expected, and simply means that the 'legacy' (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set 'legacy=False'. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
     Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
 
 

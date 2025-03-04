@@ -1,7 +1,7 @@
 ---
 author: waleed
 title: "Prefect.io POC - Building ETL Pipeline for Toronto Bicycle Data"
-description: Experimenting with prefect using open toronto bicycle data
+description: "End-to-end data engineering project using Toronto's bicycle sharing data, implementing ETL pipelines with Prefect.io, GCP, and BigQuery, featuring infrastructure-as-code with Terraform and automated data processing workflows."
 tags: ["datatalksclub", "prefect","python","sql","terraform","gcp","bigquery"]
 date: 2024-01-03T09:40:43-05:00
 draft: false

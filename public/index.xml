@@ -13,7 +13,7 @@
       <pubDate>Mon, 03 Mar 2025 12:29:19 -0500</pubDate>
       
       <guid>http://localhost:1313/post/huggingface-agents_unit1/</guid>
-      <description>&lt;p&gt;I have recently started a new course focused on building agents provided by huggingface.co
+      <description>&lt;p&gt;I have recently started a &lt;a href=&#34;https://huggingface.co/learn/agents-course/unit0/introduction&#34;&gt;new course&lt;/a&gt; focused on building agents provided by huggingface.co
 Here&amp;rsquo;s an overview of all the things that I&amp;rsquo;ll be learning:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;📖 Study AI Agents in theory, design, and practice.&lt;/li&gt;
@@ -282,7 +282,7 @@ Even just playing around with all the inputs the &lt;code&gt;CodeAgent&lt;/code&
     <item>
       <title>LLM Zoomcamp Week 4 - Monitoring and Evaluation Notes</title>
       <link>http://localhost:1313/post/llmzoomcamp_week4-monitoring-evaluation_notes/</link>
-      <pubDate>Tue, 06 Aug 2024 14:50:46 -0400</pubDate>
+      <pubDate>Tue, 06 Aug 2024 23:46:00 -0400</pubDate>
       
       <guid>http://localhost:1313/post/llmzoomcamp_week4-monitoring-evaluation_notes/</guid>
       <description>&lt;h1 id=&#34;llm-zoomcamp---week-4-notes&#34;&gt;LLM Zoomcamp - Week 4 Notes &lt;!-- omit from toc --&gt;&lt;/h1&gt;
@@ -511,7 +511,7 @@ Even just playing around with all the inputs the &lt;code&gt;CodeAgent&lt;/code&
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## re-index the document to have the document id be the key and the quesetion/course be the value&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;doc_index &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {d[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;]: d &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; d &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; documents}
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(doc_index[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;5170565b&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;text&amp;#39;&lt;/span&gt;])
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Everything is recorded, so you won&#39;t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;Now, we index the data based on the most successful vector search approach we evaluated in the previous section&lt;/li&gt;
@@ -623,7 +623,7 @@ Index course-questions created.
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;[{&#39;question&#39;: &#39;What if I miss a session?&#39;,
   &#39;course&#39;: &#39;machine-learning-zoomcamp&#39;,
   &#39;section&#39;: &#39;General course-related questions&#39;,
-  &#39;text&#39;: &#39;Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.&#39;,
+  &#39;text&#39;: &#39;Everything is recorded, so you won&#39;t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.&#39;,
   &#39;id&#39;: &#39;5170565b&#39;},
  {&#39;question&#39;: &#39;Is it going to be live? When?&#39;,
   &#39;course&#39;: &#39;machine-learning-zoomcamp&#39;,
@@ -692,7 +692,7 @@ Index course-questions created.
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;&#39;Yes, sessions are recorded if you miss one. You will still have access to everything that was covered and can also ask questions in advance for office hours or in Slack.&#39;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;doc_index[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;5170565b&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;text&amp;#39;&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;&#39;Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.&#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;&#39;Everything is recorded, so you won&#39;t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.&#39;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;cosine-similarity-metric&#34;&gt;Cosine Similarity metric&lt;/h3&gt;
 &lt;ul&gt;
@@ -709,8 +709,8 @@ Index course-questions created.
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;v_llm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;encode(answer_llm)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;v_llm&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dot(v_orig)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Yes, sessions are recorded if you miss one. Everything is recorded, including office hours, so you won’t miss any content. You can ask your questions for office hours in advance, and these will be addressed during the live stream. Additionally, you can always ask questions in Slack.
-Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Yes, sessions are recorded if you miss one. Everything is recorded, including office hours, so you won&#39;t miss any content. You can ask your questions for office hours in advance, and these will be addressed during the live stream. Additionally, you can always ask questions in Slack.
+Everything is recorded, so you won&#39;t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
 
 
 
@@ -1081,9 +1081,9 @@ RateLimitError: Error code: 429 - {&#39;error&#39;: {&#39;message&#39;: &#39;Rat
     </item>
     
     <item>
-      <title>LLM Zoomcamp Week 3 - Vector Search with Elasticsearch Notes</title>
+      <title>LLM Zoomcamp Week 3 - Vector Search Notes</title>
       <link>http://localhost:1313/post/llmzoomcamp_week3-vector-search_notes/</link>
-      <pubDate>Fri, 19 Jul 2024 15:16:18 -0400</pubDate>
+      <pubDate>Fri, 19 Jul 2024 23:39:00 -0400</pubDate>
       
       <guid>http://localhost:1313/post/llmzoomcamp_week3-vector-search_notes/</guid>
       <description>&lt;h1 id=&#34;llm-zoomcamp---week-3-notes&#34;&gt;LLM Zoomcamp - Week 3 Notes &lt;!-- omit from toc --&gt;&lt;/h1&gt;
@@ -1252,7 +1252,7 @@ RateLimitError: Error code: 429 - {&#39;error&#39;: {&#39;message&#39;: &#39;Rat
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    documents_embedding&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;append(doc)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;documents_embedding[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;{&#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;{&#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon&#39;t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
  &#39;section&#39;: &#39;General course-related questions&#39;,
  &#39;question&#39;: &#39;Course - When will the course start?&#39;,
  &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
@@ -1374,21 +1374,21 @@ RateLimitError: Error code: 429 - {&#39;error&#39;: {&#39;message&#39;: &#39;Rat
   &#39;_source&#39;: {&#39;question&#39;: &#39;WSL instructions&#39;,
    &#39;course&#39;: &#39;mlops-zoomcamp&#39;,
    &#39;section&#39;: &#39;Module 1: Introduction&#39;,
-   &#39;text&#39;: &#39;If you wish to use WSL on your windows machine, here are the setup instructions:\nCommand: Sudo apt install wget\nGet Anaconda download address here. wget &amp;lt;download address&amp;gt;\nTurn on Docker Desktop WFree Download | AnacondaSL2\nCommand: git clone &amp;lt;github repository address&amp;gt;\nVSCODE on WSL\nJupyter: pip3 install jupyter\nAdded by Gregory Morris (gwm1980@gmail.com)\nAll in all softwares at one shop:\nYou can use anaconda which has all built in services like pycharm, jupyter\nAdded by Khaja Zaffer (khajazaffer@aln.iseg.ulisboa.pt)\nFor windows “wsl --install” in Powershell\nAdded by Vadim Surin (vdmsurin@gmai.com)&#39;}},
+   &#39;text&#39;: &#39;If you wish to use WSL on your windows machine, here are the setup instructions:\nCommand: Sudo apt install wget\nGet Anaconda download address here. wget &amp;lt;download address&amp;gt;\nTurn on Docker Desktop WFree Download | AnacondaSL2\nCommand: git clone &amp;lt;github repository address&amp;gt;\nVSCODE on WSL\nJupyter: pip3 install jupyter\nAdded by Gregory Morris (gwm1980@gmail.com)\nAll in all softwares at one shop:\nYou can use anaconda which has all built in services like pycharm, jupyter\nAdded by Khaja Zaffer (khajazaffer@aln.iseg.ulisboa.pt)\nFor windows &amp;quot;wsl --install&amp;quot; in Powershell\nAdded by Vadim Surin (vdmsurin@gmai.com)&#39;}},
  {&#39;_index&#39;: &#39;course-questions&#39;,
   &#39;_id&#39;: &#39;Kn0ytJABBRmP4y366iqy&#39;,
   &#39;_score&#39;: 0.60555583,
   &#39;_source&#39;: {&#39;question&#39;: &amp;quot;The answer I get for one of the homework questions doesn&#39;t match any of the options. What should I do?&amp;quot;,
    &#39;course&#39;: &#39;machine-learning-zoomcamp&#39;,
    &#39;section&#39;: &#39;2. Machine Learning for Regression&#39;,
-   &#39;text&#39;: &#39;That’s normal. We all have different environments: our computers have different versions of OS and different versions of libraries — even different versions of Python.\nIf it’s the case, just select the option that’s closest to your answer&#39;}},
+   &#39;text&#39;: &#39;That&#39;s normal. We all have different environments: our computers have different versions of OS and different versions of libraries — even different versions of Python.\nIf it&#39;s the case, just select the option that&#39;s closest to your answer&#39;}},
  {&#39;_index&#39;: &#39;course-questions&#39;,
   &#39;_id&#39;: &#39;g30ytJABBRmP4y367iqy&#39;,
   &#39;_score&#39;: 0.6028962,
   &#39;_source&#39;: {&#39;question&#39;: &#39;How to install WSL on Windows 10 and 11 ?&#39;,
    &#39;course&#39;: &#39;machine-learning-zoomcamp&#39;,
    &#39;section&#39;: &#39;5. Deploying Machine Learning Models&#39;,
-   &#39;text&#39;: &#39;It is quite simple, and you can follow these instructions here:\nhttps://www.youtube.com/watch?v=qYlgUDKKK5A&amp;amp;ab_channel=NeuralNine\nMake sure that you have “Virtual Machine Platform” feature activated in your Windows “Features”. To do that, search “features” in the research bar and see if the checkbox is selected. You also need to make sure that your system (in the bios) is able to virtualize. This is usually the case.\nIn the Microsoft Store: look for ‘Ubuntu’ or ‘Debian’ (or any linux distribution you want) and install it\nOnce it is downloaded, open the app and choose a username and a password (secured one). When you type your password, nothing will show in the window, which is normal: the writing is invisible.\nYou are now inside of your linux system. You can test some commands such as “pwd”. You are not in your Windows system.\nTo go to your windows system: you need to go back two times with cd ../.. And then go to the “mnt” directory with cd mnt. If you list here your files, you will see your disks. You can move to the desired folder, for example here I moved to the ML_Zoomcamp folder:\nPython should be already installed but you can check it by running sudo apt install python3 command.\nYou can make your actual folder your default folder when you open your Ubuntu terminal with this command : echo &amp;quot;cd ../../mnt/your/folder/path&amp;quot; &amp;gt;&amp;gt; ~/.bashrc\nYou can disable bell sounds (when you type something that does not exist for example) by modifying the inputrc file with this command: sudo vim /etc/inputrc\nYou have to uncomment the set bell-style none line -&amp;gt; to do that, press the “i” keyboard letter (for insert) and go with your keyboard to this line. Delete the # and then press the Escape keyboard touch and finally press “:wq” to write (it saves your modifications) then quit.\nYou can check that your modifications are taken into account by opening a new terminal (you can pin it to your task bar so you do not have to go to the Microsoft app each time).\nYou will need to install pip by running this command sudo apt install python3-pip\nNB: I had this error message when trying to install pipenv (https://github.com/microsoft/WSL/issues/5663):\n/sbin/ldconfig.real: Can\&#39;t link /usr/lib/wsl/lib/libnvoptix_loader.so.1 to libnvoptix.so.1\n/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link\nSo I had to create the following symbolic link:\nsudo ln -s /usr/lib/wsl/lib/libcuda.so.1 /usr/lib64/libcuda.so\n(Mélanie Fouesnard)&#39;}},
+   &#39;text&#39;: &#39;It is quite simple, and you can follow these instructions here:\nhttps://www.youtube.com/watch?v=qYlgUDKKK5A&amp;amp;ab_channel=NeuralNine\nMake sure that you have &amp;quot;Virtual Machine Platform&amp;quot; feature activated in your Windows &amp;quot;Features&amp;quot;. To do that, search &amp;quot;features&amp;quot; in the research bar and see if the checkbox is selected. You also need to make sure that your system (in the bios) is able to virtualize. This is usually the case.\nIn the Microsoft Store: look for &#39;Ubuntu&#39; or &#39;Debian&#39; (or any linux distribution you want) and install it\nOnce it is downloaded, open the app and choose a username and a password (secured one). When you type your password, nothing will show in the window, which is normal: the writing is invisible.\nYou are now inside of your linux system. You can test some commands such as &amp;quot;pwd&amp;quot;. You are not in your Windows system.\nTo go to your windows system: you need to go back two times with cd ../.. And then go to the &amp;quot;mnt&amp;quot; directory with cd mnt. If you list here your files, you will see your disks. You can move to the desired folder, for example here I moved to the ML_Zoomcamp folder:\nPython should be already installed but you can check it by running sudo apt install python3 command.\nYou can make your actual folder your default folder when you open your Ubuntu terminal with this command : echo &amp;quot;cd ../../mnt/your/folder/path&amp;quot; &amp;gt;&amp;gt; ~/.bashrc\nYou can disable bell sounds (when you type something that does not exist for example) by modifying the inputrc file with this command: sudo vim /etc/inputrc\nYou have to uncomment the set bell-style none line -&amp;gt; to do that, press the &amp;quot;i&amp;quot; keyboard letter (for insert) and go with your keyboard to this line. Delete the # and then press the Escape keyboard touch and finally press &amp;quot;:wq&amp;quot; to write (it saves your modifications) then quit.\nYou can check that your modifications are taken into account by opening a new terminal (you can pin it to your task bar so you do not have to go to the Microsoft app each time).\nYou will need to install pip by running this command sudo apt install python3-pip\nNB: I had this error message when trying to install pipenv (https://github.com/microsoft/WSL/issues/5663):\n/sbin/ldconfig.real: Can\&#39;t link /usr/lib/wsl/lib/libnvoptix_loader.so.1 to libnvoptix.so.1\n/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link\nSo I had to create the following symbolic link:\nsudo ln -s /usr/lib/wsl/lib/libcuda.so.1 /usr/lib64/libcuda.so\n(Mélanie Fouesnard)&#39;}},
  {&#39;_index&#39;: &#39;course-questions&#39;,
   &#39;_id&#39;: &#39;R30ytJABBRmP4y361Cik&#39;,
   &#39;_score&#39;: 0.5985867,
@@ -1527,7 +1527,7 @@ RateLimitError: Error code: 429 - {&#39;error&#39;: {&#39;message&#39;: &#39;Rat
   &#39;_source&#39;: {&#39;question&#39;: &#39;Course - When will the course start?&#39;,
    &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
    &#39;section&#39;: &#39;General course-related questions&#39;,
-   &#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;},
+   &#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &amp;quot;Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon&#39;t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;},
   &#39;_explanation&#39;: {&#39;value&#39;: 0.778914,
    &#39;description&#39;: &#39;sum of:&#39;,
    &#39;details&#39;: [{&#39;value&#39;: 0.778914,
@@ -2216,11 +2216,11 @@ Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.1
 Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 504747 (493K) [text/plain]
-Saving to: ‘ground-truth-data.csv’
+Saving to: &#39;ground-truth-data.csv&#39;
 
 ground-truth-data.c 100%[===================&amp;gt;] 492.92K  --.-KB/s    in 0.01s   
 
-2024-07-18 10:02:58 (34.4 MB/s) - ‘ground-truth-data.csv’ saved [504747/504747]
+2024-07-18 10:02:58 (34.4 MB/s) - &#39;ground-truth-data.csv&#39; saved [504747/504747]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## Now let&amp;#39;s load the document-with-ids.json from DTC so that the doc_ids match&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
@@ -2235,11 +2235,11 @@ Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.1
 Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 699257 (683K) [text/plain]
-Saving to: ‘documents-with-ids.json.1’
+Saving to: &#39;documents-with-ids.json.1&#39;
 
 documents-with-ids. 100%[===================&amp;gt;] 682.87K  --.-KB/s    in 0.02s   
 
-2024-07-19 12:35:36 (37.0 MB/s) - ‘documents-with-ids.json.1’ saved [699257/699257]
+2024-07-19 12:35:36 (37.0 MB/s) - &#39;documents-with-ids.json.1&#39; saved [699257/699257]
 
 
 
@@ -2397,7 +2397,7 @@ Index course-questions created.
   &#39;question&#39;: &#39;Course - Can I follow the course after it finishes?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
   &#39;id&#39;: &#39;0472c382d4&#39;},
- {&#39;text&#39;: &#39;Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don’t rely on its answers 100%, it is pretty good though.&#39;,
+ {&#39;text&#39;: &#39;Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don&#39;t rely on its answers 100%, it is pretty good though.&#39;,
   &#39;section&#39;: &#39;General course-related questions&#39;,
   &#39;question&#39;: &#39;Course - Can I get support if I take the course in the self-paced mode?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
@@ -2433,12 +2433,12 @@ Index course-questions created.
 [False, True, False, False, False]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;results
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;[{&#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;[{&#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &amp;quot;Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon&#39;t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
   &#39;section&#39;: &#39;General course-related questions&#39;,
   &#39;question&#39;: &#39;Course - When will the course start?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
   &#39;id&#39;: &#39;6211ca3c99&#39;},
- {&#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
+ {&#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &amp;quot;Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon&#39;t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
   &#39;section&#39;: &#39;General course-related questions&#39;,
   &#39;question&#39;: &#39;Course - When will the course start?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
@@ -2460,7 +2460,7 @@ Index course-questions created.
   &#39;id&#39;: &#39;bf432e9a88&#39;}]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;next((item &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; item &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; documents &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; item&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;c02e79ef&amp;#39;&lt;/span&gt;), &lt;span style=&#34;color:#66d9ef&#34;&gt;None&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;{&#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;{&#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &amp;quot;Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon&#39;t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
  &#39;section&#39;: &#39;General course-related questions&#39;,
  &#39;question&#39;: &#39;Course - When will the course start?&#39;,
  &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
@@ -2573,11 +2573,11 @@ Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.1
 Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 699257 (683K) [text/plain]
-Saving to: ‘documents-with-ids.json’
+Saving to: &#39;documents-with-ids.json&#39;
 
 documents-with-ids. 100%[===================&amp;gt;] 682.87K  --.-KB/s    in 0.02s   
 
-2024-07-19 12:38:59 (29.4 MB/s) - ‘documents-with-ids.json’ saved [699257/699257]
+2024-07-19 12:38:59 (29.4 MB/s) - &#39;documents-with-ids.json&#39; saved [699257/699257]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; json
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
@@ -2821,7 +2821,7 @@ Index course-questions created.
   &#39;_source&#39;: {&#39;question&#39;: &#39;Course - Can I get support if I take the course in the self-paced mode?&#39;,
    &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
    &#39;section&#39;: &#39;General course-related questions&#39;,
-   &#39;text&#39;: &#39;Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don’t rely on its answers 100%, it is pretty good though.&#39;,
+   &#39;text&#39;: &#39;Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don&#39;t rely on its answers 100%, it is pretty good though.&#39;,
    &#39;id&#39;: &#39;eb56ae98&#39;},
   &#39;_explanation&#39;: {&#39;value&#39;: 1.5664915,
    &#39;description&#39;: &#39;sum of:&#39;,
@@ -2902,7 +2902,7 @@ Index course-questions created.
  {&#39;question&#39;: &#39;Course - Can I get support if I take the course in the self-paced mode?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
   &#39;section&#39;: &#39;General course-related questions&#39;,
-  &#39;text&#39;: &#39;Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don’t rely on its answers 100%, it is pretty good though.&#39;,
+  &#39;text&#39;: &#39;Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don&#39;t rely on its answers 100%, it is pretty good though.&#39;,
   &#39;id&#39;: &#39;eb56ae98&#39;},
  {&#39;question&#39;: &#39;Course - What can I do before the course starts?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
@@ -2912,12 +2912,12 @@ Index course-questions created.
  {&#39;question&#39;: &#39;The course has already started. Can I still join it?&#39;,
   &#39;course&#39;: &#39;machine-learning-zoomcamp&#39;,
   &#39;section&#39;: &#39;General course-related questions&#39;,
-  &#39;text&#39;: &#39;Yes, you can. You won’t be able to submit some of the homeworks, but you can still take part in the course.\nIn order to get a certificate, you need to submit 2 out of 3 course projects and review 3 peers’ Projects by the deadline. It means that if you join the course at the end of November and manage to work on two projects, you will still be eligible for a certificate.&#39;,
+  &#39;text&#39;: &#39;Yes, you can. You won&#39;t be able to submit some of the homeworks, but you can still take part in the course.\nIn order to get a certificate, you need to submit 2 out of 3 course projects and review 3 peers&#39; Projects by the deadline. It means that if you join the course at the end of November and manage to work on two projects, you will still be eligible for a certificate.&#39;,
   &#39;id&#39;: &#39;ee58a693&#39;},
  {&#39;question&#39;: &#39;Course - When will the course start?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
   &#39;section&#39;: &#39;General course-related questions&#39;,
-  &#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
+  &#39;text&#39;: &amp;quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &amp;quot;Office Hours&#39;&#39; live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon&#39;t forget to register in DataTalks.Club&#39;s Slack and join the channel.&amp;quot;,
   &#39;id&#39;: &#39;c02e79ef&#39;},
  {&#39;question&#39;: &#39;Course - What are the prerequisites for this course?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
@@ -2932,7 +2932,7 @@ Index course-questions created.
  {&#39;question&#39;: &#39;Course - how many Zoomcamps in a year?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
   &#39;section&#39;: &#39;General course-related questions&#39;,
-  &#39;text&#39;: &amp;quot;There are 3 Zoom Camps in a year, as of 2024. However, they are for separate courses:\nData-Engineering (Jan - Apr)\nMLOps (May - Aug)\nMachine Learning (Sep - Jan)\nThere&#39;s only one Data-Engineering Zoomcamp “live” cohort per year, for the certification. Same as for the other Zoomcamps.\nThey follow pretty much the same schedule for each cohort per zoomcamp. For Data-Engineering it is (generally) from Jan-Apr of the year. If you’re not interested in the Certificate, you can take any zoom camps at any time, at your own pace, out of sync with any “live” cohort.&amp;quot;,
+  &#39;text&#39;: &amp;quot;There are 3 Zoom Camps in a year, as of 2024. However, they are for separate courses:\nData-Engineering (Jan - Apr)\nMLOps (May - Aug)\nMachine Learning (Sep - Jan)\nThere&#39;s only one Data-Engineering Zoomcamp &amp;quot;live&amp;quot; cohort per year, for the certification. Same as for the other Zoomcamps.\nThey follow pretty much the same schedule for each cohort per zoomcamp. For Data-Engineering it is (generally) from Jan-Apr of the year. If you&#39;re not interested in the Certificate, you can take any zoom camps at any time, at your own pace, out of sync with any &amp;quot;live&amp;quot; cohort.&amp;quot;,
   &#39;id&#39;: &#39;2ed9b986&#39;},
  {&#39;question&#39;: &#39;Course - Is the current cohort going to be different from the previous cohort?&#39;,
   &#39;course&#39;: &#39;data-engineering-zoomcamp&#39;,
@@ -3029,9 +3029,9 @@ Index course-questions created.
     </item>
     
     <item>
-      <title>LLM Zoomcamp Week 2 - Open Source LLMs Notes</title>
+      <title>LLM Zoomcamp Week 2 - Open Source Notes</title>
       <link>http://localhost:1313/post/llmzoomcamp_week2-open-source_notes/</link>
-      <pubDate>Wed, 10 Jul 2024 16:56:37 -0400</pubDate>
+      <pubDate>Wed, 10 Jul 2024 13:33:00 -0400</pubDate>
       
       <guid>http://localhost:1313/post/llmzoomcamp_week2-open-source_notes/</guid>
       <description>&lt;h1 id=&#34;llm-zoomcamp---week-2-notes&#34;&gt;LLM Zoomcamp - Week 2 Notes&lt;/h1&gt;
@@ -3120,11 +3120,11 @@ Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.1
 Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 3832 (3.7K) [text/plain]
-Saving to: ‘minsearch.py’
+Saving to: &#39;minsearch.py&#39;
 
 minsearch.py        100%[===================&amp;gt;]   3.74K  --.-KB/s    in 0s      
 
-2024-07-08 01:20:41 (83.2 MB/s) - ‘minsearch.py’ saved [3832/3832]
+2024-07-08 01:20:41 (83.2 MB/s) - &#39;minsearch.py&#39; saved [3832/3832]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;From the link above, we have some reference code to run the model on a GPU:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# pip install accelerate&lt;/span&gt;
@@ -3201,7 +3201,7 @@ special_tokens_map.json:   0%|          | 0.00/2.20k [00:00&amp;lt;?, ?B/s]
 tokenizer.json:   0%|          | 0.00/2.42M [00:00&amp;lt;?, ?B/s]
 
 
-You are using the default legacy behaviour of the &amp;lt;class &#39;transformers.models.t5.tokenization_t5.T5Tokenizer&#39;&amp;gt;. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+You are using the default legacy behaviour of the &amp;lt;class &#39;transformers.models.t5.tokenization_t5.T5Tokenizer&#39;&amp;gt;. This is expected, and simply means that the &#39;legacy&#39; (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set &#39;legacy=False&#39;. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
 Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
 
 
@@ -4109,7 +4109,7 @@ I&amp;rsquo;ll troubleshoot that later&amp;hellip;&lt;/p&gt;
 &lt;p&gt;Since it&amp;rsquo;s MacOS, I&amp;rsquo;m still figuring out the best way to manage environment variables. So here are a few options.
 The one I use more often is the 3rd option:&lt;/p&gt;
 &lt;h4 id=&#34;using-bash_profile-or-zshrc&#34;&gt;Using &lt;code&gt;.bash_profile&lt;/code&gt; or &lt;code&gt;.zshrc&lt;/code&gt;&lt;/h4&gt;
-&lt;p&gt;Depending on your shell, you can define environment variables directly in your &lt;code&gt;.bash_profile&lt;/code&gt; or &lt;code&gt;.zshrc&lt;/code&gt; file. Here’s how you can do it:&lt;/p&gt;
+&lt;p&gt;Depending on your shell, you can define environment variables directly in your &lt;code&gt;.bash_profile&lt;/code&gt; or &lt;code&gt;.zshrc&lt;/code&gt; file. Here&amp;rsquo;s how you can do it:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Open your &lt;code&gt;.bash_profile&lt;/code&gt; or &lt;code&gt;.zshrc&lt;/code&gt; file in a text editor:&lt;/p&gt;
@@ -4129,7 +4129,7 @@ The one I use more often is the 3rd option:&lt;/p&gt;
 &lt;/ol&gt;
 &lt;p&gt;This method is simple but may not be ideal for managing multiple projects with different environment variables.&lt;/p&gt;
 &lt;h4 id=&#34;using-direnv&#34;&gt;Using &lt;a href=&#34;https://direnv.net/&#34;&gt;&lt;code&gt;direnv&lt;/code&gt;&lt;/a&gt;&lt;/h4&gt;
-&lt;p&gt;&lt;code&gt;direnv&lt;/code&gt; is a great tool for managing environment variables on a per-project basis. Here’s how you can set it up on MacOS:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;direnv&lt;/code&gt; is a great tool for managing environment variables on a per-project basis. Here&amp;rsquo;s how you can set it up on MacOS:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Install &lt;code&gt;direnv&lt;/code&gt; using Homebrew:&lt;/p&gt;
@@ -4200,9 +4200,9 @@ This is especially useful if you&amp;rsquo;re using a language like Node.js or P
     </item>
     
     <item>
-      <title>LLM Zoomcamp Week 1 - Intro Notes</title>
+      <title>LLM Zoomcamp Week 1 - Introduction Notes</title>
       <link>http://localhost:1313/post/llmzoomcamp_week1-intro_notes/</link>
-      <pubDate>Sat, 29 Jun 2024 08:11:46 -0400</pubDate>
+      <pubDate>Sat, 29 Jun 2024 11:42:00 -0400</pubDate>
       
       <guid>http://localhost:1313/post/llmzoomcamp_week1-intro_notes/</guid>
       <description>&lt;h1 id=&#34;llm-zoomcamp---week-1-notes&#34;&gt;LLM Zoomcamp - Week 1 Notes&lt;/h1&gt;
@@ -4414,7 +4414,7 @@ Time: 0.009s
 root@pg-database:ny_taxi&amp;gt;
 
 section: Module 1: Docker and Terraform
-question: Docker - Error response from daemon: Conflict. The container name &amp;quot;pg-database&amp;quot; is already in use by container “xxx”.  You have to remove (or rename) that container to be able to reuse that name.
+question: Docker - Error response from daemon: Conflict. The container name &amp;quot;pg-database&amp;quot; is already in use by container &amp;quot;xxx&amp;quot;.  You have to remove (or rename) that container to be able to reuse that name.
 answer: Sometimes, when you try to restart a docker image configured with a network name, the above message appears. In this case, use the following command with the appropriate container name:
 &amp;gt;&amp;gt;&amp;gt; If the container is running state, use docker stop &amp;lt;container_name&amp;gt;
 &amp;gt;&amp;gt;&amp;gt; then, docker rm pg-database
@@ -4423,8 +4423,7 @@ Or use docker start instead of docker run in order to restart the docker image w
 section: Module 1: Docker and Terraform
 question: Docker - Cannot pip install on Docker container (Windows)
 answer: You may have this error:
-Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by &#39;NewConnectionError(&#39;&amp;lt;pip._vendor.u
-rllib3.connection.HTTPSConnection object at 0x7efe331cf790&amp;gt;: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution&#39;)&#39;:
+Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by &#39;NewConnectionError(&#39;&amp;lt;pip._vendor.urllib3.connection.HTTPSConnection object at 0x7efe331cf790&amp;gt;: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution&#39;)&#39;:
 /simple/pandas/
 Possible solution might be:
 $ winpty docker run -it --dns=8.8.8.8 --entrypoint=bash python:3.9
@@ -4432,7 +4431,7 @@ $ winpty docker run -it --dns=8.8.8.8 --entrypoint=bash python:3.9
 section: Module 1: Docker and Terraform
 question: Docker - Cannot connect to Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
 answer: Make sure you&#39;re able to start the Docker daemon, and check the issue immediately down below:
-And don’t forget to update the wsl in powershell the  command is wsl –update
+And don&#39;t forget to update the wsl in powershell the  command is wsl –update
 
 section: Module 6: streaming with kafka
 question: How do I check compatibility of local and container Spark versions?
@@ -4489,26 +4488,26 @@ Run the Docker command again after switching to Docker Desktop. This step resolv
 Note: The issue occurred because Rancher Desktop was in use. Switching to Docker Desktop resolves compatibility problems and allows for the successful creation of PostgreSQL containers with mounted volumes for the New York Taxi Database on macOS M1.
 
 section: Workshop 2 - RisingWave
-question: Setup - source command.sh - error: “docker-compose” not found
-answer: If you encounter this error and are certain that you have docker compose installed, but typically run it as docker compose without the hyphen, then consider editing command.sh file by removing the hyphen from ‘docker-compose’. Example:
+question: Setup - source command.sh - error: &amp;quot;docker-compose&amp;quot; not found
+answer: If you encounter this error and are certain that you have docker compose installed, but typically run it as docker compose without the hyphen, then consider editing command.sh file by removing the hyphen from &#39;docker-compose&#39;. Example:
 start-cluster() {
 docker compose -f docker/docker-compose.yml up -d
 }
 
 section: Module 1: Docker and Terraform
 question: Docker-Compose - Error getting credentials after running docker-compose up -d
-answer: Installing pass via ‘sudo apt install pass’ helped to solve the issue. More about this can be found here: https://github.com/moby/buildkit/issues/1078
+answer: Installing pass via &#39;sudo apt install pass&#39; helped to solve the issue. More about this can be found here: https://github.com/moby/buildkit/issues/1078
 
 section: Module 1: Docker and Terraform
 question: Docker - ERRO[0000] error waiting for container: context canceled
-answer: You might have installed docker via snap. Run “sudo snap status docker” to verify.
-If you have “error: unknown command &amp;quot;status&amp;quot;, see &#39;snap help&#39;.” as a response than deinstall docker and install via the official website
+answer: You might have installed docker via snap. Run &amp;quot;sudo snap status docker&amp;quot; to verify.
+If you have &amp;quot;error: unknown command &amp;quot;status&amp;quot;, see &#39;snap help&#39;. as a response than deinstall docker and install via the official website
 Bind for 0.0.0.0:5432 failed: port is a
 
 section: Module 2: Workflow Orchestration
 question: Docker: container crashed with status code 137.
 answer: It means your container consumed all available RAM allocated to it. It can happen in particular when working on Question#3 in the homework as the dataset is relatively large and containers eat a lot of memory in general.
-I would recommend restarting your computer and only starting the necessary processes to run the container. If that doesn’t work, allocate more resources to docker. If also that doesn’t work because your workstation is a potato, you can use an online compute environment service like GitPod, which is free under under 50 hours / month of use.
+I would recommend restarting your computer and only starting the necessary processes to run the container. If that doesn&#39;t work, allocate more resources to docker. If also that doesn&#39;t work because your workstation is a potato, you can use an online compute environment service like GitPod, which is free under under 50 hours / month of use.
 
 section: Module 1: Docker and Terraform
 question: Docker - Docker network name
@@ -4516,8 +4515,8 @@ answer: Get the network name via: $ docker network ls.
 
 section: Module 1: Docker and Terraform
 question: PGCLI - INKhould we run pgcli inside another docker container?
-answer: In this section of the course, the 5432 port of pgsql is mapped to your computer’s 5432 port. Which means you can access the postgres database via pgcli directly from your computer.
-So No, you don’t need to run it inside another container. Your local system will do.
+answer: In this section of the course, the 5432 port of pgsql is mapped to your computer&#39;s 5432 port. Which means you can access the postgres database via pgcli directly from your computer.
+So No, you don&#39;t need to run it inside another container. Your local system will do.
 
 section: Module 1: Docker and Terraform
 question: GCP - Do I need to delete my instance in Google Cloud?
@@ -4535,7 +4534,7 @@ If you opt-in for WSL2, you can follow the same steps as detailed in the tutoria
 section: General course-related questions
 question: How do I use Git / GitHub for this course?
 answer: After you create a GitHub account, you should clone the course repo to your local machine using the process outlined in this video: Git for Everybody: How to Clone a Repository from GitHub
-Having this local repository on your computer will make it easy for you to access the instructors’ code and make pull requests (if you want to add your own notes or make changes to the course content).
+Having this local repository on your computer will make it easy for you to access the instructors&#39; code and make pull requests (if you want to add your own notes or make changes to the course content).
 You will probably also create your own repositories that host your notes, versions of your file, to do this. Here is a great tutorial that shows you how to do this: https://www.atlassian.com/git/tutorials/setting-up-a-repository
 Remember to ignore large database, .csv, and .gz files, and other files that should not be saved to a repository. Use .gitignore for this: https://www.atlassian.com/git/tutorials/saving-changes/gitignore NEVER store passwords or keys in a git repo (even if that repo is set to private).
 This is also a great resource: https://dangitgit.com/
@@ -4556,7 +4555,7 @@ echo &amp;quot;alias docker=&#39;winpty docker&#39;&amp;quot; &amp;gt;&amp;gt; ~
 
 section: Module 1: Docker and Terraform
 question: Docker - Connecting from VS Code
-answer: It’s very easy to manage your docker container, images, network and compose projects from VS Code.
+answer: It&#39;s very easy to manage your docker container, images, network and compose projects from VS Code.
 Just install the official extension and launch it from the left side icon.
 It will work even if your Docker runs on WSL2, as VS Code can easily connect with your Linux.
 Docker - How to stop a container?
@@ -4792,7 +4791,7 @@ docker.elastic.co/elasticsearch/elasticsearch:8.4.3
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;es_client&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;search(index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;index_name, body&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;search_query)[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;hits&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;hits&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;][&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;_source&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;question&amp;#39;&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;&#39;How do I copy files from a different folder into docker container’s working directory?&#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;&#39;How do I copy files from a different folder into docker container&#39;s working directory?&#39;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;search_elastic&lt;/span&gt;(question):
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
@@ -4844,7 +4843,7 @@ docker.elastic.co/elasticsearch/elasticsearch:8.4.3
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; answer
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;results1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; search_elastic(question)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(results1[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;])
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;{&#39;text&#39;: &#39;You can copy files from your local machine into a Docker container using the docker cp command. Here\&#39;s how to do it:\nIn the Dockerfile, you can provide the folder containing the files that you want to copy over. The basic syntax is as follows:\nCOPY [&amp;quot;src/predict.py&amp;quot;, &amp;quot;models/xgb_model.bin&amp;quot;, &amp;quot;./&amp;quot;]\t\t\t\t\t\t\t\t\t\t\tGopakumar Gopinathan&#39;, &#39;section&#39;: &#39;5. Deploying Machine Learning Models&#39;, &#39;question&#39;: &#39;How do I copy files from a different folder into docker container’s working directory?&#39;, &#39;course&#39;: &#39;machine-learning-zoomcamp&#39;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;{&#39;text&#39;: &#39;You can copy files from your local machine into a Docker container using the docker cp command. Here&#39;s how to do it:\nIn the Dockerfile, you can provide the folder containing the files that you want to copy over. The basic syntax is as follows:\nCOPY [&amp;quot;src/predict.py&amp;quot;, &amp;quot;models/xgb_model.bin&amp;quot;, &amp;quot;./&amp;quot;]\t\t\t\t\t\t\t\t\t\t\tGopakumar Gopinathan&#39;, &#39;section&#39;: &#39;5. Deploying Machine Learning Models&#39;, &#39;question&#39;: &#39;How do I copy files from a different folder into docker container&#39;s working directory?&#39;, &#39;course&#39;: &#39;machine-learning-zoomcamp&#39;}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;prompt1 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; build_prompt(question, results1)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;len(prompt1)
@@ -4899,7 +4898,7 @@ This will list the contents of the `/app` directory inside the running container
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;1617
 &lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(answer)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Yes, you can still register for the course after the start date. You won’t be able to submit some of the homework assignments, but you can still participate in the course. To be eligible for a certificate, you need to submit 2 out of 3 course projects and review 3 peers’ projects by the deadline.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code&gt;Yes, you can still register for the course after the start date. You won&#39;t be able to submit some of the homework assignments, but you can still participate in the course. To be eligible for a certificate, you need to submit 2 out of 3 course projects and review 3 peers&#39; projects by the deadline.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;bonus-calculating-the-costs-ungraded&#34;&gt;Bonus: calculating the costs (ungraded)&lt;/h2&gt;
 &lt;ul&gt;
@@ -4961,32 +4960,6 @@ Successfully installed regex-2024.5.15 tiktoken-0.7.0
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(response&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;usage)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Learning to Use Dlthub with Toronto Bicycle Data</title>
-      <link>http://localhost:1313/post/learning-to-use-dlthub/</link>
-      <pubDate>Mon, 12 Feb 2024 07:56:52 -0500</pubDate>
-      
-      <guid>http://localhost:1313/post/learning-to-use-dlthub/</guid>
-      <description>&lt;h2 id=&#34;outline&#34;&gt;Outline&lt;/h2&gt;
-&lt;h3 id=&#34;quick-intro-to-what-is-dlthub&#34;&gt;Quick intro to what is dlthub&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Start with the notebook from the data eng zoomcamp as an intro&lt;/li&gt;
-&lt;li&gt;Work through it and take notes as you&amp;rsquo;re going through each section&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;using-toronto-bicycle-data-live-stream-json-using-dictionaries-and-lists&#34;&gt;Using toronto bicycle data live stream json using dictionaries and lists&lt;/h3&gt;
-&lt;h3 id=&#34;doing-the-same-using-dlthub&#34;&gt;Doing the same using dlthub&lt;/h3&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Obsidian First Year Review</title>
-      <link>http://localhost:1313/post/obsidian-first-year-review/</link>
-      <pubDate>Wed, 03 Jan 2024 09:41:04 -0500</pubDate>
-      
-      <guid>http://localhost:1313/post/obsidian-first-year-review/</guid>
-      <description></description>
     </item>
     
     <item>
@@ -5409,7 +5382,7 @@ cd $CUR_DIR&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; f in &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$1&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;/*.rar
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;do&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; unrar x &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; -e &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; unrar x &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;done&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;I saved it in the top level config dir in the volume mapping here: &lt;code&gt;- /volume1/docker/mediacentre/qbittorrent:/config&lt;/code&gt;&lt;/li&gt;
@@ -5445,28 +5418,6 @@ cd $CUR_DIR&lt;/p&gt;
 &lt;li&gt;Resources&lt;/li&gt;
 &lt;li&gt;TODO:&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>ML Zoomcamp Week 5 Homework Using Poetry and Pyenv</title>
-      <link>http://localhost:1313/post/mlzoomcamp-week5-homework-poetry/</link>
-      <pubDate>Mon, 16 Oct 2023 19:08:29 -0400</pubDate>
-      
-      <guid>http://localhost:1313/post/mlzoomcamp-week5-homework-poetry/</guid>
-      <description>&lt;p&gt;In order to do week5 homework, you need to use pipenv to manage python packages and dependencies&lt;/p&gt;
-&lt;p&gt;An alternative toolset would be to use poetry with pyenv&lt;/p&gt;
-&lt;p&gt;In this case, you would split the management of python applications from python versions:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;poetry would be used to manage packages, dependencies and ensure project reproducibility&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Whereas pyenv would be used to manage python versions&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Install both&lt;/p&gt;
-&lt;p&gt;In your homework directory, you can run poetry init to initialize a poetry project&lt;/p&gt;
 </description>
     </item>
     
@@ -5563,288 +5514,6 @@ Periodically, you&amp;rsquo;ll want to pull updates from the original course rep
 &lt;/ol&gt;
 &lt;p&gt;Remember, the key is to treat the &lt;code&gt;upstream&lt;/code&gt; as read-only. You&amp;rsquo;ll never push changes to it. All your work will be done in your forked repository (&lt;code&gt;origin&lt;/code&gt;). This setup allows you to both keep up with updates from the course and maintain your own changes.&lt;/p&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Markdown Syntax Guide</title>
-      <link>http://localhost:1313/post/markdown-syntax/</link>
-      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/post/markdown-syntax/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;
-&lt;h2 id=&#34;headings&#34;&gt;Headings&lt;/h2&gt;
-&lt;p&gt;The following HTML &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;—&lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; elements represent six levels of section headings. &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; is the highest section level while &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; is the lowest.&lt;/p&gt;
-&lt;h1 id=&#34;h1&#34;&gt;H1&lt;/h1&gt;
-&lt;h2 id=&#34;h2&#34;&gt;H2&lt;/h2&gt;
-&lt;h3 id=&#34;h3&#34;&gt;H3&lt;/h3&gt;
-&lt;h4 id=&#34;h4&#34;&gt;H4&lt;/h4&gt;
-&lt;h5 id=&#34;h5&#34;&gt;H5&lt;/h5&gt;
-&lt;h6 id=&#34;h6&#34;&gt;H6&lt;/h6&gt;
-&lt;h2 id=&#34;paragraph&#34;&gt;Paragraph&lt;/h2&gt;
-&lt;p&gt;Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.&lt;/p&gt;
-&lt;p&gt;Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.&lt;/p&gt;
-&lt;h2 id=&#34;blockquotes&#34;&gt;Blockquotes&lt;/h2&gt;
-&lt;p&gt;The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a &lt;code&gt;footer&lt;/code&gt; or &lt;code&gt;cite&lt;/code&gt; element, and optionally with in-line changes such as annotations and abbreviations.&lt;/p&gt;
-&lt;h4 id=&#34;blockquote-without-attribution&#34;&gt;Blockquote without attribution&lt;/h4&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-&lt;strong&gt;Note&lt;/strong&gt; that you can use &lt;em&gt;Markdown syntax&lt;/em&gt; within a blockquote.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;h4 id=&#34;blockquote-with-attribution&#34;&gt;Blockquote with attribution&lt;/h4&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Don&amp;rsquo;t communicate by sharing memory, share memory by communicating.&lt;br&gt;
-— &lt;cite&gt;Rob Pike&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/cite&gt;&lt;/p&gt;&lt;/blockquote&gt;
-&lt;h2 id=&#34;tables&#34;&gt;Tables&lt;/h2&gt;
-&lt;p&gt;Tables aren&amp;rsquo;t part of the core Markdown spec, but Hugo supports supports them out-of-the-box.&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Name&lt;/th&gt;
-          &lt;th&gt;Age&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Bob&lt;/td&gt;
-          &lt;td&gt;27&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;Alice&lt;/td&gt;
-          &lt;td&gt;23&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&#34;inline-markdown-within-tables&#34;&gt;Inline Markdown within tables&lt;/h4&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;Italics&lt;/th&gt;
-          &lt;th&gt;Bold&lt;/th&gt;
-          &lt;th&gt;Code&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;&lt;em&gt;italics&lt;/em&gt;&lt;/td&gt;
-          &lt;td&gt;&lt;strong&gt;bold&lt;/strong&gt;&lt;/td&gt;
-          &lt;td&gt;&lt;code&gt;code&lt;/code&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&#34;code-blocks&#34;&gt;Code Blocks&lt;/h2&gt;
-&lt;h4 id=&#34;code-block-with-backticks&#34;&gt;Code block with backticks&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;lang&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;en&amp;#34;&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;head&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;meta&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;charset&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;utf-8&amp;#34;&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;title&lt;/span&gt;&amp;gt;Example HTML5 Document&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;title&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;head&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;body&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;Test&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;body&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;code-block-indented-with-four-spaces&#34;&gt;Code block indented with four spaces&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;!doctype html&amp;gt;
-&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt;
-  &amp;lt;title&amp;gt;Example HTML5 Document&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;p&amp;gt;Test&amp;lt;/p&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;code-block-with-hugos-internal-highlight-shortcode&#34;&gt;Code block with Hugo&amp;rsquo;s internal highlight shortcode&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;lang&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;en&amp;#34;&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;head&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;meta&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;charset&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;utf-8&amp;#34;&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;title&lt;/span&gt;&amp;gt;Example HTML5 Document&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;title&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;head&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;body&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;Test&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;p&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;body&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&#34;list-types&#34;&gt;List Types&lt;/h2&gt;
-&lt;h4 id=&#34;ordered-list&#34;&gt;Ordered List&lt;/h4&gt;
-&lt;ol&gt;
-&lt;li&gt;First item&lt;/li&gt;
-&lt;li&gt;Second item&lt;/li&gt;
-&lt;li&gt;Third item&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id=&#34;unordered-list&#34;&gt;Unordered List&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;List item&lt;/li&gt;
-&lt;li&gt;Another item&lt;/li&gt;
-&lt;li&gt;And another item&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;nested-list&#34;&gt;Nested list&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;Fruit
-&lt;ul&gt;
-&lt;li&gt;Apple&lt;/li&gt;
-&lt;li&gt;Orange&lt;/li&gt;
-&lt;li&gt;Banana&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Dairy
-&lt;ul&gt;
-&lt;li&gt;Milk&lt;/li&gt;
-&lt;li&gt;Cheese&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;other-elements--abbr-sub-sup-kbd-mark&#34;&gt;Other Elements — abbr, sub, sup, kbd, mark&lt;/h2&gt;
-&lt;p&gt;&lt;abbr title=&#34;Graphics Interchange Format&#34;&gt;GIF&lt;/abbr&gt; is a bitmap image format.&lt;/p&gt;
-&lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O&lt;/p&gt;
-&lt;p&gt;X&lt;sup&gt;n&lt;/sup&gt; + Y&lt;sup&gt;n&lt;/sup&gt; = Z&lt;sup&gt;n&lt;/sup&gt;&lt;/p&gt;
-&lt;p&gt;Press &lt;kbd&gt;&lt;kbd&gt;CTRL&lt;/kbd&gt;+&lt;kbd&gt;ALT&lt;/kbd&gt;+&lt;kbd&gt;Delete&lt;/kbd&gt;&lt;/kbd&gt; to end the session.&lt;/p&gt;
-&lt;p&gt;Most &lt;mark&gt;salamanders&lt;/mark&gt; are nocturnal, and hunt for insects, worms, and other small creatures.&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
-&lt;hr&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn:1&#34;&gt;
-&lt;p&gt;The above quote is excerpted from Rob Pike&amp;rsquo;s &lt;a href=&#34;https://www.youtube.com/watch?v=PAAkCSZUG1c&#34;&gt;talk&lt;/a&gt; during Gopherfest, November 18, 2015.&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Rich Content</title>
-      <link>http://localhost:1313/post/rich-content/</link>
-      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/post/rich-content/</guid>
-      <description>&lt;p&gt;Hugo ships with several &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/#use-hugos-built-in-shortcodes&#34;&gt;Built-in Shortcodes&lt;/a&gt; for rich content, along with a &lt;a href=&#34;https://gohugo.io/about/hugo-and-gdpr/&#34;&gt;Privacy Config&lt;/a&gt; and a set of Simple Shortcodes that enable static and no-JS versions of various social media embeds.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;youtube-privacy-enhanced-shortcode&#34;&gt;YouTube Privacy Enhanced Shortcode&lt;/h2&gt;
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/ZJthWmvUzzc?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;
-    &lt;/div&gt;
-
-&lt;br&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;twitter-simple-shortcode&#34;&gt;Twitter Simple Shortcode&lt;/h2&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Owl bet you&amp;#39;ll lose this staring contest 🦉 &lt;a href=&#34;https://t.co/eJh4f2zncC&#34;&gt;pic.twitter.com/eJh4f2zncC&lt;/a&gt;&lt;/p&gt;&amp;mdash; San Diego Zoo Wildlife Alliance (@sandiegozoo) &lt;a href=&#34;https://twitter.com/sandiegozoo/status/1453110110599868418?ref_src=twsrc%5Etfw&#34;&gt;October 26, 2021&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
-
-
-&lt;br&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;vimeo-simple-shortcode&#34;&gt;Vimeo Simple Shortcode&lt;/h2&gt;
-&lt;style&gt;
-.__h_video {
-   position: relative;
-   padding-bottom: 56.23%;
-   height: 0;
-   overflow: hidden;
-   width: 100%;
-   background: #000;
-}
-.__h_video img {
-   width: 100%;
-   height: auto;
-   color: #000;
-}
-.__h_video .play {
-   height: 72px;
-   width: 72px;
-   left: 50%;
-   top: 50%;
-   margin-left: -36px;
-   margin-top: -36px;
-   position: absolute;
-   cursor: pointer;
-}
-&lt;/style&gt;&lt;div class=&#34;s_video_simple __h_video&#34;&gt;
-          &lt;a href=&#34;https://vimeo.com/4.8912912e&amp;#43;07&#34; rel=&#34;noopener&#34; target=&#34;_blank&#34;&gt;
-            &lt;img src=&#34;https://i.vimeocdn.com/video/337401969-979f0cc9f55fdf305fb8984e90d92639ec9d7ecc4c9dfbc6536e28edb43784ce-d_640&#34; srcset=&#34;https://i.vimeocdn.com/video/337401969-979f0cc9f55fdf305fb8984e90d92639ec9d7ecc4c9dfbc6536e28edb43784ce-d_640 1x, https://i.vimeocdn.com/video/337401969-979f0cc9f55fdf305fb8984e90d92639ec9d7ecc4c9dfbc6536e28edb43784ce-d_640 2x&#34; alt=&#34;Sing Jan Swing - Kinetic Type&#34;&gt;
-            &lt;div class=&#34;play&#34;&gt;
-              &lt;svg version=&#34;1&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; viewBox=&#34;0 0 61 61&#34;&gt;&lt;circle cx=&#34;30.5&#34; cy=&#34;30.5&#34; r=&#34;30.5&#34; opacity=&#34;.8&#34; fill=&#34;#000&#34;&gt;&lt;/circle&gt;&lt;path d=&#34;M25.3 19.2c-2.1-1.2-3.8-.2-3.8 2.2v18.1c0 2.4 1.7 3.4 3.8 2.2l16.6-9.1c2.1-1.2 2.1-3.2 0-4.4l-16.6-9z&#34; fill=&#34;#fff&#34;&gt;&lt;/path&gt;&lt;/svg&gt;
-            &lt;/div&gt;
-          &lt;/a&gt;
-        &lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Placeholder Text</title>
-      <link>http://localhost:1313/post/placeholder-text/</link>
-      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/post/placeholder-text/</guid>
-      <description>&lt;p&gt;Lorem est tota propiore conpellat pectoribus de pectora summo.&lt;/p&gt;
-&lt;p&gt;Redit teque digerit hominumque toris verebor lumina non cervice subde tollit usus habet Arctonque, furores quas nec ferunt. Quoque montibus nunc caluere tempus inhospita parcite confusaque translucet patri vestro qui optatis lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Exierant elisi ambit vivere dedere&lt;/li&gt;
-&lt;li&gt;Duce pollice&lt;/li&gt;
-&lt;li&gt;Eris modo&lt;/li&gt;
-&lt;li&gt;Spargitque ferrea quos palude&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Rursus nulli murmur; hastile inridet ut ab gravi sententia! Nomine potitus silentia flumen, sustinet placuit petis in dilapsa erat sunt. Atria tractus malis.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Comas hunc haec pietate fetum procerum dixit&lt;/li&gt;
-&lt;li&gt;Post torum vates letum Tiresia&lt;/li&gt;
-&lt;li&gt;Flumen querellas&lt;/li&gt;
-&lt;li&gt;Arcanaque montibus omnes&lt;/li&gt;
-&lt;li&gt;Quidem et&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1 id=&#34;vagus-elidunt&#34;&gt;Vagus elidunt&lt;/h1&gt;
-&lt;p&gt;&lt;svg class=&#34;canon&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; overflow=&#34;visible&#34; viewBox=&#34;0 0 496 373&#34; height=&#34;373&#34; width=&#34;496&#34;&gt;&lt;g fill=&#34;none&#34;&gt;&lt;path stroke=&#34;#000&#34; stroke-width=&#34;.75&#34; d=&#34;M.599 372.348L495.263 1.206M.312.633l494.95 370.853M.312 372.633L247.643.92M248.502.92l246.76 370.566M330.828 123.869V1.134M330.396 1.134L165.104 124.515&#34;&gt;&lt;/path&gt;&lt;path stroke=&#34;#ED1C24&#34; stroke-width=&#34;.75&#34; d=&#34;M275.73 41.616h166.224v249.05H275.73zM54.478 41.616h166.225v249.052H54.478z&#34;&gt;&lt;/path&gt;&lt;path stroke=&#34;#000&#34; stroke-width=&#34;.75&#34; d=&#34;M.479.375h495v372h-495zM247.979.875v372&#34;&gt;&lt;/path&gt;&lt;ellipse cx=&#34;498.729&#34; cy=&#34;177.625&#34; rx=&#34;.75&#34; ry=&#34;1.25&#34;&gt;&lt;/ellipse&gt;&lt;ellipse cx=&#34;247.229&#34; cy=&#34;377.375&#34; rx=&#34;.75&#34; ry=&#34;1.25&#34;&gt;&lt;/ellipse&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Canons_of_page_construction#Van_de_Graaf_canon&#34;&gt;The Van de Graaf Canon&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;mane-refeci-capiebant-unda-mulcebat&#34;&gt;Mane refeci capiebant unda mulcebat&lt;/h2&gt;
-&lt;p&gt;Victa caducifer, malo vulnere contra dicere aurato, ludit regale, voca! Retorsit colit est profanae esse virescere furit nec; iaculi matertera et visa est, viribus. Divesque creatis, tecta novat collumque vulnus est, parvas. &lt;strong&gt;Faces illo pepulere&lt;/strong&gt; tempus adest. Tendit flamma, ab opes virum sustinet, sidus sequendo urbis.&lt;/p&gt;
-&lt;p&gt;Iubar proles corpore raptos vero auctor imperium; sed et huic: manus caeli Lelegas tu lux. Verbis obstitit intus oblectamina fixis linguisque ausus sperare Echionides cornuaque tenent clausit possit. Omnia putatur. Praeteritae refert ausus; ferebant e primus lora nutat, vici quae mea ipse. Et iter nil spectatae vulnus haerentia iuste et exercebat, sui et.&lt;/p&gt;
-&lt;p&gt;Eurytus Hector, materna ipsumque ut Politen, nec, nate, ignari, vernum cohaesit sequitur. Vel &lt;strong&gt;mitis temploque&lt;/strong&gt; vocatus, inque alis, &lt;em&gt;oculos nomen&lt;/em&gt; non silvis corpore coniunx ne displicet illa. Crescunt non unus, vidit visa quantum inmiti flumina mortis facto sic: undique a alios vincula sunt iactata abdita! Suspenderat ego fuit tendit: luna, ante urbem Propoetides &lt;strong&gt;parte&lt;/strong&gt;.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Math Typesetting</title>
-      <link>http://localhost:1313/post/math-typesetting/</link>
-      <pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/post/math-typesetting/</guid>
-      <description>&lt;p&gt;Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.&lt;/p&gt;
-&lt;p&gt;In this example we will be using &lt;a href=&#34;https://katex.org/&#34;&gt;KaTeX&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Create a partial under &lt;code&gt;/layouts/partials/math.html&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Within this partial reference the &lt;a href=&#34;https://katex.org/docs/autorender.html&#34;&gt;Auto-render Extension&lt;/a&gt; or host these scripts locally.&lt;/li&gt;
-&lt;li&gt;Include the partial in your templates like so:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{{&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; or .Params.math .Site.Params.math &lt;span style=&#34;color:#f92672&#34;&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{{&lt;/span&gt; partial &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;math.html&amp;#34;&lt;/span&gt; . &lt;span style=&#34;color:#f92672&#34;&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;{{&lt;/span&gt; end &lt;span style=&#34;color:#f92672&#34;&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;To enable KaTex globally set the parameter &lt;code&gt;math&lt;/code&gt; to &lt;code&gt;true&lt;/code&gt; in a project&amp;rsquo;s configuration&lt;/li&gt;
-&lt;li&gt;To enable KaTex on a per page basis include the parameter &lt;code&gt;math: true&lt;/code&gt; in content files&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Use the online reference of &lt;a href=&#34;https://katex.org/docs/supported.html&#34;&gt;Supported TeX Functions&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
-
-&lt;p&gt;Block math:
-$$
-\varphi = 1+\frac{1} {1+\frac{1} {1+\frac{1} {1+\cdots} } }
-$$&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Emoji Support</title>
-      <link>http://localhost:1313/post/emoji-support/</link>
-      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/post/emoji-support/</guid>
-      <description>&lt;p&gt;Emoji can be enabled in a Hugo project in a number of ways.&lt;/p&gt;
-&lt;p&gt;The &lt;a href=&#34;https://gohugo.io/functions/emojify/&#34;&gt;&lt;code&gt;emojify&lt;/code&gt;&lt;/a&gt; function can be called directly in templates or &lt;a href=&#34;https://gohugo.io/templates/shortcode-templates/#inline-shortcodes&#34;&gt;Inline Shortcodes&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To enable emoji globally, set &lt;code&gt;enableEmoji&lt;/code&gt; to &lt;code&gt;true&lt;/code&gt; in your site&amp;rsquo;s &lt;a href=&#34;https://gohugo.io/getting-started/configuration/&#34;&gt;configuration&lt;/a&gt; and then you can type emoji shorthand codes directly in content files; e.g.&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;nowrap&#34;&gt;&lt;span class=&#34;emojify&#34;&gt;🙈&lt;/span&gt; &lt;code&gt;:see_no_evil:&lt;/code&gt;&lt;/span&gt;  &lt;span class=&#34;nowrap&#34;&gt;&lt;span class=&#34;emojify&#34;&gt;🙉&lt;/span&gt; &lt;code&gt;:hear_no_evil:&lt;/code&gt;&lt;/span&gt;  &lt;span class=&#34;nowrap&#34;&gt;&lt;span class=&#34;emojify&#34;&gt;🙊&lt;/span&gt; &lt;code&gt;:speak_no_evil:&lt;/code&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;br&gt;
-&lt;p&gt;The &lt;a href=&#34;http://www.emoji-cheat-sheet.com/&#34;&gt;Emoji cheat sheet&lt;/a&gt; is a useful reference for emoji shorthand codes.&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;strong&gt;N.B.&lt;/strong&gt; The above steps enable Unicode Standard emoji characters and sequences in Hugo, however the rendering of these glyphs depends on the browser and the platform. To style the emoji you can either use a third party emoji font or a font stack; e.g.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;.emoji {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

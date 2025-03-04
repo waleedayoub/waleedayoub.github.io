@@ -1,9 +1,9 @@
 ---
-title: "LLM Zoomcamp Week 1 - Intro Notes"
+title: "LLM Zoomcamp Week 1 - Introduction Notes"
 author: waleed
-date: 2024-06-29T08:11:46-04:00
-description: Datatalksclub LLM Zoomcamp Week 1 Notes
-tags: ["datatalksclub", "LLM","python"]
+date: 2024-06-29T11:42:00-04:00
+description: "Comprehensive notes on LLM Zoomcamp's introduction week, covering fundamental concepts of Large Language Models, their applications, and basic implementation approaches."
+tags: ["datatalksclub", "llm", "zoomcamp"]
 series: ["llm-zoomcamp-2024"]
 hasMermaid: true
 draft: false
@@ -270,7 +270,7 @@ print(prompt)
     root@pg-database:ny_taxi>
     
     section: Module 1: Docker and Terraform
-    question: Docker - Error response from daemon: Conflict. The container name "pg-database" is already in use by container “xxx”.  You have to remove (or rename) that container to be able to reuse that name.
+    question: Docker - Error response from daemon: Conflict. The container name "pg-database" is already in use by container "xxx".  You have to remove (or rename) that container to be able to reuse that name.
     answer: Sometimes, when you try to restart a docker image configured with a network name, the above message appears. In this case, use the following command with the appropriate container name:
     >>> If the container is running state, use docker stop <container_name>
     >>> then, docker rm pg-database
@@ -279,8 +279,7 @@ print(prompt)
     section: Module 1: Docker and Terraform
     question: Docker - Cannot pip install on Docker container (Windows)
     answer: You may have this error:
-    Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.u
-    rllib3.connection.HTTPSConnection object at 0x7efe331cf790>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')':
+    Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7efe331cf790>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')':
     /simple/pandas/
     Possible solution might be:
     $ winpty docker run -it --dns=8.8.8.8 --entrypoint=bash python:3.9
@@ -288,7 +287,7 @@ print(prompt)
     section: Module 1: Docker and Terraform
     question: Docker - Cannot connect to Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
     answer: Make sure you're able to start the Docker daemon, and check the issue immediately down below:
-    And don’t forget to update the wsl in powershell the  command is wsl –update
+    And don't forget to update the wsl in powershell the  command is wsl –update
     
     section: Module 6: streaming with kafka
     question: How do I check compatibility of local and container Spark versions?
@@ -345,26 +344,26 @@ print(prompt)
     Note: The issue occurred because Rancher Desktop was in use. Switching to Docker Desktop resolves compatibility problems and allows for the successful creation of PostgreSQL containers with mounted volumes for the New York Taxi Database on macOS M1.
     
     section: Workshop 2 - RisingWave
-    question: Setup - source command.sh - error: “docker-compose” not found
-    answer: If you encounter this error and are certain that you have docker compose installed, but typically run it as docker compose without the hyphen, then consider editing command.sh file by removing the hyphen from ‘docker-compose’. Example:
+    question: Setup - source command.sh - error: "docker-compose" not found
+    answer: If you encounter this error and are certain that you have docker compose installed, but typically run it as docker compose without the hyphen, then consider editing command.sh file by removing the hyphen from 'docker-compose'. Example:
     start-cluster() {
     docker compose -f docker/docker-compose.yml up -d
     }
     
     section: Module 1: Docker and Terraform
     question: Docker-Compose - Error getting credentials after running docker-compose up -d
-    answer: Installing pass via ‘sudo apt install pass’ helped to solve the issue. More about this can be found here: https://github.com/moby/buildkit/issues/1078
+    answer: Installing pass via 'sudo apt install pass' helped to solve the issue. More about this can be found here: https://github.com/moby/buildkit/issues/1078
     
     section: Module 1: Docker and Terraform
     question: Docker - ERRO[0000] error waiting for container: context canceled
-    answer: You might have installed docker via snap. Run “sudo snap status docker” to verify.
-    If you have “error: unknown command "status", see 'snap help'.” as a response than deinstall docker and install via the official website
+    answer: You might have installed docker via snap. Run "sudo snap status docker" to verify.
+    If you have "error: unknown command "status", see 'snap help'. as a response than deinstall docker and install via the official website
     Bind for 0.0.0.0:5432 failed: port is a
     
     section: Module 2: Workflow Orchestration
     question: Docker: container crashed with status code 137.
     answer: It means your container consumed all available RAM allocated to it. It can happen in particular when working on Question#3 in the homework as the dataset is relatively large and containers eat a lot of memory in general.
-    I would recommend restarting your computer and only starting the necessary processes to run the container. If that doesn’t work, allocate more resources to docker. If also that doesn’t work because your workstation is a potato, you can use an online compute environment service like GitPod, which is free under under 50 hours / month of use.
+    I would recommend restarting your computer and only starting the necessary processes to run the container. If that doesn't work, allocate more resources to docker. If also that doesn't work because your workstation is a potato, you can use an online compute environment service like GitPod, which is free under under 50 hours / month of use.
     
     section: Module 1: Docker and Terraform
     question: Docker - Docker network name
@@ -372,8 +371,8 @@ print(prompt)
     
     section: Module 1: Docker and Terraform
     question: PGCLI - INKhould we run pgcli inside another docker container?
-    answer: In this section of the course, the 5432 port of pgsql is mapped to your computer’s 5432 port. Which means you can access the postgres database via pgcli directly from your computer.
-    So No, you don’t need to run it inside another container. Your local system will do.
+    answer: In this section of the course, the 5432 port of pgsql is mapped to your computer's 5432 port. Which means you can access the postgres database via pgcli directly from your computer.
+    So No, you don't need to run it inside another container. Your local system will do.
     
     section: Module 1: Docker and Terraform
     question: GCP - Do I need to delete my instance in Google Cloud?
@@ -391,7 +390,7 @@ print(prompt)
     section: General course-related questions
     question: How do I use Git / GitHub for this course?
     answer: After you create a GitHub account, you should clone the course repo to your local machine using the process outlined in this video: Git for Everybody: How to Clone a Repository from GitHub
-    Having this local repository on your computer will make it easy for you to access the instructors’ code and make pull requests (if you want to add your own notes or make changes to the course content).
+    Having this local repository on your computer will make it easy for you to access the instructors' code and make pull requests (if you want to add your own notes or make changes to the course content).
     You will probably also create your own repositories that host your notes, versions of your file, to do this. Here is a great tutorial that shows you how to do this: https://www.atlassian.com/git/tutorials/setting-up-a-repository
     Remember to ignore large database, .csv, and .gz files, and other files that should not be saved to a repository. Use .gitignore for this: https://www.atlassian.com/git/tutorials/saving-changes/gitignore NEVER store passwords or keys in a git repo (even if that repo is set to private).
     This is also a great resource: https://dangitgit.com/
@@ -412,7 +411,7 @@ print(prompt)
     
     section: Module 1: Docker and Terraform
     question: Docker - Connecting from VS Code
-    answer: It’s very easy to manage your docker container, images, network and compose projects from VS Code.
+    answer: It's very easy to manage your docker container, images, network and compose projects from VS Code.
     Just install the official extension and launch it from the left side icon.
     It will work even if your Docker runs on WSL2, as VS Code can easily connect with your Linux.
     Docker - How to stop a container?
@@ -692,7 +691,7 @@ es_client.search(index=index_name, body=search_query)['hits']['hits'][2]['_sourc
 
 
 
-    'How do I copy files from a different folder into docker container’s working directory?'
+    'How do I copy files from a different folder into docker container's working directory?'
 
 
 
@@ -766,7 +765,7 @@ results1 = search_elastic(question)
 print(results1[2])
 ```
 
-    {'text': 'You can copy files from your local machine into a Docker container using the docker cp command. Here\'s how to do it:\nIn the Dockerfile, you can provide the folder containing the files that you want to copy over. The basic syntax is as follows:\nCOPY ["src/predict.py", "models/xgb_model.bin", "./"]\t\t\t\t\t\t\t\t\t\t\tGopakumar Gopinathan', 'section': '5. Deploying Machine Learning Models', 'question': 'How do I copy files from a different folder into docker container’s working directory?', 'course': 'machine-learning-zoomcamp'}
+    {'text': 'You can copy files from your local machine into a Docker container using the docker cp command. Here's how to do it:\nIn the Dockerfile, you can provide the folder containing the files that you want to copy over. The basic syntax is as follows:\nCOPY ["src/predict.py", "models/xgb_model.bin", "./"]\t\t\t\t\t\t\t\t\t\t\tGopakumar Gopinathan', 'section': '5. Deploying Machine Learning Models', 'question': 'How do I copy files from a different folder into docker container's working directory?', 'course': 'machine-learning-zoomcamp'}
 
 
 
@@ -849,7 +848,7 @@ len(answer1)
 print(answer)
 ```
 
-    Yes, you can still register for the course after the start date. You won’t be able to submit some of the homework assignments, but you can still participate in the course. To be eligible for a certificate, you need to submit 2 out of 3 course projects and review 3 peers’ projects by the deadline.
+    Yes, you can still register for the course after the start date. You won't be able to submit some of the homework assignments, but you can still participate in the course. To be eligible for a certificate, you need to submit 2 out of 3 course projects and review 3 peers' projects by the deadline.
 
 
 ## Bonus: calculating the costs (ungraded)

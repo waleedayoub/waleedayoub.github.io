@@ -26,7 +26,17 @@
                         <h5><a class="tag" href='{{ "tags/" | absURL }}{{.}}'>{{.}}</a></h5>
                         {{end}}
                     </span>
-                    <p>{{ .Summary }}</p>
+                    <p class="post-description">
+                        {{- if .Description -}}
+                            {{- .Description -}}
+                        {{- else -}}
+                            {{- if .Summary -}}
+                                {{- .Summary | truncate 160 -}}
+                            {{- else -}}
+                                {{- .Content | truncate 160 -}}
+                            {{- end -}}
+                        {{- end -}}
+                    </p>
                 </well>
                 {{end}}            
             </div><br>

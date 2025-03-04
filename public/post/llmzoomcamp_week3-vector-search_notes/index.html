@@ -3,9 +3,9 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-    <title>LLM Zoomcamp Week 3 - Vector Search with Elasticsearch Notes | Waleed Ayoub</title>
-    <meta name="description" content="LLM Zoomcamp Week 3 - Vector Search with Elasticsearch Notes">
-    <meta property="og:site_name" content="LLM Zoomcamp Week 3 - Vector Search with Elasticsearch Notes" />
+    <title>LLM Zoomcamp Week 3 - Vector Search Notes | Waleed Ayoub</title>
+    <meta name="description" content="LLM Zoomcamp Week 3 - Vector Search Notes">
+    <meta property="og:site_name" content="LLM Zoomcamp Week 3 - Vector Search Notes" />
     <meta property="og:title" content="Waleed Ayoub" />
     <meta property="og:description" content="LLM Zoomcamp - Week 3 Notes In this section the focus is on the following:
 Applying Vector Databases as an alternative to Elasticsearch in the previous two models. Important to note that Elasticsearch has the ability to operate as a Vector DB as an alternative to Lucene and will be covered as well Vector embeddings and their role in building RAG applications Evaluation methods for search / query retrieval performance Table of Contents 3.1 Introduction to Vector Search 3.2 How to do Vectorized Search with Elasticsearch 3.2.1 Let&rsquo;s start with Semantic Search Step 1 - Load our documents Step 2 - Create embeddings using pre-trained models Step 3 - Set up Elasticsearch connection Step 4 Create Elasticsearch mappings and index Step 5 Add documents to the index Step 6 Create the user query Step 7 Perform a semantic search using Elasticsearch VectorDB 3.2.2 Now let&rsquo;s try Advanced Semantic Search 3.3 Evaluation 3.3.1 Evaluation metrics for retrieval 3.3.2 Ground truth generation for retrieval evaluation 3.3.3 Evaluation of text retrieval techniques for RAG 3.3.4 Evaluation vector retrieval 3.1 Introduction to Vector Search Vector search has been around for a while and is getting popular again largely because LLMs lack long-term memory and have limited context windows Vector DBs are an economical and effective way to store data for use with LLMs Elastic.co does a good job of explaining what vector embeddings are here Here&rsquo;s their definition: Vector embeddings are a way to convert words and sentences and other data into numbers that capture their meaning and relationships. They represent different data types as points in a multidimensional space, where similar data points are clustered closer together. These numerical representations help machines understand and process this data more effectively. Vector databases are databases that index and store vector embeddings Which means you can easily store them, reference them, compare different vectors semantically (using various distance measures, etc.) Here&rsquo;s what it would look like when put together with an LLM: 3.2 How to do Vectorized Search with Elasticsearch Let&rsquo;s start with the architecture of the Semantic Search system we&rsquo;re going to build: graph LR documents.json --&gt;|load| documents subgraph Process documents --&gt; embeddings embeddings --&gt; index index --&gt;|store| Elasticsearch[(Elasticsearch vector DB)] end Elasticsearch --&gt;|retrieve| Semantic_search_results(Semantic search results) new_search_query(New search query) -.-&gt; embeddings embeddings -.-&gt; Elasticsearch style new_search_query stroke:blue,stroke-width:2px; The way this system works is as follows:
@@ -34,7 +34,7 @@ Applying Vector Databases as an alternative to Elasticsearch in the previous two
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.145.0">
     
-    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.5665646b97fc6d2e2f82b86c3df5c557932e22130fac85274baaefff435e2a9a.css" type="text/css" media="screen">
 
     <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
 
@@ -110,8 +110,8 @@ Applying Vector Databases as an alternative to Elasticsearch in the previous two
 <section class="intro">
   
   <div class="post-header">
-    <a class="go-back" href="http://localhost:1313/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
-    <h2 class="post-title">LLM Zoomcamp Week 3 - Vector Search with Elasticsearch Notes</h2>
+    <a class="go-back" href="/post/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+    <h2 class="post-title">LLM Zoomcamp Week 3 - Vector Search Notes</h2>
 </div>
 
 <p>By <a href="">waleed</a></p>
@@ -124,9 +124,9 @@ Applying Vector Databases as an alternative to Elasticsearch in the previous two
   
   <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
   
-  <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+  <h5><a class="tag" href='http://localhost:1313/tags/llm'>llm</a></h5>
   
-  <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+  <h5><a class="tag" href='http://localhost:1313/tags/zoomcamp'>zoomcamp</a></h5>
   
 </span>
 
@@ -297,7 +297,7 @@ Applying Vector Databases as an alternative to Elasticsearch in the previous two
 </span></span><span style="display:flex;"><span>    documents_embedding<span style="color:#f92672">.</span>append(doc)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>documents_embedding[<span style="color:#ae81ff">0</span>]
-</span></span></code></pre></div><pre><code>{'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.&quot;,
+</span></span></code></pre></div><pre><code>{'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.&quot;,
  'section': 'General course-related questions',
  'question': 'Course - When will the course start?',
  'course': 'data-engineering-zoomcamp',
@@ -419,21 +419,21 @@ Applying Vector Databases as an alternative to Elasticsearch in the previous two
   '_source': {'question': 'WSL instructions',
    'course': 'mlops-zoomcamp',
    'section': 'Module 1: Introduction',
-   'text': 'If you wish to use WSL on your windows machine, here are the setup instructions:\nCommand: Sudo apt install wget\nGet Anaconda download address here. wget &lt;download address&gt;\nTurn on Docker Desktop WFree Download | AnacondaSL2\nCommand: git clone &lt;github repository address&gt;\nVSCODE on WSL\nJupyter: pip3 install jupyter\nAdded by Gregory Morris (gwm1980@gmail.com)\nAll in all softwares at one shop:\nYou can use anaconda which has all built in services like pycharm, jupyter\nAdded by Khaja Zaffer (khajazaffer@aln.iseg.ulisboa.pt)\nFor windows “wsl --install” in Powershell\nAdded by Vadim Surin (vdmsurin@gmai.com)'}},
+   'text': 'If you wish to use WSL on your windows machine, here are the setup instructions:\nCommand: Sudo apt install wget\nGet Anaconda download address here. wget &lt;download address&gt;\nTurn on Docker Desktop WFree Download | AnacondaSL2\nCommand: git clone &lt;github repository address&gt;\nVSCODE on WSL\nJupyter: pip3 install jupyter\nAdded by Gregory Morris (gwm1980@gmail.com)\nAll in all softwares at one shop:\nYou can use anaconda which has all built in services like pycharm, jupyter\nAdded by Khaja Zaffer (khajazaffer@aln.iseg.ulisboa.pt)\nFor windows &quot;wsl --install&quot; in Powershell\nAdded by Vadim Surin (vdmsurin@gmai.com)'}},
  {'_index': 'course-questions',
   '_id': 'Kn0ytJABBRmP4y366iqy',
   '_score': 0.60555583,
   '_source': {'question': &quot;The answer I get for one of the homework questions doesn't match any of the options. What should I do?&quot;,
    'course': 'machine-learning-zoomcamp',
    'section': '2. Machine Learning for Regression',
-   'text': 'That’s normal. We all have different environments: our computers have different versions of OS and different versions of libraries — even different versions of Python.\nIf it’s the case, just select the option that’s closest to your answer'}},
+   'text': 'That's normal. We all have different environments: our computers have different versions of OS and different versions of libraries — even different versions of Python.\nIf it's the case, just select the option that's closest to your answer'}},
  {'_index': 'course-questions',
   '_id': 'g30ytJABBRmP4y367iqy',
   '_score': 0.6028962,
   '_source': {'question': 'How to install WSL on Windows 10 and 11 ?',
    'course': 'machine-learning-zoomcamp',
    'section': '5. Deploying Machine Learning Models',
-   'text': 'It is quite simple, and you can follow these instructions here:\nhttps://www.youtube.com/watch?v=qYlgUDKKK5A&amp;ab_channel=NeuralNine\nMake sure that you have “Virtual Machine Platform” feature activated in your Windows “Features”. To do that, search “features” in the research bar and see if the checkbox is selected. You also need to make sure that your system (in the bios) is able to virtualize. This is usually the case.\nIn the Microsoft Store: look for ‘Ubuntu’ or ‘Debian’ (or any linux distribution you want) and install it\nOnce it is downloaded, open the app and choose a username and a password (secured one). When you type your password, nothing will show in the window, which is normal: the writing is invisible.\nYou are now inside of your linux system. You can test some commands such as “pwd”. You are not in your Windows system.\nTo go to your windows system: you need to go back two times with cd ../.. And then go to the “mnt” directory with cd mnt. If you list here your files, you will see your disks. You can move to the desired folder, for example here I moved to the ML_Zoomcamp folder:\nPython should be already installed but you can check it by running sudo apt install python3 command.\nYou can make your actual folder your default folder when you open your Ubuntu terminal with this command : echo &quot;cd ../../mnt/your/folder/path&quot; &gt;&gt; ~/.bashrc\nYou can disable bell sounds (when you type something that does not exist for example) by modifying the inputrc file with this command: sudo vim /etc/inputrc\nYou have to uncomment the set bell-style none line -&gt; to do that, press the “i” keyboard letter (for insert) and go with your keyboard to this line. Delete the # and then press the Escape keyboard touch and finally press “:wq” to write (it saves your modifications) then quit.\nYou can check that your modifications are taken into account by opening a new terminal (you can pin it to your task bar so you do not have to go to the Microsoft app each time).\nYou will need to install pip by running this command sudo apt install python3-pip\nNB: I had this error message when trying to install pipenv (https://github.com/microsoft/WSL/issues/5663):\n/sbin/ldconfig.real: Can\'t link /usr/lib/wsl/lib/libnvoptix_loader.so.1 to libnvoptix.so.1\n/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link\nSo I had to create the following symbolic link:\nsudo ln -s /usr/lib/wsl/lib/libcuda.so.1 /usr/lib64/libcuda.so\n(Mélanie Fouesnard)'}},
+   'text': 'It is quite simple, and you can follow these instructions here:\nhttps://www.youtube.com/watch?v=qYlgUDKKK5A&amp;ab_channel=NeuralNine\nMake sure that you have &quot;Virtual Machine Platform&quot; feature activated in your Windows &quot;Features&quot;. To do that, search &quot;features&quot; in the research bar and see if the checkbox is selected. You also need to make sure that your system (in the bios) is able to virtualize. This is usually the case.\nIn the Microsoft Store: look for 'Ubuntu' or 'Debian' (or any linux distribution you want) and install it\nOnce it is downloaded, open the app and choose a username and a password (secured one). When you type your password, nothing will show in the window, which is normal: the writing is invisible.\nYou are now inside of your linux system. You can test some commands such as &quot;pwd&quot;. You are not in your Windows system.\nTo go to your windows system: you need to go back two times with cd ../.. And then go to the &quot;mnt&quot; directory with cd mnt. If you list here your files, you will see your disks. You can move to the desired folder, for example here I moved to the ML_Zoomcamp folder:\nPython should be already installed but you can check it by running sudo apt install python3 command.\nYou can make your actual folder your default folder when you open your Ubuntu terminal with this command : echo &quot;cd ../../mnt/your/folder/path&quot; &gt;&gt; ~/.bashrc\nYou can disable bell sounds (when you type something that does not exist for example) by modifying the inputrc file with this command: sudo vim /etc/inputrc\nYou have to uncomment the set bell-style none line -&gt; to do that, press the &quot;i&quot; keyboard letter (for insert) and go with your keyboard to this line. Delete the # and then press the Escape keyboard touch and finally press &quot;:wq&quot; to write (it saves your modifications) then quit.\nYou can check that your modifications are taken into account by opening a new terminal (you can pin it to your task bar so you do not have to go to the Microsoft app each time).\nYou will need to install pip by running this command sudo apt install python3-pip\nNB: I had this error message when trying to install pipenv (https://github.com/microsoft/WSL/issues/5663):\n/sbin/ldconfig.real: Can\'t link /usr/lib/wsl/lib/libnvoptix_loader.so.1 to libnvoptix.so.1\n/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link\nSo I had to create the following symbolic link:\nsudo ln -s /usr/lib/wsl/lib/libcuda.so.1 /usr/lib64/libcuda.so\n(Mélanie Fouesnard)'}},
  {'_index': 'course-questions',
   '_id': 'R30ytJABBRmP4y361Cik',
   '_score': 0.5985867,
@@ -572,7 +572,7 @@ Applying Vector Databases as an alternative to Elasticsearch in the previous two
   '_source': {'question': 'Course - When will the course start?',
    'course': 'data-engineering-zoomcamp',
    'section': 'General course-related questions',
-   'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.&quot;},
+   'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &quot;Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.&quot;},
   '_explanation': {'value': 0.778914,
    'description': 'sum of:',
    'details': [{'value': 0.778914,
@@ -1261,11 +1261,11 @@ Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.1
 Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 504747 (493K) [text/plain]
-Saving to: ‘ground-truth-data.csv’
+Saving to: 'ground-truth-data.csv'
 
 ground-truth-data.c 100%[===================&gt;] 492.92K  --.-KB/s    in 0.01s   
 
-2024-07-18 10:02:58 (34.4 MB/s) - ‘ground-truth-data.csv’ saved [504747/504747]
+2024-07-18 10:02:58 (34.4 MB/s) - 'ground-truth-data.csv' saved [504747/504747]
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Now let&#39;s load the document-with-ids.json from DTC so that the doc_ids match</span>
 </span></span><span style="display:flex;"><span>
@@ -1280,11 +1280,11 @@ Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.1
 Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 699257 (683K) [text/plain]
-Saving to: ‘documents-with-ids.json.1’
+Saving to: 'documents-with-ids.json.1'
 
 documents-with-ids. 100%[===================&gt;] 682.87K  --.-KB/s    in 0.02s   
 
-2024-07-19 12:35:36 (37.0 MB/s) - ‘documents-with-ids.json.1’ saved [699257/699257]
+2024-07-19 12:35:36 (37.0 MB/s) - 'documents-with-ids.json.1' saved [699257/699257]
 
 
 
@@ -1442,7 +1442,7 @@ Index course-questions created.
   'question': 'Course - Can I follow the course after it finishes?',
   'course': 'data-engineering-zoomcamp',
   'id': '0472c382d4'},
- {'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don’t rely on its answers 100%, it is pretty good though.',
+ {'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don't rely on its answers 100%, it is pretty good though.',
   'section': 'General course-related questions',
   'question': 'Course - Can I get support if I take the course in the self-paced mode?',
   'course': 'data-engineering-zoomcamp',
@@ -1478,12 +1478,12 @@ Index course-questions created.
 [False, True, False, False, False]
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>results
-</span></span></code></pre></div><pre><code>[{'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.&quot;,
+</span></span></code></pre></div><pre><code>[{'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &quot;Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.&quot;,
   'section': 'General course-related questions',
   'question': 'Course - When will the course start?',
   'course': 'data-engineering-zoomcamp',
   'id': '6211ca3c99'},
- {'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.&quot;,
+ {'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &quot;Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.&quot;,
   'section': 'General course-related questions',
   'question': 'Course - When will the course start?',
   'course': 'data-engineering-zoomcamp',
@@ -1505,7 +1505,7 @@ Index course-questions created.
   'id': 'bf432e9a88'}]
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>next((item <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> documents <span style="color:#66d9ef">if</span> item<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;id&#39;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;c02e79ef&#39;</span>), <span style="color:#66d9ef">None</span>)
-</span></span></code></pre></div><pre><code>{'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.&quot;,
+</span></span></code></pre></div><pre><code>{'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &quot;Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.&quot;,
  'section': 'General course-related questions',
  'question': 'Course - When will the course start?',
  'course': 'data-engineering-zoomcamp',
@@ -1618,11 +1618,11 @@ Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.1
 Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 699257 (683K) [text/plain]
-Saving to: ‘documents-with-ids.json’
+Saving to: 'documents-with-ids.json'
 
 documents-with-ids. 100%[===================&gt;] 682.87K  --.-KB/s    in 0.02s   
 
-2024-07-19 12:38:59 (29.4 MB/s) - ‘documents-with-ids.json’ saved [699257/699257]
+2024-07-19 12:38:59 (29.4 MB/s) - 'documents-with-ids.json' saved [699257/699257]
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> json
 </span></span><span style="display:flex;"><span>
@@ -1866,7 +1866,7 @@ Index course-questions created.
   '_source': {'question': 'Course - Can I get support if I take the course in the self-paced mode?',
    'course': 'data-engineering-zoomcamp',
    'section': 'General course-related questions',
-   'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don’t rely on its answers 100%, it is pretty good though.',
+   'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don't rely on its answers 100%, it is pretty good though.',
    'id': 'eb56ae98'},
   '_explanation': {'value': 1.5664915,
    'description': 'sum of:',
@@ -1947,7 +1947,7 @@ Index course-questions created.
  {'question': 'Course - Can I get support if I take the course in the self-paced mode?',
   'course': 'data-engineering-zoomcamp',
   'section': 'General course-related questions',
-  'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don’t rely on its answers 100%, it is pretty good though.',
+  'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don't rely on its answers 100%, it is pretty good though.',
   'id': 'eb56ae98'},
  {'question': 'Course - What can I do before the course starts?',
   'course': 'data-engineering-zoomcamp',
@@ -1957,12 +1957,12 @@ Index course-questions created.
  {'question': 'The course has already started. Can I still join it?',
   'course': 'machine-learning-zoomcamp',
   'section': 'General course-related questions',
-  'text': 'Yes, you can. You won’t be able to submit some of the homeworks, but you can still take part in the course.\nIn order to get a certificate, you need to submit 2 out of 3 course projects and review 3 peers’ Projects by the deadline. It means that if you join the course at the end of November and manage to work on two projects, you will still be eligible for a certificate.',
+  'text': 'Yes, you can. You won't be able to submit some of the homeworks, but you can still take part in the course.\nIn order to get a certificate, you need to submit 2 out of 3 course projects and review 3 peers' Projects by the deadline. It means that if you join the course at the end of November and manage to work on two projects, you will still be eligible for a certificate.',
   'id': 'ee58a693'},
  {'question': 'Course - When will the course start?',
   'course': 'data-engineering-zoomcamp',
   'section': 'General course-related questions',
-  'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.&quot;,
+  'text': &quot;The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  &quot;Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.&quot;,
   'id': 'c02e79ef'},
  {'question': 'Course - What are the prerequisites for this course?',
   'course': 'data-engineering-zoomcamp',
@@ -1977,7 +1977,7 @@ Index course-questions created.
  {'question': 'Course - how many Zoomcamps in a year?',
   'course': 'data-engineering-zoomcamp',
   'section': 'General course-related questions',
-  'text': &quot;There are 3 Zoom Camps in a year, as of 2024. However, they are for separate courses:\nData-Engineering (Jan - Apr)\nMLOps (May - Aug)\nMachine Learning (Sep - Jan)\nThere's only one Data-Engineering Zoomcamp “live” cohort per year, for the certification. Same as for the other Zoomcamps.\nThey follow pretty much the same schedule for each cohort per zoomcamp. For Data-Engineering it is (generally) from Jan-Apr of the year. If you’re not interested in the Certificate, you can take any zoom camps at any time, at your own pace, out of sync with any “live” cohort.&quot;,
+  'text': &quot;There are 3 Zoom Camps in a year, as of 2024. However, they are for separate courses:\nData-Engineering (Jan - Apr)\nMLOps (May - Aug)\nMachine Learning (Sep - Jan)\nThere's only one Data-Engineering Zoomcamp &quot;live&quot; cohort per year, for the certification. Same as for the other Zoomcamps.\nThey follow pretty much the same schedule for each cohort per zoomcamp. For Data-Engineering it is (generally) from Jan-Apr of the year. If you're not interested in the Certificate, you can take any zoom camps at any time, at your own pace, out of sync with any &quot;live&quot; cohort.&quot;,
   'id': '2ed9b986'},
  {'question': 'Course - Is the current cohort going to be different from the previous cohort?',
   'course': 'data-engineering-zoomcamp',

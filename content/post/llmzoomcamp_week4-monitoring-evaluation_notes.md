@@ -1,9 +1,9 @@
 ---
-date: 2024-08-06T14:50:46-04:00
 title: "LLM Zoomcamp Week 4 - Monitoring and Evaluation Notes"
 author: waleed
-description: Datatalksclub LLM Zoomcamp Week 4 Notes
-tags: ["datatalksclub", "LLM","python"]
+date: 2024-08-06T23:46:00-04:00
+description: "In-depth coverage of LLM monitoring and evaluation techniques, including metrics, testing frameworks, and best practices for maintaining model quality and performance in production environments."
+tags: ["datatalksclub", "llm", "zoomcamp"]
 series: ["llm-zoomcamp-2024"]
 hasMermaid: true
 draft: false
@@ -179,7 +179,7 @@ doc_index = {d['id']: d for d in documents}
 print(doc_index['5170565b']['text'])
 ```
 
-    Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
+    Everything is recorded, so you won't miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
 
 
 - Now, we index the data based on the most successful vector search approach we evaluated in the previous section
@@ -329,7 +329,7 @@ question_text_vector_knn(dict(
     [{'question': 'What if I miss a session?',
       'course': 'machine-learning-zoomcamp',
       'section': 'General course-related questions',
-      'text': 'Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.',
+      'text': 'Everything is recorded, so you won't miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.',
       'id': '5170565b'},
      {'question': 'Is it going to be live? When?',
       'course': 'machine-learning-zoomcamp',
@@ -442,7 +442,7 @@ doc_index['5170565b']['text']
 
 
 
-    'Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.'
+    'Everything is recorded, so you won't miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.'
 
 
 
@@ -464,8 +464,8 @@ v_llm = model.encode(answer_llm)
 v_llm.dot(v_orig)
 ```
 
-    Yes, sessions are recorded if you miss one. Everything is recorded, including office hours, so you won’t miss any content. You can ask your questions for office hours in advance, and these will be addressed during the live stream. Additionally, you can always ask questions in Slack.
-    Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
+    Yes, sessions are recorded if you miss one. Everything is recorded, including office hours, so you won't miss any content. You can ask your questions for office hours in advance, and these will be addressed during the live stream. Additionally, you can always ask questions in Slack.
+    Everything is recorded, so you won't miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
 
 
 

@@ -3,9 +3,9 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-    <title>LLM Zoomcamp Week 1 - Intro Notes | Waleed Ayoub</title>
-    <meta name="description" content="LLM Zoomcamp Week 1 - Intro Notes">
-    <meta property="og:site_name" content="LLM Zoomcamp Week 1 - Intro Notes" />
+    <title>LLM Zoomcamp Week 1 - Introduction Notes | Waleed Ayoub</title>
+    <meta name="description" content="LLM Zoomcamp Week 1 - Introduction Notes">
+    <meta property="og:site_name" content="LLM Zoomcamp Week 1 - Introduction Notes" />
     <meta property="og:title" content="Waleed Ayoub" />
     <meta property="og:description" content="LLM Zoomcamp - Week 1 Notes This is the first week of the new LLM Zoomcamp hosted by DataTalksClub. I&rsquo;ve found their content really helpful in the past, having completed the Data Engineering Zoomcamp a year ago and successively attempted (but never finished!) the other two zoomcamps they offer.
 In order to give me the best chance of completing this one, I&rsquo;ve decided to publish my notes on my blog. Hope that helps me see this one through!
@@ -34,7 +34,7 @@ In order to give me the best chance of completing this one, I&rsquo;ve decided t
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.145.0">
     
-    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.5665646b97fc6d2e2f82b86c3df5c557932e22130fac85274baaefff435e2a9a.css" type="text/css" media="screen">
 
     <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
 
@@ -110,8 +110,8 @@ In order to give me the best chance of completing this one, I&rsquo;ve decided t
 <section class="intro">
   
   <div class="post-header">
-    <a class="go-back" href="http://localhost:1313/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
-    <h2 class="post-title">LLM Zoomcamp Week 1 - Intro Notes</h2>
+    <a class="go-back" href="/post/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+    <h2 class="post-title">LLM Zoomcamp Week 1 - Introduction Notes</h2>
 </div>
 
 <p>By <a href="">waleed</a></p>
@@ -124,9 +124,9 @@ In order to give me the best chance of completing this one, I&rsquo;ve decided t
   
   <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
   
-  <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+  <h5><a class="tag" href='http://localhost:1313/tags/llm'>llm</a></h5>
   
-  <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+  <h5><a class="tag" href='http://localhost:1313/tags/zoomcamp'>zoomcamp</a></h5>
   
 </span>
 
@@ -340,7 +340,7 @@ Time: 0.009s
 root@pg-database:ny_taxi&gt;
 
 section: Module 1: Docker and Terraform
-question: Docker - Error response from daemon: Conflict. The container name &quot;pg-database&quot; is already in use by container “xxx”.  You have to remove (or rename) that container to be able to reuse that name.
+question: Docker - Error response from daemon: Conflict. The container name &quot;pg-database&quot; is already in use by container &quot;xxx&quot;.  You have to remove (or rename) that container to be able to reuse that name.
 answer: Sometimes, when you try to restart a docker image configured with a network name, the above message appears. In this case, use the following command with the appropriate container name:
 &gt;&gt;&gt; If the container is running state, use docker stop &lt;container_name&gt;
 &gt;&gt;&gt; then, docker rm pg-database
@@ -349,8 +349,7 @@ Or use docker start instead of docker run in order to restart the docker image w
 section: Module 1: Docker and Terraform
 question: Docker - Cannot pip install on Docker container (Windows)
 answer: You may have this error:
-Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;pip._vendor.u
-rllib3.connection.HTTPSConnection object at 0x7efe331cf790&gt;: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')':
+Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;pip._vendor.urllib3.connection.HTTPSConnection object at 0x7efe331cf790&gt;: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')':
 /simple/pandas/
 Possible solution might be:
 $ winpty docker run -it --dns=8.8.8.8 --entrypoint=bash python:3.9
@@ -358,7 +357,7 @@ $ winpty docker run -it --dns=8.8.8.8 --entrypoint=bash python:3.9
 section: Module 1: Docker and Terraform
 question: Docker - Cannot connect to Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
 answer: Make sure you're able to start the Docker daemon, and check the issue immediately down below:
-And don’t forget to update the wsl in powershell the  command is wsl –update
+And don't forget to update the wsl in powershell the  command is wsl –update
 
 section: Module 6: streaming with kafka
 question: How do I check compatibility of local and container Spark versions?
@@ -415,26 +414,26 @@ Run the Docker command again after switching to Docker Desktop. This step resolv
 Note: The issue occurred because Rancher Desktop was in use. Switching to Docker Desktop resolves compatibility problems and allows for the successful creation of PostgreSQL containers with mounted volumes for the New York Taxi Database on macOS M1.
 
 section: Workshop 2 - RisingWave
-question: Setup - source command.sh - error: “docker-compose” not found
-answer: If you encounter this error and are certain that you have docker compose installed, but typically run it as docker compose without the hyphen, then consider editing command.sh file by removing the hyphen from ‘docker-compose’. Example:
+question: Setup - source command.sh - error: &quot;docker-compose&quot; not found
+answer: If you encounter this error and are certain that you have docker compose installed, but typically run it as docker compose without the hyphen, then consider editing command.sh file by removing the hyphen from 'docker-compose'. Example:
 start-cluster() {
 docker compose -f docker/docker-compose.yml up -d
 }
 
 section: Module 1: Docker and Terraform
 question: Docker-Compose - Error getting credentials after running docker-compose up -d
-answer: Installing pass via ‘sudo apt install pass’ helped to solve the issue. More about this can be found here: https://github.com/moby/buildkit/issues/1078
+answer: Installing pass via 'sudo apt install pass' helped to solve the issue. More about this can be found here: https://github.com/moby/buildkit/issues/1078
 
 section: Module 1: Docker and Terraform
 question: Docker - ERRO[0000] error waiting for container: context canceled
-answer: You might have installed docker via snap. Run “sudo snap status docker” to verify.
-If you have “error: unknown command &quot;status&quot;, see 'snap help'.” as a response than deinstall docker and install via the official website
+answer: You might have installed docker via snap. Run &quot;sudo snap status docker&quot; to verify.
+If you have &quot;error: unknown command &quot;status&quot;, see 'snap help'. as a response than deinstall docker and install via the official website
 Bind for 0.0.0.0:5432 failed: port is a
 
 section: Module 2: Workflow Orchestration
 question: Docker: container crashed with status code 137.
 answer: It means your container consumed all available RAM allocated to it. It can happen in particular when working on Question#3 in the homework as the dataset is relatively large and containers eat a lot of memory in general.
-I would recommend restarting your computer and only starting the necessary processes to run the container. If that doesn’t work, allocate more resources to docker. If also that doesn’t work because your workstation is a potato, you can use an online compute environment service like GitPod, which is free under under 50 hours / month of use.
+I would recommend restarting your computer and only starting the necessary processes to run the container. If that doesn't work, allocate more resources to docker. If also that doesn't work because your workstation is a potato, you can use an online compute environment service like GitPod, which is free under under 50 hours / month of use.
 
 section: Module 1: Docker and Terraform
 question: Docker - Docker network name
@@ -442,8 +441,8 @@ answer: Get the network name via: $ docker network ls.
 
 section: Module 1: Docker and Terraform
 question: PGCLI - INKhould we run pgcli inside another docker container?
-answer: In this section of the course, the 5432 port of pgsql is mapped to your computer’s 5432 port. Which means you can access the postgres database via pgcli directly from your computer.
-So No, you don’t need to run it inside another container. Your local system will do.
+answer: In this section of the course, the 5432 port of pgsql is mapped to your computer's 5432 port. Which means you can access the postgres database via pgcli directly from your computer.
+So No, you don't need to run it inside another container. Your local system will do.
 
 section: Module 1: Docker and Terraform
 question: GCP - Do I need to delete my instance in Google Cloud?
@@ -461,7 +460,7 @@ If you opt-in for WSL2, you can follow the same steps as detailed in the tutoria
 section: General course-related questions
 question: How do I use Git / GitHub for this course?
 answer: After you create a GitHub account, you should clone the course repo to your local machine using the process outlined in this video: Git for Everybody: How to Clone a Repository from GitHub
-Having this local repository on your computer will make it easy for you to access the instructors’ code and make pull requests (if you want to add your own notes or make changes to the course content).
+Having this local repository on your computer will make it easy for you to access the instructors' code and make pull requests (if you want to add your own notes or make changes to the course content).
 You will probably also create your own repositories that host your notes, versions of your file, to do this. Here is a great tutorial that shows you how to do this: https://www.atlassian.com/git/tutorials/setting-up-a-repository
 Remember to ignore large database, .csv, and .gz files, and other files that should not be saved to a repository. Use .gitignore for this: https://www.atlassian.com/git/tutorials/saving-changes/gitignore NEVER store passwords or keys in a git repo (even if that repo is set to private).
 This is also a great resource: https://dangitgit.com/
@@ -482,7 +481,7 @@ echo &quot;alias docker='winpty docker'&quot; &gt;&gt; ~/.bash_profile
 
 section: Module 1: Docker and Terraform
 question: Docker - Connecting from VS Code
-answer: It’s very easy to manage your docker container, images, network and compose projects from VS Code.
+answer: It's very easy to manage your docker container, images, network and compose projects from VS Code.
 Just install the official extension and launch it from the left side icon.
 It will work even if your Docker runs on WSL2, as VS Code can easily connect with your Linux.
 Docker - How to stop a container?
@@ -718,7 +717,7 @@ docker.elastic.co/elasticsearch/elasticsearch:8.4.3
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>es_client<span style="color:#f92672">.</span>search(index<span style="color:#f92672">=</span>index_name, body<span style="color:#f92672">=</span>search_query)[<span style="color:#e6db74">&#39;hits&#39;</span>][<span style="color:#e6db74">&#39;hits&#39;</span>][<span style="color:#ae81ff">2</span>][<span style="color:#e6db74">&#39;_source&#39;</span>][<span style="color:#e6db74">&#39;question&#39;</span>]
-</span></span></code></pre></div><pre><code>'How do I copy files from a different folder into docker container’s working directory?'
+</span></span></code></pre></div><pre><code>'How do I copy files from a different folder into docker container's working directory?'
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_elastic</span>(question):
 </span></span><span style="display:flex;"><span>
@@ -770,7 +769,7 @@ docker.elastic.co/elasticsearch/elasticsearch:8.4.3
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> answer
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>results1 <span style="color:#f92672">=</span> search_elastic(question)
 </span></span><span style="display:flex;"><span>print(results1[<span style="color:#ae81ff">2</span>])
-</span></span></code></pre></div><pre><code>{'text': 'You can copy files from your local machine into a Docker container using the docker cp command. Here\'s how to do it:\nIn the Dockerfile, you can provide the folder containing the files that you want to copy over. The basic syntax is as follows:\nCOPY [&quot;src/predict.py&quot;, &quot;models/xgb_model.bin&quot;, &quot;./&quot;]\t\t\t\t\t\t\t\t\t\t\tGopakumar Gopinathan', 'section': '5. Deploying Machine Learning Models', 'question': 'How do I copy files from a different folder into docker container’s working directory?', 'course': 'machine-learning-zoomcamp'}
+</span></span></code></pre></div><pre><code>{'text': 'You can copy files from your local machine into a Docker container using the docker cp command. Here's how to do it:\nIn the Dockerfile, you can provide the folder containing the files that you want to copy over. The basic syntax is as follows:\nCOPY [&quot;src/predict.py&quot;, &quot;models/xgb_model.bin&quot;, &quot;./&quot;]\t\t\t\t\t\t\t\t\t\t\tGopakumar Gopinathan', 'section': '5. Deploying Machine Learning Models', 'question': 'How do I copy files from a different folder into docker container's working directory?', 'course': 'machine-learning-zoomcamp'}
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>prompt1 <span style="color:#f92672">=</span> build_prompt(question, results1)
 </span></span><span style="display:flex;"><span>len(prompt1)
@@ -825,7 +824,7 @@ This will list the contents of the `/app` directory inside the running container
 </span></span></code></pre></div><pre><code>1617
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(answer)
-</span></span></code></pre></div><pre><code>Yes, you can still register for the course after the start date. You won’t be able to submit some of the homework assignments, but you can still participate in the course. To be eligible for a certificate, you need to submit 2 out of 3 course projects and review 3 peers’ projects by the deadline.
+</span></span></code></pre></div><pre><code>Yes, you can still register for the course after the start date. You won't be able to submit some of the homework assignments, but you can still participate in the course. To be eligible for a certificate, you need to submit 2 out of 3 course projects and review 3 peers' projects by the deadline.
 </code></pre>
 <h2 id="bonus-calculating-the-costs-ungraded">Bonus: calculating the costs (ungraded)</h2>
 <ul>

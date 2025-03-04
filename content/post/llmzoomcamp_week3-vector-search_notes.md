@@ -1,11 +1,9 @@
 ---
-title: "LLM Zoomcamp Week 3 - Vector Search with Elasticsearch Notes"
-author: "waleed"
-date: 2024-07-19T15:16:18-04:00
-description: Datatalksclub LLM Zoomcamp Week 3 Notes
-tags: ["datatalksclub", "LLM","python"]
-series: ["llm-zoomcamp-2024"]
-hasMermaid: false
+title: "LLM Zoomcamp Week 3 - Vector Search Notes"
+author: waleed
+date: 2024-07-19T23:39:00-04:00
+description: "Detailed exploration of vector search in LLMs, including embeddings, similarity measures, and implementing efficient vector databases for semantic search."
+tags: ["datatalksclub", "llm", "zoomcamp"]
 draft: false
 ---
 
@@ -151,7 +149,7 @@ documents_embedding[0]
 
 
 
-    {'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.",
+    {'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.",
      'section': 'General course-related questions',
      'question': 'Course - When will the course start?',
      'course': 'data-engineering-zoomcamp',
@@ -302,21 +300,21 @@ res["hits"]["hits"]
       '_source': {'question': 'WSL instructions',
        'course': 'mlops-zoomcamp',
        'section': 'Module 1: Introduction',
-       'text': 'If you wish to use WSL on your windows machine, here are the setup instructions:\nCommand: Sudo apt install wget\nGet Anaconda download address here. wget <download address>\nTurn on Docker Desktop WFree Download | AnacondaSL2\nCommand: git clone <github repository address>\nVSCODE on WSL\nJupyter: pip3 install jupyter\nAdded by Gregory Morris (gwm1980@gmail.com)\nAll in all softwares at one shop:\nYou can use anaconda which has all built in services like pycharm, jupyter\nAdded by Khaja Zaffer (khajazaffer@aln.iseg.ulisboa.pt)\nFor windows “wsl --install” in Powershell\nAdded by Vadim Surin (vdmsurin@gmai.com)'}},
+       'text': 'If you wish to use WSL on your windows machine, here are the setup instructions:\nCommand: Sudo apt install wget\nGet Anaconda download address here. wget <download address>\nTurn on Docker Desktop WFree Download | AnacondaSL2\nCommand: git clone <github repository address>\nVSCODE on WSL\nJupyter: pip3 install jupyter\nAdded by Gregory Morris (gwm1980@gmail.com)\nAll in all softwares at one shop:\nYou can use anaconda which has all built in services like pycharm, jupyter\nAdded by Khaja Zaffer (khajazaffer@aln.iseg.ulisboa.pt)\nFor windows "wsl --install" in Powershell\nAdded by Vadim Surin (vdmsurin@gmai.com)'}},
      {'_index': 'course-questions',
       '_id': 'Kn0ytJABBRmP4y366iqy',
       '_score': 0.60555583,
       '_source': {'question': "The answer I get for one of the homework questions doesn't match any of the options. What should I do?",
        'course': 'machine-learning-zoomcamp',
        'section': '2. Machine Learning for Regression',
-       'text': 'That’s normal. We all have different environments: our computers have different versions of OS and different versions of libraries — even different versions of Python.\nIf it’s the case, just select the option that’s closest to your answer'}},
+       'text': 'That's normal. We all have different environments: our computers have different versions of OS and different versions of libraries — even different versions of Python.\nIf it's the case, just select the option that's closest to your answer'}},
      {'_index': 'course-questions',
       '_id': 'g30ytJABBRmP4y367iqy',
       '_score': 0.6028962,
       '_source': {'question': 'How to install WSL on Windows 10 and 11 ?',
        'course': 'machine-learning-zoomcamp',
        'section': '5. Deploying Machine Learning Models',
-       'text': 'It is quite simple, and you can follow these instructions here:\nhttps://www.youtube.com/watch?v=qYlgUDKKK5A&ab_channel=NeuralNine\nMake sure that you have “Virtual Machine Platform” feature activated in your Windows “Features”. To do that, search “features” in the research bar and see if the checkbox is selected. You also need to make sure that your system (in the bios) is able to virtualize. This is usually the case.\nIn the Microsoft Store: look for ‘Ubuntu’ or ‘Debian’ (or any linux distribution you want) and install it\nOnce it is downloaded, open the app and choose a username and a password (secured one). When you type your password, nothing will show in the window, which is normal: the writing is invisible.\nYou are now inside of your linux system. You can test some commands such as “pwd”. You are not in your Windows system.\nTo go to your windows system: you need to go back two times with cd ../.. And then go to the “mnt” directory with cd mnt. If you list here your files, you will see your disks. You can move to the desired folder, for example here I moved to the ML_Zoomcamp folder:\nPython should be already installed but you can check it by running sudo apt install python3 command.\nYou can make your actual folder your default folder when you open your Ubuntu terminal with this command : echo "cd ../../mnt/your/folder/path" >> ~/.bashrc\nYou can disable bell sounds (when you type something that does not exist for example) by modifying the inputrc file with this command: sudo vim /etc/inputrc\nYou have to uncomment the set bell-style none line -> to do that, press the “i” keyboard letter (for insert) and go with your keyboard to this line. Delete the # and then press the Escape keyboard touch and finally press “:wq” to write (it saves your modifications) then quit.\nYou can check that your modifications are taken into account by opening a new terminal (you can pin it to your task bar so you do not have to go to the Microsoft app each time).\nYou will need to install pip by running this command sudo apt install python3-pip\nNB: I had this error message when trying to install pipenv (https://github.com/microsoft/WSL/issues/5663):\n/sbin/ldconfig.real: Can\'t link /usr/lib/wsl/lib/libnvoptix_loader.so.1 to libnvoptix.so.1\n/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link\nSo I had to create the following symbolic link:\nsudo ln -s /usr/lib/wsl/lib/libcuda.so.1 /usr/lib64/libcuda.so\n(Mélanie Fouesnard)'}},
+       'text': 'It is quite simple, and you can follow these instructions here:\nhttps://www.youtube.com/watch?v=qYlgUDKKK5A&ab_channel=NeuralNine\nMake sure that you have "Virtual Machine Platform" feature activated in your Windows "Features". To do that, search "features" in the research bar and see if the checkbox is selected. You also need to make sure that your system (in the bios) is able to virtualize. This is usually the case.\nIn the Microsoft Store: look for 'Ubuntu' or 'Debian' (or any linux distribution you want) and install it\nOnce it is downloaded, open the app and choose a username and a password (secured one). When you type your password, nothing will show in the window, which is normal: the writing is invisible.\nYou are now inside of your linux system. You can test some commands such as "pwd". You are not in your Windows system.\nTo go to your windows system: you need to go back two times with cd ../.. And then go to the "mnt" directory with cd mnt. If you list here your files, you will see your disks. You can move to the desired folder, for example here I moved to the ML_Zoomcamp folder:\nPython should be already installed but you can check it by running sudo apt install python3 command.\nYou can make your actual folder your default folder when you open your Ubuntu terminal with this command : echo "cd ../../mnt/your/folder/path" >> ~/.bashrc\nYou can disable bell sounds (when you type something that does not exist for example) by modifying the inputrc file with this command: sudo vim /etc/inputrc\nYou have to uncomment the set bell-style none line -> to do that, press the "i" keyboard letter (for insert) and go with your keyboard to this line. Delete the # and then press the Escape keyboard touch and finally press ":wq" to write (it saves your modifications) then quit.\nYou can check that your modifications are taken into account by opening a new terminal (you can pin it to your task bar so you do not have to go to the Microsoft app each time).\nYou will need to install pip by running this command sudo apt install python3-pip\nNB: I had this error message when trying to install pipenv (https://github.com/microsoft/WSL/issues/5663):\n/sbin/ldconfig.real: Can\'t link /usr/lib/wsl/lib/libnvoptix_loader.so.1 to libnvoptix.so.1\n/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link\nSo I had to create the following symbolic link:\nsudo ln -s /usr/lib/wsl/lib/libcuda.so.1 /usr/lib64/libcuda.so\n(Mélanie Fouesnard)'}},
      {'_index': 'course-questions',
       '_id': 'R30ytJABBRmP4y361Cik',
       '_score': 0.5985867,
@@ -457,7 +455,7 @@ res["hits"]["hits"]
       '_source': {'question': 'Course - When will the course start?',
        'course': 'data-engineering-zoomcamp',
        'section': 'General course-related questions',
-       'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel."},
+       'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  "Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel."},
       '_explanation': {'value': 0.778914,
        'description': 'sum of:',
        'details': [{'value': 0.778914,
@@ -1198,11 +1196,11 @@ for each question in ground_truth_dataset:
     Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
     HTTP request sent, awaiting response... 200 OK
     Length: 504747 (493K) [text/plain]
-    Saving to: ‘ground-truth-data.csv’
+    Saving to: 'ground-truth-data.csv'
     
     ground-truth-data.c 100%[===================>] 492.92K  --.-KB/s    in 0.01s   
     
-    2024-07-18 10:02:58 (34.4 MB/s) - ‘ground-truth-data.csv’ saved [504747/504747]
+    2024-07-18 10:02:58 (34.4 MB/s) - 'ground-truth-data.csv' saved [504747/504747]
     
 
 
@@ -1223,11 +1221,11 @@ with open('documents-with-ids.json', 'rt') as f:
     Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
     HTTP request sent, awaiting response... 200 OK
     Length: 699257 (683K) [text/plain]
-    Saving to: ‘documents-with-ids.json.1’
+    Saving to: 'documents-with-ids.json.1'
     
     documents-with-ids. 100%[===================>] 682.87K  --.-KB/s    in 0.02s   
     
-    2024-07-19 12:35:36 (37.0 MB/s) - ‘documents-with-ids.json.1’ saved [699257/699257]
+    2024-07-19 12:35:36 (37.0 MB/s) - 'documents-with-ids.json.1' saved [699257/699257]
     
 
 
@@ -1411,7 +1409,7 @@ elastic_search(
       'question': 'Course - Can I follow the course after it finishes?',
       'course': 'data-engineering-zoomcamp',
       'id': '0472c382d4'},
-     {'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don’t rely on its answers 100%, it is pretty good though.',
+     {'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don't rely on its answers 100%, it is pretty good though.',
       'section': 'General course-related questions',
       'question': 'Course - Can I get support if I take the course in the self-paced mode?',
       'course': 'data-engineering-zoomcamp',
@@ -1465,12 +1463,12 @@ results
 
 
 
-    [{'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.",
+    [{'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  "Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.",
       'section': 'General course-related questions',
       'question': 'Course - When will the course start?',
       'course': 'data-engineering-zoomcamp',
       'id': '6211ca3c99'},
-     {'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.",
+     {'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  "Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.",
       'section': 'General course-related questions',
       'question': 'Course - When will the course start?',
       'course': 'data-engineering-zoomcamp',
@@ -1501,7 +1499,7 @@ next((item for item in documents if item.get('id') == 'c02e79ef'), None)
 
 
 
-    {'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.",
+    {'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  "Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.",
      'section': 'General course-related questions',
      'question': 'Course - When will the course start?',
      'course': 'data-engineering-zoomcamp',
@@ -1632,11 +1630,11 @@ print(f"The hit rate is {hit_rate(match_array)} and the MRR is {mrr(match_array)
     Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
     HTTP request sent, awaiting response... 200 OK
     Length: 699257 (683K) [text/plain]
-    Saving to: ‘documents-with-ids.json’
+    Saving to: 'documents-with-ids.json'
     
     documents-with-ids. 100%[===================>] 682.87K  --.-KB/s    in 0.02s   
     
-    2024-07-19 12:38:59 (29.4 MB/s) - ‘documents-with-ids.json’ saved [699257/699257]
+    2024-07-19 12:38:59 (29.4 MB/s) - 'documents-with-ids.json' saved [699257/699257]
     
 
 
@@ -1917,7 +1915,7 @@ res["hits"]["hits"]
       '_source': {'question': 'Course - Can I get support if I take the course in the self-paced mode?',
        'course': 'data-engineering-zoomcamp',
        'section': 'General course-related questions',
-       'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don’t rely on its answers 100%, it is pretty good though.',
+       'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don't rely on its answers 100%, it is pretty good though.',
        'id': 'eb56ae98'},
       '_explanation': {'value': 1.5664915,
        'description': 'sum of:',
@@ -2010,7 +2008,7 @@ elastic_search_knn("question_vector", v_user_query, "data-engineering-zoomcamp")
      {'question': 'Course - Can I get support if I take the course in the self-paced mode?',
       'course': 'data-engineering-zoomcamp',
       'section': 'General course-related questions',
-      'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don’t rely on its answers 100%, it is pretty good though.',
+      'text': 'Yes, the slack channel remains open and you can ask questions there. But always sDocker containers exit code w search the channel first and second, check the FAQ (this document), most likely all your questions are already answered here.\nYou can also tag the bot @ZoomcampQABot to help you conduct the search, but don't rely on its answers 100%, it is pretty good though.',
       'id': 'eb56ae98'},
      {'question': 'Course - What can I do before the course starts?',
       'course': 'data-engineering-zoomcamp',
@@ -2020,12 +2018,12 @@ elastic_search_knn("question_vector", v_user_query, "data-engineering-zoomcamp")
      {'question': 'The course has already started. Can I still join it?',
       'course': 'machine-learning-zoomcamp',
       'section': 'General course-related questions',
-      'text': 'Yes, you can. You won’t be able to submit some of the homeworks, but you can still take part in the course.\nIn order to get a certificate, you need to submit 2 out of 3 course projects and review 3 peers’ Projects by the deadline. It means that if you join the course at the end of November and manage to work on two projects, you will still be eligible for a certificate.',
+      'text': 'Yes, you can. You won't be able to submit some of the homeworks, but you can still take part in the course.\nIn order to get a certificate, you need to submit 2 out of 3 course projects and review 3 peers' Projects by the deadline. It means that if you join the course at the end of November and manage to work on two projects, you will still be eligible for a certificate.',
       'id': 'ee58a693'},
      {'question': 'Course - When will the course start?',
       'course': 'data-engineering-zoomcamp',
       'section': 'General course-related questions',
-      'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  “Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon’t forget to register in DataTalks.Club's Slack and join the channel.",
+      'text': "The purpose of this document is to capture frequently asked technical questions\nThe exact day and hour of the course will be 15th Jan 2024 at 17h00. The course will start with the first  "Office Hours'' live.1\nSubscribe to course public Google Calendar (it works from Desktop only).\nRegister before the course starts using this link.\nJoin the course Telegram channel with announcements.\nDon't forget to register in DataTalks.Club's Slack and join the channel.",
       'id': 'c02e79ef'},
      {'question': 'Course - What are the prerequisites for this course?',
       'course': 'data-engineering-zoomcamp',
@@ -2040,7 +2038,7 @@ elastic_search_knn("question_vector", v_user_query, "data-engineering-zoomcamp")
      {'question': 'Course - how many Zoomcamps in a year?',
       'course': 'data-engineering-zoomcamp',
       'section': 'General course-related questions',
-      'text': "There are 3 Zoom Camps in a year, as of 2024. However, they are for separate courses:\nData-Engineering (Jan - Apr)\nMLOps (May - Aug)\nMachine Learning (Sep - Jan)\nThere's only one Data-Engineering Zoomcamp “live” cohort per year, for the certification. Same as for the other Zoomcamps.\nThey follow pretty much the same schedule for each cohort per zoomcamp. For Data-Engineering it is (generally) from Jan-Apr of the year. If you’re not interested in the Certificate, you can take any zoom camps at any time, at your own pace, out of sync with any “live” cohort.",
+      'text': "There are 3 Zoom Camps in a year, as of 2024. However, they are for separate courses:\nData-Engineering (Jan - Apr)\nMLOps (May - Aug)\nMachine Learning (Sep - Jan)\nThere's only one Data-Engineering Zoomcamp "live" cohort per year, for the certification. Same as for the other Zoomcamps.\nThey follow pretty much the same schedule for each cohort per zoomcamp. For Data-Engineering it is (generally) from Jan-Apr of the year. If you're not interested in the Certificate, you can take any zoom camps at any time, at your own pace, out of sync with any "live" cohort.",
       'id': '2ed9b986'},
      {'question': 'Course - Is the current cohort going to be different from the previous cohort?',
       'course': 'data-engineering-zoomcamp',

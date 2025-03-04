@@ -3,9 +3,9 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-    <title>LLM Zoomcamp Week 2 - Open Source LLMs Notes | Waleed Ayoub</title>
-    <meta name="description" content="LLM Zoomcamp Week 2 - Open Source LLMs Notes">
-    <meta property="og:site_name" content="LLM Zoomcamp Week 2 - Open Source LLMs Notes" />
+    <title>LLM Zoomcamp Week 2 - Open Source Notes | Waleed Ayoub</title>
+    <meta name="description" content="LLM Zoomcamp Week 2 - Open Source Notes">
+    <meta property="og:site_name" content="LLM Zoomcamp Week 2 - Open Source Notes" />
     <meta property="og:title" content="Waleed Ayoub" />
     <meta property="og:description" content="LLM Zoomcamp - Week 2 Notes In the second week, we set up cloud-based GPU options like SaturnCloud and explore open source alternatives to OpenAI platforms and models like: Platforms:
 HuggingFace Ollama SaturnCloud Models:
@@ -37,7 +37,7 @@ For the most part, I will be taking these notes in a Saturn Cloud notebook Which
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.145.0">
     
-    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.5665646b97fc6d2e2f82b86c3df5c557932e22130fac85274baaefff435e2a9a.css" type="text/css" media="screen">
 
     <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
 
@@ -113,8 +113,8 @@ For the most part, I will be taking these notes in a Saturn Cloud notebook Which
 <section class="intro">
   
   <div class="post-header">
-    <a class="go-back" href="http://localhost:1313/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
-    <h2 class="post-title">LLM Zoomcamp Week 2 - Open Source LLMs Notes</h2>
+    <a class="go-back" href="/post/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+    <h2 class="post-title">LLM Zoomcamp Week 2 - Open Source Notes</h2>
 </div>
 
 <p>By <a href="">waleed</a></p>
@@ -127,9 +127,9 @@ For the most part, I will be taking these notes in a Saturn Cloud notebook Which
   
   <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
   
-  <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+  <h5><a class="tag" href='http://localhost:1313/tags/llm'>llm</a></h5>
   
-  <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+  <h5><a class="tag" href='http://localhost:1313/tags/zoomcamp'>zoomcamp</a></h5>
   
 </span>
 
@@ -220,11 +220,11 @@ Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.1
 Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 3832 (3.7K) [text/plain]
-Saving to: ‘minsearch.py’
+Saving to: 'minsearch.py'
 
 minsearch.py        100%[===================&gt;]   3.74K  --.-KB/s    in 0s      
 
-2024-07-08 01:20:41 (83.2 MB/s) - ‘minsearch.py’ saved [3832/3832]
+2024-07-08 01:20:41 (83.2 MB/s) - 'minsearch.py' saved [3832/3832]
 </code></pre>
 <p>From the link above, we have some reference code to run the model on a GPU:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># pip install accelerate</span>
@@ -301,7 +301,7 @@ special_tokens_map.json:   0%|          | 0.00/2.20k [00:00&lt;?, ?B/s]
 tokenizer.json:   0%|          | 0.00/2.42M [00:00&lt;?, ?B/s]
 
 
-You are using the default legacy behaviour of the &lt;class 'transformers.models.t5.tokenization_t5.T5Tokenizer'&gt;. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+You are using the default legacy behaviour of the &lt;class 'transformers.models.t5.tokenization_t5.T5Tokenizer'&gt;. This is expected, and simply means that the 'legacy' (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set 'legacy=False'. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
 Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
 
 

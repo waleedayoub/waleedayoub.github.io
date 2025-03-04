@@ -32,7 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.145.0">
     
-    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.5665646b97fc6d2e2f82b86c3df5c557932e22130fac85274baaefff435e2a9a.css" type="text/css" media="screen">
 
     <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
 
@@ -117,23 +117,14 @@
                         
                         <h5><a class="tag" href='http://localhost:1313/tags/huggingface'>huggingface</a></h5>
                         
-                        <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+                        <h5><a class="tag" href='http://localhost:1313/tags/llm'>llm</a></h5>
                         
                         <h5><a class="tag" href='http://localhost:1313/tags/agents'>agents</a></h5>
                         
                         <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
                         
                     </span>
-                    <p><p>I have recently started a new course focused on building agents provided by huggingface.co
-Here&rsquo;s an overview of all the things that I&rsquo;ll be learning:</p>
-<ul>
-<li>📖 Study AI Agents in theory, design, and practice.</li>
-<li>🧑‍💻 Learn to use established AI Agent libraries such as smolagents, LlamaIndex, and LangGraph.</li>
-<li>💾 Share your agents on the Hugging Face Hub and explore agents created by the community.</li>
-<li>🏆 Participate in challenges where you will evaluate your agents against other students’.</li>
-<li>🎓 Earn a certificate of completion by completing assignments.</li>
-</ul>
-<p>I thought what better way to motivate myself to keep going than to maintain some regular blog posts with concepts and frameworks I explore. Unfortunately, that didn&rsquo;t help me complete the DataTalksClub LLM Zoomcamp fully, but it did really get me pretty far. So here goes.</p></p>
+                    <p class="post-description">Deep dive into huggingface&#39;s CodeAgent framework: exploring how AI agents work with prompts.yaml, manage context evolution, and make decisions through LLM interactions. Includes practical insights on agent observability using Langfuse.</p>
                 </well>
                             
             </div><br>
@@ -150,51 +141,12 @@ Here&rsquo;s an overview of all the things that I&rsquo;ll be learning:</p>
                         
                         <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
                         
-                        <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+                        <h5><a class="tag" href='http://localhost:1313/tags/llm'>llm</a></h5>
                         
-                        <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+                        <h5><a class="tag" href='http://localhost:1313/tags/zoomcamp'>zoomcamp</a></h5>
                         
                     </span>
-                    <p><h1 id="llm-zoomcamp---week-4-notes">LLM Zoomcamp - Week 4 Notes <!-- omit from toc --></h1>
-<p>In this section the focus is on the following:</p>
-<ul>
-<li>
-<p>Extending the evaluation work we did in section 3 to monitor answer quality over time</p>
-</li>
-<li>
-<p>How to look at answer quality with user feedback and interaction</p>
-</li>
-<li>
-<p>How to store all this data and visualize it, etc.</p>
-</li>
-<li>
-<p>But before all that, let&rsquo;s do a quick recap of where we are.</p>
-</li>
-</ul>
-<h2 id="table-of-contents">Table of Contents <!-- omit from toc --></h2>
-<ul>
-<li><a href="#recap">Recap</a></li>
-<li><a href="#41-intro">4.1 Intro</a></li>
-<li><a href="#42-differences-between-online-and-offline-evaluation-with-rags">4.2 Differences Between Online and Offline Evaluation (with RAGs)</a>
-<ul>
-<li><a href="#techniques-for-offline-evaluation">Techniques For Offline Evaluation</a></li>
-</ul>
-</li>
-<li><a href="#43-offline-evaluation-for-our-rag-system">4.3 Offline Evaluation for our RAG System</a>
-<ul>
-<li><a href="#load-our-faq-documents-with-document-ids">Load our FAQ Documents with Document IDs</a></li>
-<li><a href="#load-ground-truth-dataset-we-create-using-llms">Load ground truth dataset we create using LLMs</a></li>
-<li><a href="#cosine-similarity-metric">Cosine Similarity metric</a></li>
-<li><a href="#evaluating-gpt-35-turbo-vs-gpt-4o-mini">Evaluating GPT-3.5-turbo vs GPT-4o-mini</a></li>
-</ul>
-</li>
-<li><a href="#44-offline-rag-evaluation---cosine-similarity">4.4 Offline RAG Evaluation - Cosine Similarity</a></li>
-<li><a href="#45-offline-rag-evaluation---llm-as-a-judge">4.5 Offline RAG Evaluation - LLM as a Judge</a></li>
-<li><a href="#46-capturing-user-feedback">4.6 Capturing User Feedback</a></li>
-<li><a href="#47-monitoring-the-system">4.7 Monitoring the System</a></li>
-</ul>
-<h2 id="recap">Recap</h2>
-<p>A quick recap of what the first three sections have been about:</p></p>
+                    <p class="post-description">In-depth coverage of LLM monitoring and evaluation techniques, including metrics, testing frameworks, and best practices for maintaining model quality and performance in production environments.</p>
                 </well>
                             
             </div><br>
@@ -202,7 +154,7 @@ Here&rsquo;s an overview of all the things that I&rsquo;ll be learning:</p>
             <div class="post-item">
               
                 <well class="well">
-                  <h3><a class="link" href="http://localhost:1313/post/llmzoomcamp_week3-vector-search_notes/">LLM Zoomcamp Week 3 - Vector Search with Elasticsearch Notes</a>
+                  <h3><a class="link" href="http://localhost:1313/post/llmzoomcamp_week3-vector-search_notes/">LLM Zoomcamp Week 3 - Vector Search Notes</a>
                     
                     by <a class="link" href="">waleed</a></h3>
                   
@@ -211,95 +163,12 @@ Here&rsquo;s an overview of all the things that I&rsquo;ll be learning:</p>
                         
                         <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
                         
-                        <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+                        <h5><a class="tag" href='http://localhost:1313/tags/llm'>llm</a></h5>
                         
-                        <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+                        <h5><a class="tag" href='http://localhost:1313/tags/zoomcamp'>zoomcamp</a></h5>
                         
                     </span>
-                    <p><h1 id="llm-zoomcamp---week-3-notes">LLM Zoomcamp - Week 3 Notes <!-- omit from toc --></h1>
-<p>In this section the focus is on the following:</p>
-<ul>
-<li>Applying Vector Databases as an alternative to Elasticsearch in the previous two models.
-<ul>
-<li>Important to note that Elasticsearch has the ability to operate as a Vector DB as an alternative to Lucene and will be covered as well</li>
-</ul>
-</li>
-<li>Vector embeddings and their role in building RAG applications</li>
-<li>Evaluation methods for search / query retrieval performance</li>
-</ul>
-<h2 id="table-of-contents">Table of Contents <!-- omit from toc --></h2>
-<ul>
-<li><a href="#31-introduction-to-vector-search">3.1 Introduction to Vector Search</a></li>
-<li><a href="#32-how-to-do-vectorized-search-with-elasticsearch">3.2 How to do Vectorized Search with Elasticsearch</a>
-<ul>
-<li><a href="#321-lets-start-with-semantic-search">3.2.1 Let&rsquo;s start with Semantic Search</a>
-<ul>
-<li><a href="#step-1---load-our-documents">Step 1 - Load our documents</a></li>
-<li><a href="#step-2---create-embeddings-using-pre-trained-models">Step 2 - Create embeddings using pre-trained models</a></li>
-<li><a href="#step-3---set-up-elasticsearch-connection">Step 3 - Set up Elasticsearch connection</a></li>
-<li><a href="#step-4-create-elasticsearch-mappings-and-index">Step 4 Create Elasticsearch mappings and index</a></li>
-<li><a href="#step-5-add-documents-to-the-index">Step 5 Add documents to the index</a></li>
-<li><a href="#step-6-create-the-user-query">Step 6 Create the user query</a></li>
-<li><a href="#step-7-perform-a-semantic-search-using-elasticsearch-vectordb">Step 7 Perform a semantic search using Elasticsearch VectorDB</a></li>
-</ul>
-</li>
-<li><a href="#322-now-lets-try-advanced-semantic-search">3.2.2 Now let&rsquo;s try Advanced Semantic Search</a></li>
-</ul>
-</li>
-<li><a href="#33-evaluation">3.3 Evaluation</a>
-<ul>
-<li><a href="#331-evaluation-metrics-for-retrieval">3.3.1 Evaluation metrics for retrieval</a></li>
-<li><a href="#332-ground-truth-generation-for-retrieval-evaluation">3.3.2 Ground truth generation for retrieval evaluation</a></li>
-<li><a href="#333-evaluation-of-text-retrieval-techniques-for-rag">3.3.3 Evaluation of text retrieval techniques for RAG</a></li>
-<li><a href="#334-evaluation-vector-retrieval">3.3.4 Evaluation vector retrieval</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="31-introduction-to-vector-search">3.1 Introduction to Vector Search</h2>
-<ul>
-<li>Vector search has been around for a while and is getting popular again largely because LLMs lack long-term memory and have limited context windows
-<ul>
-<li>Vector DBs are an economical and effective way to store data for use with LLMs</li>
-</ul>
-</li>
-<li>Elastic.co does a good job of explaining what vector embeddings are <a href="https://www.elastic.co/what-is/vector-embedding">here</a>
-<ul>
-<li>Here&rsquo;s their definition:</li>
-<li><code>Vector embeddings are a way to convert words and sentences and other data into numbers that capture their meaning and relationships. They represent different data types as points in a multidimensional space, where similar data points are clustered closer together. These numerical representations help machines understand and process this data more effectively.</code></li>
-</ul>
-</li>
-<li>Vector databases are databases that index and store vector embeddings
-<ul>
-<li>Which means you can easily store them, reference them, compare different vectors semantically (using various distance measures, etc.)</li>
-</ul>
-</li>
-<li>Here&rsquo;s what it would look like when put together with an LLM:</li>
-</ul>
-<div style="max-width: 100%; overflow: hidden;">
-    <img src="/images/sbert.png" alt="List of SBERT original models" style="width: 100%; height: auto;">
-</div>
-<h2 id="32-how-to-do-vectorized-search-with-elasticsearch">3.2 How to do Vectorized Search with Elasticsearch</h2>
-<ul>
-<li>Let&rsquo;s start with the architecture of the Semantic Search system we&rsquo;re going to build:</li>
-</ul>
-<div class="mermaid-wrapper">
-    <pre class="mermaid">graph LR
-    documents.json -->|load| documents
-    subgraph Process
-        documents --> embeddings
-        embeddings --> index
-        index -->|store| Elasticsearch[(Elasticsearch vector DB)]
-    end
-    Elasticsearch -->|retrieve| Semantic_search_results(Semantic search results)
-    new_search_query(New search query) -.-> embeddings
-    embeddings  -.-> Elasticsearch
-	
-	style new_search_query stroke:blue,stroke-width:2px;
-    </pre>
-</div>
-<ul>
-<li>
-<p>The way this system works is as follows:</p></p>
+                    <p class="post-description">Detailed exploration of vector search in LLMs, including embeddings, similarity measures, and implementing efficient vector databases for semantic search.</p>
                 </well>
                             
             </div><br>
@@ -307,7 +176,7 @@ Here&rsquo;s an overview of all the things that I&rsquo;ll be learning:</p>
             <div class="post-item">
               
                 <well class="well">
-                  <h3><a class="link" href="http://localhost:1313/post/llmzoomcamp_week2-open-source_notes/">LLM Zoomcamp Week 2 - Open Source LLMs Notes</a>
+                  <h3><a class="link" href="http://localhost:1313/post/llmzoomcamp_week2-open-source_notes/">LLM Zoomcamp Week 2 - Open Source Notes</a>
                     
                     by <a class="link" href="">waleed</a></h3>
                   
@@ -316,90 +185,12 @@ Here&rsquo;s an overview of all the things that I&rsquo;ll be learning:</p>
                         
                         <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
                         
-                        <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+                        <h5><a class="tag" href='http://localhost:1313/tags/llm'>llm</a></h5>
                         
-                        <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+                        <h5><a class="tag" href='http://localhost:1313/tags/zoomcamp'>zoomcamp</a></h5>
                         
                     </span>
-                    <p><h1 id="llm-zoomcamp---week-2-notes">LLM Zoomcamp - Week 2 Notes</h1>
-<p>In the second week, we set up cloud-based GPU options like SaturnCloud and explore open source alternatives to OpenAI platforms and  models like:
-Platforms:</p>
-<ul>
-<li>HuggingFace</li>
-<li>Ollama</li>
-<li>SaturnCloud</li>
-</ul>
-<p>Models:</p>
-<ul>
-<li>Google FLAN T5</li>
-<li>Phi 3 Mini</li>
-<li>Mistral 7-B</li>
-</ul>
-<p>And finally, we put the RAG we built in week 1 into a Streamlit UI</p>
-<p>A few important call outs for this section:</p>
-<ul>
-<li>For the most part, I will be taking these notes in a Saturn Cloud notebook</li>
-<li>Which means that before starting each note section, I will be restarting the kernel to free up RAM from the GPU I&rsquo;m using</li>
-<li>So if I ever decide to revisit these notes in the future, I won&rsquo;t be able to just load this notebook and run things as is</li>
-</ul>
-<h2 id="table-of-contents">Table of Contents</h2>
-<ul>
-<li><a href="#22-using-saturncloud-for-gpu-notebooks">2.2 Using SaturnCloud for GPU Notebooks</a></li>
-<li><a href="#23-huggingface-and-google-flan-t5">2.3 HuggingFace and Google FLAN T5</a></li>
-<li><a href="#24-phi-3-mini">2.4 Phi 3 Mini</a></li>
-<li><a href="#25-mistral-7b-and-huggingface-hub-authentication">2.5 Mistral-7B and HuggingFace Hub Authentication</a></li>
-<li><a href="#26-exploring-open-source-llms">2.6 Exploring Open Source LLMs</a></li>
-<li><a href="#27-running-llms-locally-without-a-gpu-with-ollama">2.7 Running LLMs Locally without a GPU with Ollama</a></li>
-<li><a href="#28-ollama--elastic-in-docker-compose">2.8 Ollama + Elastic in Docker Compose</a>
-<ul>
-<li><a href="#docker-compose-setup">Docker Compose Setup</a></li>
-<li><a href="#setting-up-elasticsearch-and-ollama">Setting Up Elasticsearch and Ollama</a></li>
-<li><a href="#building-the-rag-system">Building the RAG System</a></li>
-</ul>
-</li>
-<li><a href="#29-creating-a-streamlit-ui">2.9 Creating a Streamlit UI</a></li>
-<li><a href="#bonus-ollama--openwebui--elastic-in-docker-with-gpu">Bonus Ollama + OpenWebUI + Elastic in Docker with GPU</a></li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
-</span></span></code></pre></div><h2 id="22-using-saturncloud-for-gpu-notebooks">2.2 Using SaturnCloud for GPU Notebooks</h2>
-<ul>
-<li>The main thing not covered is how to give Saturn Cloud access to your GitHub repositories
-<ul>
-<li>This is fairly straightforward:
-<ol>
-<li>In Saturn Cloud, go to &ldquo;Manage <username>&rdquo; and create an SSH key pair</li>
-<li>Copy the public key Saturn Cloud generates and go to Github.com
-i. In Github.com, go to Settings -&gt; SSH and GPG keys and click on <code>New SSH Key</code>
-ii. Paste in the public key you copied from Saturn Cloud</li>
-<li>Now go back to Saturn Cloud and click on <code>Git Repositories</code>
-i. Click on <code>New</code>
-ii. Add the url for the Github repository you want Saturn Cloud to have access to</li>
-</ol>
-</li>
-</ul>
-</li>
-<li>When creating a new Python VM resource, make sure to install additional libs: <code>pip install -U transformers accelerate bitsandbytes</code></li>
-<li>The rest of it is quite straightforward</li>
-<li>A few things I did with my setup of the notebook resource that just helps with development:
-<ol>
-<li>I enabled SSH access so that I can ideally connect to this notebook resource in VS Code (and thus take advantange of many things including Github Copilot)</li>
-<li>I gave the VM an easy to remember name: <a href="https://llm-zoomcamp-waleed.community.saturnenterprise.io">https://llm-zoomcamp-waleed.community.saturnenterprise.io</a></li>
-<li>I created an access token on huggingface.co and added it as an environment variable on Saturn Cloud (more on that in section 2.5)</li>
-</ol>
-</li>
-</ul>
-<h2 id="23-huggingface-and-google-flan-t5">2.3 HuggingFace and Google FLAN T5</h2>
-<ul>
-<li>In this lesson, we start working with open source models available on <a href="huggingface.co">HuggingFace</a>
-<ul>
-<li>HuggingFace is a place where people host models, not just LLMs, all kinds of ML models (which effectively boils down to hosting model weights)</li>
-</ul>
-</li>
-<li>This is where our Saturn Cloud GPU notebook in 2.2 comes into play as we&rsquo;ll need a GPU to work with these models</li>
-<li>We&rsquo;re going to be using Google FLAN T5: <a href="https://huggingface.co/google/flan-t5-xl">https://huggingface.co/google/flan-t5-xl</a></li>
-</ul>
-<p>Let&rsquo;s start by pulling in the minsearch engine we&rsquo;re going to use in our RAG</p></p>
+                    <p class="post-description">Deep dive into open-source LLMs, exploring model architectures, training approaches, and practical implementation using popular frameworks and libraries.</p>
                 </well>
                             
             </div><br>
@@ -407,7 +198,7 @@ ii. Add the url for the Github repository you want Saturn Cloud to have access t
             <div class="post-item">
               
                 <well class="well">
-                  <h3><a class="link" href="http://localhost:1313/post/llmzoomcamp_week1-intro_notes/">LLM Zoomcamp Week 1 - Intro Notes</a>
+                  <h3><a class="link" href="http://localhost:1313/post/llmzoomcamp_week1-intro_notes/">LLM Zoomcamp Week 1 - Introduction Notes</a>
                     
                     by <a class="link" href="">waleed</a></h3>
                   
@@ -416,15 +207,12 @@ ii. Add the url for the Github repository you want Saturn Cloud to have access t
                         
                         <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
                         
-                        <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+                        <h5><a class="tag" href='http://localhost:1313/tags/llm'>llm</a></h5>
                         
-                        <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+                        <h5><a class="tag" href='http://localhost:1313/tags/zoomcamp'>zoomcamp</a></h5>
                         
                     </span>
-                    <p><h1 id="llm-zoomcamp---week-1-notes">LLM Zoomcamp - Week 1 Notes</h1>
-<p>This is the first week of the new <a href="https://github.com/DataTalksClub/llm-zoomcamp/tree/main">LLM Zoomcamp</a> hosted by <a href="https://datatalks.club/">DataTalksClub</a>.
-I&rsquo;ve found their content really helpful in the past, having completed the Data Engineering Zoomcamp a year ago and successively attempted (but never finished!) the other two zoomcamps they offer.</p>
-<p>In order to give me the best chance of completing this one, I&rsquo;ve decided to publish my notes on my blog. Hope that helps me see this one through!</p></p>
+                    <p class="post-description">Comprehensive notes on LLM Zoomcamp&#39;s introduction week, covering fundamental concepts of Large Language Models, their applications, and basic implementation approaches.</p>
                 </well>
                             
             </div><br>
