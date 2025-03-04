@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang=""><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>LLM Zoomcamp Week 2 - Open Source LLMs Notes | Waleed Ayoub</title>
+    <meta name="description" content="LLM Zoomcamp Week 2 - Open Source LLMs Notes">
+    <meta property="og:site_name" content="LLM Zoomcamp Week 2 - Open Source LLMs Notes" />
+    <meta property="og:title" content="Waleed Ayoub" />
+    <meta property="og:description" content="LLM Zoomcamp - Week 2 Notes In the second week, we set up cloud-based GPU options like SaturnCloud and explore open source alternatives to OpenAI platforms and models like: Platforms:
+HuggingFace Ollama SaturnCloud Models:
+Google FLAN T5 Phi 3 Mini Mistral 7-B And finally, we put the RAG we built in week 1 into a Streamlit UI
+A few important call outs for this section:
+For the most part, I will be taking these notes in a Saturn Cloud notebook Which means that before starting each note section, I will be restarting the kernel to free up RAM from the GPU I&rsquo;m using So if I ever decide to revisit these notes in the future, I won&rsquo;t be able to just load this notebook and run things as is Table of Contents 2.2 Using SaturnCloud for GPU Notebooks 2.3 HuggingFace and Google FLAN T5 2.4 Phi 3 Mini 2.5 Mistral-7B and HuggingFace Hub Authentication 2.6 Exploring Open Source LLMs 2.7 Running LLMs Locally without a GPU with Ollama 2.8 Ollama &#43; Elastic in Docker Compose Docker Compose Setup Setting Up Elasticsearch and Ollama Building the RAG System 2.9 Creating a Streamlit UI Bonus Ollama &#43; OpenWebUI &#43; Elastic in Docker with GPU import os import requests 2.2 Using SaturnCloud for GPU Notebooks The main thing not covered is how to give Saturn Cloud access to your GitHub repositories This is fairly straightforward: In Saturn Cloud, go to &ldquo;Manage &rdquo; and create an SSH key pair Copy the public key Saturn Cloud generates and go to Github.com i. In Github.com, go to Settings -&gt; SSH and GPG keys and click on New SSH Key ii. Paste in the public key you copied from Saturn Cloud Now go back to Saturn Cloud and click on Git Repositories i. Click on New ii. Add the url for the Github repository you want Saturn Cloud to have access to When creating a new Python VM resource, make sure to install additional libs: pip install -U transformers accelerate bitsandbytes The rest of it is quite straightforward A few things I did with my setup of the notebook resource that just helps with development: I enabled SSH access so that I can ideally connect to this notebook resource in VS Code (and thus take advantange of many things including Github Copilot) I gave the VM an easy to remember name: https://llm-zoomcamp-waleed.community.saturnenterprise.io I created an access token on huggingface.co and added it as an environment variable on Saturn Cloud (more on that in section 2.5) 2.3 HuggingFace and Google FLAN T5 In this lesson, we start working with open source models available on HuggingFace HuggingFace is a place where people host models, not just LLMs, all kinds of ML models (which effectively boils down to hosting model weights) This is where our Saturn Cloud GPU notebook in 2.2 comes into play as we&rsquo;ll need a GPU to work with these models We&rsquo;re going to be using Google FLAN T5: https://huggingface.co/google/flan-t5-xl Let&rsquo;s start by pulling in the minsearch engine we&rsquo;re going to use in our RAG
+" />
+    <meta property="og:image" content="http://localhost:1313/images/headshot-waleed.png" />
+    <meta name="keywords" content="" />
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+        integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+        integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous">
+        </script>
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);">
+        </script>
+    
+    <meta name="keywords" content="waleed, data, python">
+    <link rel="icon" type="image/svg" href='http://localhost:1313/images/logo.png' />
+    <meta name="author" content='waleed'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.145.0">
+    
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+
+    <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
+
+    
+
+    
+    
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({ startOnLoad: true });
+        });
+    </script>
+    
+</head><body>
+      <div class="line" id="scrollIndicator"></div>
+      <div class="main"><div class="title">
+  <div class="name">
+    <h2><a href="http://localhost:1313/"
+	   style="text-decoration: none; color: inherit;">Waleed Ayoub</a></h2>
+  </div>
+  <div class="color-scheme">
+    <input type="checkbox" class="checkbox" id="chk" />
+    <label class="label" for="chk">
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"></path></svg>
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 160c-52.9 0-96 43.1-96
+										96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z"></path></svg>
+      <div class="ball"></div>
+    </label>
+  </div>
+</div>
+<script>
+  const themeSetter = (theme) => {
+      document.body.classList.toggle('dark')
+      localStorage.setItem('theme', theme)
+      blockSwitcher()
+  }
+
+  const blockSwitcher = () => [...document.getElementsByTagName("BLOCKQUOTE")]
+	.forEach(b => b.classList.toggle('dark'))
+
+  const styleSwapper = () => {
+      document.body.classList.add('back-transition')
+      if (localStorage.getItem('theme') === 'dark') themeSetter('light')
+      else if (localStorage.getItem('theme') === 'light') themeSetter('dark')
+  }
+
+  if (localStorage.getItem('theme') === 'dark'){
+      themeSetter('dark')
+      document.addEventListener("DOMContentLoaded", blockSwitcher)
+  }
+ else localStorage.setItem('theme', 'light')
+
+  document.getElementById('chk').addEventListener('change',styleSwapper);
+
+  window.addEventListener("scroll", () => {
+      let height = document.documentElement.scrollHeight
+          - document.documentElement.clientHeight;
+      if(height >= 500){
+	  let winScroll = document.body.scrollTop
+              || document.documentElement.scrollTop;
+	  let scrolled = (winScroll / height) * 100;
+	  document.getElementById("scrollIndicator").style.width = scrolled + "%";
+      }
+  });
+</script>
+
+<section class="intro">
+  
+  <div class="post-header">
+    <a class="go-back" href="http://localhost:1313/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+    <h2 class="post-title">LLM Zoomcamp Week 2 - Open Source LLMs Notes</h2>
+</div>
+
+<p>By <a href="">waleed</a></p>
+
+<p class="post-dets">Published on: July 10, 2024
+  | Reading Time: 23 min | Last Modified: July 10, 2024
+  <br>
+</p>
+<span class="tags">
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+  
+</span>
+
+<div class="content">
+  <h1 id="llm-zoomcamp---week-2-notes">LLM Zoomcamp - Week 2 Notes</h1>
+<p>In the second week, we set up cloud-based GPU options like SaturnCloud and explore open source alternatives to OpenAI platforms and  models like:
+Platforms:</p>
+<ul>
+<li>HuggingFace</li>
+<li>Ollama</li>
+<li>SaturnCloud</li>
+</ul>
+<p>Models:</p>
+<ul>
+<li>Google FLAN T5</li>
+<li>Phi 3 Mini</li>
+<li>Mistral 7-B</li>
+</ul>
+<p>And finally, we put the RAG we built in week 1 into a Streamlit UI</p>
+<p>A few important call outs for this section:</p>
+<ul>
+<li>For the most part, I will be taking these notes in a Saturn Cloud notebook</li>
+<li>Which means that before starting each note section, I will be restarting the kernel to free up RAM from the GPU I&rsquo;m using</li>
+<li>So if I ever decide to revisit these notes in the future, I won&rsquo;t be able to just load this notebook and run things as is</li>
+</ul>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#22-using-saturncloud-for-gpu-notebooks">2.2 Using SaturnCloud for GPU Notebooks</a></li>
+<li><a href="#23-huggingface-and-google-flan-t5">2.3 HuggingFace and Google FLAN T5</a></li>
+<li><a href="#24-phi-3-mini">2.4 Phi 3 Mini</a></li>
+<li><a href="#25-mistral-7b-and-huggingface-hub-authentication">2.5 Mistral-7B and HuggingFace Hub Authentication</a></li>
+<li><a href="#26-exploring-open-source-llms">2.6 Exploring Open Source LLMs</a></li>
+<li><a href="#27-running-llms-locally-without-a-gpu-with-ollama">2.7 Running LLMs Locally without a GPU with Ollama</a></li>
+<li><a href="#28-ollama--elastic-in-docker-compose">2.8 Ollama + Elastic in Docker Compose</a>
+<ul>
+<li><a href="#docker-compose-setup">Docker Compose Setup</a></li>
+<li><a href="#setting-up-elasticsearch-and-ollama">Setting Up Elasticsearch and Ollama</a></li>
+<li><a href="#building-the-rag-system">Building the RAG System</a></li>
+</ul>
+</li>
+<li><a href="#29-creating-a-streamlit-ui">2.9 Creating a Streamlit UI</a></li>
+<li><a href="#bonus-ollama--openwebui--elastic-in-docker-with-gpu">Bonus Ollama + OpenWebUI + Elastic in Docker with GPU</a></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span></code></pre></div><h2 id="22-using-saturncloud-for-gpu-notebooks">2.2 Using SaturnCloud for GPU Notebooks</h2>
+<ul>
+<li>The main thing not covered is how to give Saturn Cloud access to your GitHub repositories
+<ul>
+<li>This is fairly straightforward:
+<ol>
+<li>In Saturn Cloud, go to &ldquo;Manage <username>&rdquo; and create an SSH key pair</li>
+<li>Copy the public key Saturn Cloud generates and go to Github.com
+i. In Github.com, go to Settings -&gt; SSH and GPG keys and click on <code>New SSH Key</code>
+ii. Paste in the public key you copied from Saturn Cloud</li>
+<li>Now go back to Saturn Cloud and click on <code>Git Repositories</code>
+i. Click on <code>New</code>
+ii. Add the url for the Github repository you want Saturn Cloud to have access to</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>When creating a new Python VM resource, make sure to install additional libs: <code>pip install -U transformers accelerate bitsandbytes</code></li>
+<li>The rest of it is quite straightforward</li>
+<li>A few things I did with my setup of the notebook resource that just helps with development:
+<ol>
+<li>I enabled SSH access so that I can ideally connect to this notebook resource in VS Code (and thus take advantange of many things including Github Copilot)</li>
+<li>I gave the VM an easy to remember name: <a href="https://llm-zoomcamp-waleed.community.saturnenterprise.io">https://llm-zoomcamp-waleed.community.saturnenterprise.io</a></li>
+<li>I created an access token on huggingface.co and added it as an environment variable on Saturn Cloud (more on that in section 2.5)</li>
+</ol>
+</li>
+</ul>
+<h2 id="23-huggingface-and-google-flan-t5">2.3 HuggingFace and Google FLAN T5</h2>
+<ul>
+<li>In this lesson, we start working with open source models available on <a href="huggingface.co">HuggingFace</a>
+<ul>
+<li>HuggingFace is a place where people host models, not just LLMs, all kinds of ML models (which effectively boils down to hosting model weights)</li>
+</ul>
+</li>
+<li>This is where our Saturn Cloud GPU notebook in 2.2 comes into play as we&rsquo;ll need a GPU to work with these models</li>
+<li>We&rsquo;re going to be using Google FLAN T5: <a href="https://huggingface.co/google/flan-t5-xl">https://huggingface.co/google/flan-t5-xl</a></li>
+</ul>
+<p>Let&rsquo;s start by pulling in the minsearch engine we&rsquo;re going to use in our RAG</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span>rm <span style="color:#f92672">-</span>f minsearch<span style="color:#f92672">.</span>py
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span>wget https:<span style="color:#f92672">//</span>raw<span style="color:#f92672">.</span>githubusercontent<span style="color:#f92672">.</span>com<span style="color:#f92672">/</span>alexeygrigorev<span style="color:#f92672">/</span>minsearch<span style="color:#f92672">/</span>main<span style="color:#f92672">/</span>minsearch<span style="color:#f92672">.</span>py
+</span></span></code></pre></div><pre><code>--2024-07-08 01:20:41--  https://raw.githubusercontent.com/alexeygrigorev/minsearch/main/minsearch.py
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133, 185.199.110.133, 185.199.108.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3832 (3.7K) [text/plain]
+Saving to: ‘minsearch.py’
+
+minsearch.py        100%[===================&gt;]   3.74K  --.-KB/s    in 0s      
+
+2024-07-08 01:20:41 (83.2 MB/s) - ‘minsearch.py’ saved [3832/3832]
+</code></pre>
+<p>From the link above, we have some reference code to run the model on a GPU:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># pip install accelerate</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> T5Tokenizer, T5ForConditionalGeneration
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Import a tokenizer to convert text to tokens</span>
+</span></span><span style="display:flex;"><span>tokenizer <span style="color:#f92672">=</span> T5Tokenizer<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;google/flan-t5-xl&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load the model</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> T5ForConditionalGeneration<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;google/flan-t5-xl&#34;</span>, device_map<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;auto&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>input_text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;translate English to German: How old are you?&#34;</span>
+</span></span><span style="display:flex;"><span>input_ids <span style="color:#f92672">=</span> tokenizer(input_text, return_tensors<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span>)<span style="color:#f92672">.</span>input_ids<span style="color:#f92672">.</span>to(<span style="color:#e6db74">&#34;cuda&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>outputs <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate(input_ids)
+</span></span><span style="display:flex;"><span>print(tokenizer<span style="color:#f92672">.</span>decode(outputs[<span style="color:#ae81ff">0</span>]))
+</span></span></code></pre></div><ul>
+<li>An important consideration is how Saturn Cloud provisions storage
+<ul>
+<li>By default, HuggingFace wants to use a /cache subdirectory within the /home directory in your Saturn Cloud environment
+<ul>
+<li>You can change this by setting the <code>HF_HOME</code> environment variable</li>
+<li>A better way to do this would be to set it using <code>direnv</code> (helpful blog post on that <a href="https://waleedayoub.com/post/managing-dev-environments_local-vs-codespaces/#option-2-github-codespaces">here</a>)</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#39;HF_HOME&#39;</span>]<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/run/cache&#39;</span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#39;HF_HOME&#39;</span>]<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/run/cache&#39;</span>
+</span></span></code></pre></div><ul>
+<li>The main change we make to our original FAQ answering RAG is the <code>def llm(query):</code> function</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">llm</span>(prompt):
+</span></span><span style="display:flex;"><span>    input_text <span style="color:#f92672">=</span> prompt
+</span></span><span style="display:flex;"><span>    input_ids <span style="color:#f92672">=</span> tokenizer(input_text, return_tensors<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span>)<span style="color:#f92672">.</span>input_ids<span style="color:#f92672">.</span>to(<span style="color:#e6db74">&#34;cuda&#34;</span>)
+</span></span><span style="display:flex;"><span>    outputs <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate(input_ids)
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> tokenizer<span style="color:#f92672">.</span>decode(outputs[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> results
+</span></span></code></pre></div><ul>
+<li>By default, FLAN T5&rsquo;s <code>generate</code> method caps the length of the response. You can actually check what the max length is with this:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Default max_length: </span><span style="color:#e6db74">{</span>model<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>max_length<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><ul>
+<li>This returns: Default max_length: 20</li>
+<li>So this can easily be changed when calling the <code>generate</code> method like this:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>outputs <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate(input_ids, max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)
+</span></span></code></pre></div><ul>
+<li>Another useful parameter to the <code>decode</code> method is passing <code>skip_special_tokens</code> which seems to get rid of the padding leading and trailing tokens</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>results <span style="color:#f92672">=</span> tokenizer<span style="color:#f92672">.</span>decode(outputs[<span style="color:#ae81ff">0</span>], skip_special_tokens<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="so-lets-put-it-all-together-now-and-modify-our-rag-from-section-1-to-use-flan-t5">So let&rsquo;s put it all together now and modify our RAG from section 1 to use FLAN T5!</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#39;HF_HOME&#39;</span>]<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/run/cache&#39;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> T5Tokenizer, T5ForConditionalGeneration
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Import a tokenizer to convert text to tokens</span>
+</span></span><span style="display:flex;"><span>tokenizer <span style="color:#f92672">=</span> T5Tokenizer<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;google/flan-t5-xl&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load the model</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> T5ForConditionalGeneration<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;google/flan-t5-xl&#34;</span>, device_map<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;auto&#34;</span>)
+</span></span></code></pre></div><pre><code>tokenizer_config.json:   0%|          | 0.00/2.54k [00:00&lt;?, ?B/s]
+
+
+
+spiece.model:   0%|          | 0.00/792k [00:00&lt;?, ?B/s]
+
+
+
+special_tokens_map.json:   0%|          | 0.00/2.20k [00:00&lt;?, ?B/s]
+
+
+
+tokenizer.json:   0%|          | 0.00/2.42M [00:00&lt;?, ?B/s]
+
+
+You are using the default legacy behaviour of the &lt;class 'transformers.models.t5.tokenization_t5.T5Tokenizer'&gt;. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+
+
+
+config.json:   0%|          | 0.00/1.44k [00:00&lt;?, ?B/s]
+
+
+
+model.safetensors.index.json:   0%|          | 0.00/53.0k [00:00&lt;?, ?B/s]
+
+
+
+Downloading shards:   0%|          | 0/2 [00:00&lt;?, ?it/s]
+
+
+
+model-00001-of-00002.safetensors:   0%|          | 0.00/9.45G [00:00&lt;?, ?B/s]
+
+
+
+model-00002-of-00002.safetensors:   0%|          | 0.00/1.95G [00:00&lt;?, ?B/s]
+
+
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00&lt;?, ?it/s]
+
+
+
+generation_config.json:   0%|          | 0.00/147 [00:00&lt;?, ?B/s]
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>input_text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;translate English to German: How old are you?&#34;</span>
+</span></span><span style="display:flex;"><span>input_ids <span style="color:#f92672">=</span> tokenizer(input_text, return_tensors<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span>)<span style="color:#f92672">.</span>input_ids<span style="color:#f92672">.</span>to(<span style="color:#e6db74">&#34;cuda&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(input_ids)
+</span></span></code></pre></div><pre><code>tensor([[13959,  1566,    12,  2968,    10,   571,   625,    33,    25,    58,
+             1]], device='cuda:0')
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>outputs <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate(input_ids)
+</span></span><span style="display:flex;"><span>print(outputs)
+</span></span><span style="display:flex;"><span>print(tokenizer<span style="color:#f92672">.</span>decode(outputs[<span style="color:#ae81ff">0</span>]))
+</span></span></code></pre></div><pre><code>/opt/saturncloud/envs/saturn/lib/python3.9/site-packages/transformers/generation/utils.py:1249: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+  warnings.warn(
+
+
+tensor([[   0, 2739, 4445,  436,  292,   58,    1]], device='cuda:0')
+&lt;pad&gt; Wie alt sind Sie?&lt;/s&gt;
+</code></pre>
+<h3 id="now-we-do-the-same-rag-as-before-but-we-modify-the-llm-function-to-use-our-local-flan-t5-weights-vs-an-openai-api-call">Now we do the same RAG as before but we modify the llm function to use our local FLAN T5 weights vs an OpenAI API call</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> minsearch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docs_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://github.com/DataTalksClub/llm-zoomcamp/blob/main/01-intro/documents.json?raw=1&#39;</span>
+</span></span><span style="display:flex;"><span>docs_response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(docs_url)
+</span></span><span style="display:flex;"><span>documents_raw <span style="color:#f92672">=</span> docs_response<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>documents <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> course <span style="color:#f92672">in</span> documents_raw:
+</span></span><span style="display:flex;"><span>    course_name <span style="color:#f92672">=</span> course[<span style="color:#e6db74">&#39;course&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> course[<span style="color:#e6db74">&#39;documents&#39;</span>]:
+</span></span><span style="display:flex;"><span>        doc[<span style="color:#e6db74">&#39;course&#39;</span>] <span style="color:#f92672">=</span> course_name
+</span></span><span style="display:flex;"><span>        documents<span style="color:#f92672">.</span>append(doc)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>index <span style="color:#f92672">=</span> minsearch<span style="color:#f92672">.</span>Index(
+</span></span><span style="display:flex;"><span>    text_fields<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;question&#34;</span>, <span style="color:#e6db74">&#34;text&#34;</span>, <span style="color:#e6db74">&#34;section&#34;</span>],
+</span></span><span style="display:flex;"><span>    keyword_fields<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;course&#34;</span>]
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>index<span style="color:#f92672">.</span>fit(documents)
+</span></span></code></pre></div><pre><code>&lt;minsearch.Index at 0x7f69146b9940&gt;
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search</span>(query):
+</span></span><span style="display:flex;"><span>    boost <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;question&#39;</span>: <span style="color:#ae81ff">3.0</span>, <span style="color:#e6db74">&#39;section&#39;</span>: <span style="color:#ae81ff">0.5</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> index<span style="color:#f92672">.</span>search(
+</span></span><span style="display:flex;"><span>        query<span style="color:#f92672">=</span>query,
+</span></span><span style="display:flex;"><span>        filter_dict<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;course&#39;</span>: <span style="color:#e6db74">&#39;data-engineering-zoomcamp&#39;</span>},
+</span></span><span style="display:flex;"><span>        boost_dict<span style="color:#f92672">=</span>boost,
+</span></span><span style="display:flex;"><span>        num_results<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> results
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_prompt</span>(query, search_results):
+</span></span><span style="display:flex;"><span>    prompt_template <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">You&#39;re a course teaching assistant. Answer the QUESTION based on the CONTEXT from the FAQ database.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Use only the facts from the CONTEXT when answering the QUESTION.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">QUESTION: </span><span style="color:#e6db74">{question}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">CONTEXT: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#e6db74">{context}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    context <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> search_results:
+</span></span><span style="display:flex;"><span>        context <span style="color:#f92672">=</span> context <span style="color:#f92672">+</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;section: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;section&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">question: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;question&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">answer: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;text&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> prompt_template<span style="color:#f92672">.</span>format(question<span style="color:#f92672">=</span>query, context<span style="color:#f92672">=</span>context)<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> prompt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">llm</span>(prompt):
+</span></span><span style="display:flex;"><span>    input_text <span style="color:#f92672">=</span> prompt
+</span></span><span style="display:flex;"><span>    input_ids <span style="color:#f92672">=</span> tokenizer(input_text, return_tensors<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span>)<span style="color:#f92672">.</span>input_ids<span style="color:#f92672">.</span>to(<span style="color:#e6db74">&#34;cuda&#34;</span>)
+</span></span><span style="display:flex;"><span>    outputs <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate(input_ids, max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> tokenizer<span style="color:#f92672">.</span>decode(outputs[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> results
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rag</span>(query):
+</span></span><span style="display:flex;"><span>    search_results <span style="color:#f92672">=</span> search(query)
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> build_prompt(query, search_results)
+</span></span><span style="display:flex;"><span>    answer <span style="color:#f92672">=</span> llm(prompt)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> answer
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rag(<span style="color:#e6db74">&#34;I just discovered the course, can I still register?&#34;</span>)
+</span></span></code></pre></div><pre><code>&quot;&lt;pad&gt; Yes, even if you don't register, you're still eligible to submit the homeworks. Be aware, however, that there will be deadlines for turning in the final projects. So don't leave everything for the last minute.&lt;/s&gt;&quot;
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Default max_length: </span><span style="color:#e6db74">{</span>model<span style="color:#f92672">.</span>config<span style="color:#f92672">.</span>max_length<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><pre><code>Default max_length: 20
+</code></pre>
+<h2 id="24-phi-3-mini">2.4 Phi 3 Mini</h2>
+<ul>
+<li>Not a lot of notes to take here</li>
+<li>We just replaced the FLAN T5 implementation in the previous section with the Microsoft Phi 3 Mini implementation:
+<ul>
+<li>You can find that model here: <a href="https://huggingface.co/microsoft/Phi-3-mini-128k-instruct">https://huggingface.co/microsoft/Phi-3-mini-128k-instruct</a></li>
+</ul>
+</li>
+<li>I&rsquo;m not going to bother reproducing all the same code for the Phi3 model and will instead focus on the next section using Mistral7B</li>
+</ul>
+<h2 id="25-mistral-7b-and-huggingface-hub-authentication">2.5 Mistral-7B and HuggingFace Hub Authentication</h2>
+<ul>
+<li>For this lesson, we&rsquo;ll be using this model from HuggingFace: <a href="https://huggingface.co/mistralai/Mistral-7B-v0.1https://huggingface.co/mistralai/Mistral-7B-v0.1">https://huggingface.co/mistralai/Mistral-7B-v0.1https://huggingface.co/mistralai/Mistral-7B-v0.1</a></li>
+<li>The documentation there is pretty sparse, but luckily HuggingFace&rsquo;s own &ldquo;generation with LLM&rsquo;s&rdquo; tutorial page uses this model in its example: <a href="https://huggingface.co/docs/transformers/en/llm_tutorialhttps://huggingface.co/docs/transformers/en/llm_tutorial">https://huggingface.co/docs/transformers/en/llm_tutorialhttps://huggingface.co/docs/transformers/en/llm_tutorial</a>
+<ul>
+<li>One of the things you&rsquo;ll encounter on HuggingFace are models that are gated:</li>
+</ul>
+  <div style="max-width: 100%; overflow: hidden;">
+      <img src="/images/huggingface-gatedmodel.png" alt="Gated model prompt on HuggingFace" style="width: 100%; height: auto;">
+  </div>
+  - In order to have access to these models, you need authenticate your account by creating an access token on HuggingFace and adding it as an environment variable wherever you need to use it
+  - Thankfully, in section 2.1 above, I had already created an access token on HuggingFace and added it as an environment variable here in SaturnCloud as `HF_TOKEN`
+  - To login using that token, you would do this use a function from `huggingface_hub` and pass it the token
+  - One thing to make sure of is that you have all the right permissions for the respective HuggingFace repo where the model is stored. To do this, select the access token and edit its permissions
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> huggingface_hub <span style="color:#f92672">import</span> login
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>login(token <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#39;HF_TOKEN&#39;</span>])
+</span></span></code></pre></div><pre><code>The token has not been saved to the git credentials helper. Pass `add_to_git_credential=True` in this function directly or `--add-to-git-credential` if using via `huggingface-cli` if you want to set the git credential as well.
+Token is valid (permission: fineGrained).
+Your token has been saved to /run/cache/token
+Login successful
+</code></pre>
+<h3 id="and-now-we-can-dump-in-all-the-code-needed-to-use-the-mistral7b-model">And now we can dump in all the code needed to use the Mistral7B model</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> AutoModelForCausalLM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> AutoTokenizer
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>model <span style="color:#f92672">=</span> AutoModelForCausalLM<span style="color:#f92672">.</span>from_pretrained(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mistralai/Mistral-7B-v0.1&#34;</span>, device_map<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;auto&#34;</span>, load_in_4bit<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tokenizer <span style="color:#f92672">=</span> AutoTokenizer<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;mistralai/Mistral-7B-v0.1&#34;</span>, padding_side<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>)
+</span></span></code></pre></div><pre><code>config.json:   0%|          | 0.00/571 [00:00&lt;?, ?B/s]
+
+
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+
+
+
+model.safetensors.index.json:   0%|          | 0.00/25.1k [00:00&lt;?, ?B/s]
+
+
+
+Downloading shards:   0%|          | 0/2 [00:00&lt;?, ?it/s]
+
+
+
+model-00001-of-00002.safetensors:   0%|          | 0.00/9.94G [00:00&lt;?, ?B/s]
+
+
+
+model-00002-of-00002.safetensors:   0%|          | 0.00/4.54G [00:00&lt;?, ?B/s]
+
+
+
+Loading checkpoint shards:   0%|          | 0/2 [00:00&lt;?, ?it/s]
+
+
+
+generation_config.json:   0%|          | 0.00/116 [00:00&lt;?, ?B/s]
+
+
+
+tokenizer_config.json:   0%|          | 0.00/996 [00:00&lt;?, ?B/s]
+
+
+
+tokenizer.model:   0%|          | 0.00/493k [00:00&lt;?, ?B/s]
+
+
+
+tokenizer.json:   0%|          | 0.00/1.80M [00:00&lt;?, ?B/s]
+
+
+
+special_tokens_map.json:   0%|          | 0.00/414 [00:00&lt;?, ?B/s]
+</code></pre>
+<h3 id="now-to-use-the-model-to-generate-an-output-we-use-the-following-code">Now to use the model to generate an output, we use the following code</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># create the inputs</span>
+</span></span><span style="display:flex;"><span>model_inputs <span style="color:#f92672">=</span> tokenizer([<span style="color:#e6db74">&#39;A list of colours: blue, red, pink&#39;</span>], return_tensors<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span>)<span style="color:#f92672">.</span>to(<span style="color:#e6db74">&#34;cuda&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>generated_ids <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>generate(<span style="color:#f92672">**</span>model_inputs)
+</span></span><span style="display:flex;"><span>tokenizer<span style="color:#f92672">.</span>batch_decode(generated_ids, skip_special_tokens<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)[<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><h3 id="but-before-we-do-that-were-going-to-have-to-make-some-modifications-to-our-rag-in-order-to-ensure-this-model-works-effectively">But, before we do that, we&rsquo;re going to have to make some modifications to our RAG in order to ensure this model works effectively</h3>
+<ol>
+<li>Use the <code>pipeline</code> function from HuggingFace&rsquo;s <code>tranformers</code> library to abstract how we use this model
+<ul>
+<li>I don&rsquo;t know exactly what magic happens under <code>pipeline</code>&rsquo;s hood, but it seems to be aware of particular models complex needs</li>
+<li>So instead of using the <code>tokenizer</code> and <code>model.generate</code> above, we first create a <code>generator</code> object using <code>pipeline</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>generator <span style="color:#f92672">=</span> pipeline(<span style="color:#e6db74">&#34;text-generation&#34;</span>, model <span style="color:#f92672">=</span> model, tokenizer <span style="color:#f92672">=</span> tokenizer
+</span></span></code></pre></div><ul>
+<li>Then in the llm function, we use <code>generator</code> to generate our output</li>
+</ul>
+</li>
+<li>This model is a completion model, so it passes the whole context back to you. Which means it&rsquo;s highly sensitive to the context you pass it. So, we&rsquo;re going to need to simplify the context</li>
+<li>Another thing we&rsquo;ll need to do is limit the responses we get back from our search engine as that too is part of the context we pass it</li>
+</ol>
+<ul>
+<li>When using the actual model, we&rsquo;re going to have to pass some parameters to ensure we get good results:
+<ul>
+<li><code>max_length</code>: Make this big but not too big :/</li>
+<li><code>temperature</code>: Adjust the temperature to less than 1.0 to reduce randomness</li>
+<li><code>top_p</code>: Implements nucleus sampling, which chooses from the smallest set of tokens whose cumulative probability exceeds p.</li>
+<li><code>num_return_sequences</code>: Indicates that only one sequence should be returned.</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>Filter the output to exclude the initial prompt</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Return only 3 results this time</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search</span>(query):
+</span></span><span style="display:flex;"><span>    boost <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;question&#39;</span>: <span style="color:#ae81ff">3.0</span>, <span style="color:#e6db74">&#39;section&#39;</span>: <span style="color:#ae81ff">0.5</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> index<span style="color:#f92672">.</span>search(
+</span></span><span style="display:flex;"><span>        query<span style="color:#f92672">=</span>query,
+</span></span><span style="display:flex;"><span>        filter_dict<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;course&#39;</span>: <span style="color:#e6db74">&#39;data-engineering-zoomcamp&#39;</span>},
+</span></span><span style="display:flex;"><span>        boost_dict<span style="color:#f92672">=</span>boost,
+</span></span><span style="display:flex;"><span>        num_results<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> results
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Use the pipeline method to abstract our usage of Mistral7B</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> pipeline
+</span></span><span style="display:flex;"><span>generator <span style="color:#f92672">=</span> pipeline(<span style="color:#e6db74">&#34;text-generation&#34;</span>, model<span style="color:#f92672">=</span>model, tokenizer<span style="color:#f92672">=</span>tokenizer)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Finally, change the way the prompt is constructed:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_prompt</span>(query, search_results):
+</span></span><span style="display:flex;"><span>    prompt_template <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">QUESTION: </span><span style="color:#e6db74">{question}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">CONTEXT:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#e6db74">{context}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ANSWER:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    context <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> search_results:
+</span></span><span style="display:flex;"><span>        context <span style="color:#f92672">=</span> context <span style="color:#f92672">+</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;question&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;text&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> prompt_template<span style="color:#f92672">.</span>format(question<span style="color:#f92672">=</span>query, context<span style="color:#f92672">=</span>context)<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> prompt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">llm</span>(prompt):
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> generator(prompt, max_length<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, temperature<span style="color:#f92672">=</span><span style="color:#ae81ff">0.7</span>, top_p<span style="color:#f92672">=</span><span style="color:#ae81ff">0.95</span>, num_return_sequences<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    response_final <span style="color:#f92672">=</span> response[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;generated_text&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> response_final[len(prompt):]<span style="color:#f92672">.</span>strip()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rag(<span style="color:#e6db74">&#34;I just discovered the course. Can I still join it?&#34;</span>)
+</span></span></code></pre></div><pre><code>Truncation was not explicitly activated but `max_length` is provided a specific value, please use `truncation=True` to explicitly truncate examples to max length. Defaulting to 'longest_first' truncation strategy. If you encode pairs of sequences (GLUE-style) with the tokenizer you can select this strategy more precisely by providing a specific strategy to `truncation`.
+/opt/saturncloud/envs/saturn/lib/python3.9/site-packages/transformers/generation/configuration_utils.py:540: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/opt/saturncloud/envs/saturn/lib/python3.9/site-packages/transformers/generation/configuration_utils.py:545: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.95` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+Setting `pad_token_id` to `eos_token_id`:2 for open-end generation.
+/opt/saturncloud/envs/saturn/lib/python3.9/site-packages/bitsandbytes/nn/modules.py:426: UserWarning: Input type into Linear4bit is torch.float16, but bnb_4bit_compute_dtype=torch.float32 (default). This will lead to slow inference or training speed.
+  warnings.warn(
+
+
+
+
+
+'Yes, you can still join the course.'
+</code></pre>
+<p>And lastly, if we want to download these model weights to use them without having to authenticate with HuggingFace everytime, we can do so with the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> AutoModelForCausalLM, AutoTokenizer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mistralai/Mistral-7B-v0.1&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Download and cache the model and tokenizer</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> AutoModelForCausalLM<span style="color:#f92672">.</span>from_pretrained(model_name)
+</span></span><span style="display:flex;"><span>tokenizer <span style="color:#f92672">=</span> AutoTokenizer<span style="color:#f92672">.</span>from_pretrained(model_name)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Save the model and tokenizer locally</span>
+</span></span><span style="display:flex;"><span>model<span style="color:#f92672">.</span>save_pretrained(<span style="color:#e6db74">&#34;./mistral-7b-model&#34;</span>)
+</span></span><span style="display:flex;"><span>tokenizer<span style="color:#f92672">.</span>save_pretrained(<span style="color:#e6db74">&#34;./mistral-7b-tokenizer&#34;</span>)
+</span></span></code></pre></div><p>And if we already have the model weights downloaded locally, we can load them without having to use HuggingFace like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> AutoModelForCausalLM, AutoTokenizer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model_dir <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./mistral-7b-model&#34;</span>
+</span></span><span style="display:flex;"><span>tokenizer_dir <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./mistral-7b-tokenizer&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load the model and tokenizer from the local directory</span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> AutoModelForCausalLM<span style="color:#f92672">.</span>from_pretrained(model_dir)
+</span></span><span style="display:flex;"><span>tokenizer <span style="color:#f92672">=</span> AutoTokenizer<span style="color:#f92672">.</span>from_pretrained(tokenizer_dir)
+</span></span></code></pre></div><h2 id="26-exploring-open-source-llms">2.6 Exploring Open Source LLMs</h2>
+<ul>
+<li>Not a whole lot of note taking here</li>
+<li>This lesson was just showcasing where to find other open source LLMs</li>
+<li>I think the crux of it is that you&rsquo;re always looking to pair the highest quality model with the hardware limitations of your machine
+<ul>
+<li>So the rule of thumb for us here is that a 7B - 9B parameter model generally fits within a 16G RAM GPU</li>
+</ul>
+</li>
+</ul>
+<h2 id="27-running-llms-locally-without-a-gpu-with-ollama">2.7 Running LLMs Locally without a GPU with Ollama</h2>
+<ul>
+<li>Now we start to use tools like <a href="https://ollama.com/">ollama</a> to run models locally, with or without a GPU</li>
+<li>The main thing in this section is modifying our RAG system from before to use ollama as a drop-in replacement for the other model implementations we&rsquo;ve tried</li>
+<li>Interestingly, ollama is invoked directly in the OpenAI API call like this:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> openai <span style="color:#f92672">import</span> OpenAI
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client <span style="color:#f92672">=</span> OpenAI(
+</span></span><span style="display:flex;"><span>    base_url<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;http://localhost:11434/v1/&#39;</span>,
+</span></span><span style="display:flex;"><span>    api_key<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ollama&#39;</span>,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;What&#39;s the formula for energy?&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>response <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>chat<span style="color:#f92672">.</span>completions<span style="color:#f92672">.</span>create(
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gemma:2b&#34;</span>,
+</span></span><span style="display:flex;"><span>    messages<span style="color:#f92672">=</span>[{<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: prompt}],
+</span></span><span style="display:flex;"><span>    temperature<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><ul>
+<li>
+<p><em><strong>BUT</strong></em> Before we do that, we need to first ensure we&rsquo;ve got ollama running the model we&rsquo;re going to reference in the <code>completions.create</code> method</p>
+</li>
+<li>
+<p>We can do that by running ollama locally or by running it in a docker container, which is what we do in the homework, like this:</p>
+</li>
+<li>
+<p>First you run ollama in a docker container</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -it <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --rm <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -v ollama:/root/.ollama <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -p 11434:11434 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --name ollama <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    ollama/ollama
+</span></span></code></pre></div><ul>
+<li>Then, you download a model to be used within <code>ollama</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker exec -it ollama ollama pull gemma:2b 
+</span></span></code></pre></div><ul>
+<li>Now, we should be able to go back and run those python snippets and plug ollama with gemma:2b into our RAG workflow</li>
+<li>I&rsquo;m not going to bother reproducing all those steps again here after already doing it a few times, so I&rsquo;m just going to move onto the next section</li>
+</ul>
+<h2 id="28-ollama--elastic-in-docker-compose">2.8 Ollama + Elastic in Docker Compose</h2>
+<ul>
+<li>In this section, we end building our RAG workflow all over again, but without any dependency on any external APIs
+<ul>
+<li>That is, we&rsquo;ll be hosting every single part of this diagram locally in a docker container:</li>
+</ul>
+</li>
+</ul>
+<div class="mermaid-wrapper">
+    <pre class="mermaid">graph TD
+    A[User] -->|Q| B[Elasticsearch]
+    B -->|Relevant Documents D1, D2, ..., DN| C[Context = Prompt + Q + Documents]
+    A -->|Q| C
+    C -->|Q| D[Ollama:Phi3]
+    D -->|Answer| A
+    subgraph Context
+        direction LR
+        D1
+        D2
+        D3
+        D4
+        ...
+        DN
+    end
+    B -.-> D1
+    B -.-> D2
+    B -.-> D3
+    B -.-> D4
+    B -.-> ...
+    B -.-> DN
+    classDef entity fill:#f9f,stroke:#333,stroke-width:4px;
+    </pre>
+</div>
+<ul>
+<li>I&rsquo;m going to go ahead and reproduce all the code needed for this section as we&rsquo;re going to need it for the Streamlit app we&rsquo;ll create in the next section</li>
+</ul>
+<h3 id="but-first-lets-create-a-docker-compose-file-that-has-elasticsearch-and-ollama-for-our-rag-application-to-use">But first, let&rsquo;s create a docker compose file that has elasticsearch and ollama for our RAG application to use</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span>version: <span style="color:#e6db74">&#39;3.8&#39;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>services:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  elasticsearch:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    container_name: elasticsearch<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    environment:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - discovery.type<span style="color:#f92672">=</span>single-node<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - xpack.security.enabled<span style="color:#f92672">=</span>false<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;9200:9200&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;9300:9300&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  ollama:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    image: ollama/ollama<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    container_name: ollama<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    volumes:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - ollama:/root/.ollama<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;11434:11434&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>volumes:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  ollama:<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="most-importantly-before-i-docker-compose-up-im-going-to-switch-back-to-using-a-local-machine">Most importantly, before I <code>docker-compose up</code> I&rsquo;m going to switch back to using a local machine</h3>
+<ul>
+<li>Technically, I won&rsquo;t actually be using my local machine which is this:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Darwin thirteen2 23.5.0 Darwin Kernel Version 23.5.0: Wed May  <span style="color:#ae81ff">1</span> 20:19:05 PDT 2024; root:xnu-10063.121.3~5/RELEASE_ARM64_T8112 arm64
+</span></span></code></pre></div><ul>
+<li>I fortunately have a Windows gaming rig running WSL2 and Docker that I&rsquo;ve built and will be using that instead:</li>
+</ul>
+<pre tabindex="0"><code>Linux gaming 5.15.153.1-microsoft-standard-WSL2 #1 SMP Fri Mar 29 23:14:13 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+</code></pre><ul>
+<li>It&rsquo;s running an NVidia GeForce RTX 3080:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>waleed@gaming:/mnt/c/Users/waleed$ nvidia-smi
+</span></span><span style="display:flex;"><span>Wed Jul <span style="color:#ae81ff">10</span> 08:12:38 <span style="color:#ae81ff">2024</span>
+</span></span><span style="display:flex;"><span>+-----------------------------------------------------------------------------------------+
+</span></span><span style="display:flex;"><span>| NVIDIA-SMI 555.58.02              Driver Version: 556.12         CUDA Version: 12.5     |
+</span></span><span style="display:flex;"><span>|-----------------------------------------+------------------------+----------------------+
+</span></span><span style="display:flex;"><span>| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+</span></span><span style="display:flex;"><span>| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+</span></span><span style="display:flex;"><span>|                                         |                        |               MIG M. |
+</span></span><span style="display:flex;"><span>|<span style="color:#f92672">=========================================</span>+<span style="color:#f92672">========================</span>+<span style="color:#f92672">======================</span>|
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">0</span>  NVIDIA GeForce RTX <span style="color:#ae81ff">3080</span>        On  |   00000000:2B:00.0 Off |                  N/A |
+</span></span><span style="display:flex;"><span>|  0%   30C    P8             25W /  380W |     786MiB /  10240MiB |      0%      Default |
+</span></span><span style="display:flex;"><span>|                                         |                        |                  N/A |
+</span></span><span style="display:flex;"><span>+-----------------------------------------+------------------------+----------------------+
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>+-----------------------------------------------------------------------------------------+
+</span></span><span style="display:flex;"><span>| Processes:                                                                              |
+</span></span><span style="display:flex;"><span>|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+</span></span><span style="display:flex;"><span>|        ID   ID                                                               Usage      |
+</span></span><span style="display:flex;"><span>|<span style="color:#f92672">=========================================================================================</span>|
+</span></span><span style="display:flex;"><span>|    <span style="color:#ae81ff">0</span>   N/A  N/A        <span style="color:#ae81ff">34</span>      G   /Xwayland                                   N/A      |
+</span></span><span style="display:flex;"><span>+-----------------------------------------------------------------------------------------+
+</span></span></code></pre></div><ul>
+<li>In order to use this machine as a <code>docker context</code> there are a few important steps that I&rsquo;ll cover in a blog post <a href="https://waleedayoub.com/post/windows-docker-context">here</a></li>
+</ul>
+<p>Once that&rsquo;s done, I do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker-compose up -D
+</span></span></code></pre></div><p>And once that&rsquo;s done, I can check to see my services are running:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker ps -a
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>llm-zoom<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>main<span style="color:#f92672">][</span>~/Documents/school/datatalksclub/llm-zoomcamp/cohorts/2024/02-open-source<span style="color:#f92672">]</span>$ docker ps -a     
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                                                 COMMAND                  CREATED         STATUS                   PORTS                                            NAMES
+</span></span><span style="display:flex;"><span>59639804b224   docker.elastic.co/elasticsearch/elasticsearch:8.4.3   <span style="color:#e6db74">&#34;/bin/tini -- /usr/l…&#34;</span>   <span style="color:#ae81ff">2</span> minutes ago   Up <span style="color:#ae81ff">2</span> minutes             0.0.0.0:9200-&gt;9200/tcp, 0.0.0.0:9300-&gt;9300/tcp   elasticsearch
+</span></span><span style="display:flex;"><span>f4ce2158f4dd   ollama/ollama                                         <span style="color:#e6db74">&#34;/bin/ollama serve&#34;</span>      <span style="color:#ae81ff">2</span> minutes ago   Up <span style="color:#ae81ff">2</span> minutes             0.0.0.0:11434-&gt;11434/tcp                         ollama
+</span></span><span style="display:flex;"><span>94ff02fd3793   hello-world                                           <span style="color:#e6db74">&#34;/hello&#34;</span>                 <span style="color:#ae81ff">3</span> hours ago     Exited <span style="color:#f92672">(</span>0<span style="color:#f92672">)</span> <span style="color:#ae81ff">3</span> hours ago  
+</span></span></code></pre></div><p>To check that our Elasticsearch server is running, we can do this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl http://192.168.50.49:9200
+</span></span></code></pre></div><p>And we get back the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;name&#34;</span> : <span style="color:#e6db74">&#34;59639804b224&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;cluster_name&#34;</span> : <span style="color:#e6db74">&#34;docker-cluster&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;cluster_uuid&#34;</span> : <span style="color:#e6db74">&#34;lEAGr46ZQFSGETnozKvZZg&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;version&#34;</span> : <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;number&#34;</span> : <span style="color:#e6db74">&#34;8.4.3&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;build_flavor&#34;</span> : <span style="color:#e6db74">&#34;default&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;build_type&#34;</span> : <span style="color:#e6db74">&#34;docker&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;build_hash&#34;</span> : <span style="color:#e6db74">&#34;42f05b9372a9a4a470db3b52817899b99a76ee73&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;build_date&#34;</span> : <span style="color:#e6db74">&#34;2022-10-04T07:17:24.662462378Z&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;build_snapshot&#34;</span> : false,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;lucene_version&#34;</span> : <span style="color:#e6db74">&#34;9.3.0&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;minimum_wire_compatibility_version&#34;</span> : <span style="color:#e6db74">&#34;7.17.0&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;minimum_index_compatibility_version&#34;</span> : <span style="color:#e6db74">&#34;7.0.0&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;tagline&#34;</span> : <span style="color:#e6db74">&#34;You Know, for Search&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>And to check our <code>ollama</code> service is running, we can just pull the <code>phi3</code> model like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker exec -it ollama ollama pull phi3
+</span></span></code></pre></div><p>And get the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pulling manifest 
+</span></span><span style="display:flex;"><span>pulling 3e38718d00bb... 100% ▕████████████████████████████████████████████████▏ 2.2 GB                         
+</span></span><span style="display:flex;"><span>pulling fa8235e5b48f... 100% ▕████████████████████████████████████████████████▏ 1.1 KB                         
+</span></span><span style="display:flex;"><span>pulling 542b217f179c... 100% ▕████████████████████████████████████████████████▏  <span style="color:#ae81ff">148</span> B                         
+</span></span><span style="display:flex;"><span>pulling 8dde1baf1db0... 100% ▕████████████████████████████████████████████████▏   <span style="color:#ae81ff">78</span> B                         
+</span></span><span style="display:flex;"><span>pulling ed7ab7698fdd... 100% ▕████████████████████████████████████████████████▏  <span style="color:#ae81ff">483</span> B                         
+</span></span><span style="display:flex;"><span>verifying sha256 digest 
+</span></span><span style="display:flex;"><span>writing manifest 
+</span></span><span style="display:flex;"><span>removing any unused layers 
+</span></span><span style="display:flex;"><span>success 
+</span></span></code></pre></div><p>And now our services are running and we&rsquo;re ready to deploy our RAG!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Let&#39;s make sure our libraries are installed</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span>pip install elastic openai tqdm
+</span></span></code></pre></div><pre><code>Collecting elastic
+  Downloading elastic-5.2.3.6-py3-none-any.whl.metadata (3.4 kB)
+Requirement already satisfied: openai in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (1.35.13)
+Requirement already satisfied: tqdm in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (4.66.4)
+Collecting ase (from elastic)
+  Downloading ase-3.23.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting spglib (from elastic)
+  Downloading spglib-2.4.0-cp311-cp311-macosx_11_0_arm64.whl.metadata (4.2 kB)
+Requirement already satisfied: numpy in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from elastic) (2.0.0)
+Requirement already satisfied: scipy in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from elastic) (1.13.1)
+Collecting click (from elastic)
+  Using cached click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+Requirement already satisfied: anyio&lt;5,&gt;=3.5.0 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from openai) (4.4.0)
+Requirement already satisfied: distro&lt;2,&gt;=1.7.0 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from openai) (1.9.0)
+Requirement already satisfied: httpx&lt;1,&gt;=0.23.0 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from openai) (0.27.0)
+Requirement already satisfied: pydantic&lt;3,&gt;=1.9.0 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from openai) (2.8.2)
+Requirement already satisfied: sniffio in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from openai) (1.3.1)
+Requirement already satisfied: typing-extensions&lt;5,&gt;=4.7 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from openai) (4.12.2)
+Requirement already satisfied: idna&gt;=2.8 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from anyio&lt;5,&gt;=3.5.0-&gt;openai) (3.7)
+Requirement already satisfied: certifi in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from httpx&lt;1,&gt;=0.23.0-&gt;openai) (2024.6.2)
+Requirement already satisfied: httpcore==1.* in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from httpx&lt;1,&gt;=0.23.0-&gt;openai) (1.0.5)
+Requirement already satisfied: h11&lt;0.15,&gt;=0.13 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from httpcore==1.*-&gt;httpx&lt;1,&gt;=0.23.0-&gt;openai) (0.14.0)
+Requirement already satisfied: annotated-types&gt;=0.4.0 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from pydantic&lt;3,&gt;=1.9.0-&gt;openai) (0.7.0)
+Requirement already satisfied: pydantic-core==2.20.1 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from pydantic&lt;3,&gt;=1.9.0-&gt;openai) (2.20.1)
+Collecting matplotlib&gt;=3.3.4 (from ase-&gt;elastic)
+  Downloading matplotlib-3.9.1-cp311-cp311-macosx_11_0_arm64.whl.metadata (11 kB)
+Collecting contourpy&gt;=1.0.1 (from matplotlib&gt;=3.3.4-&gt;ase-&gt;elastic)
+  Downloading contourpy-1.2.1-cp311-cp311-macosx_11_0_arm64.whl.metadata (5.8 kB)
+Collecting cycler&gt;=0.10 (from matplotlib&gt;=3.3.4-&gt;ase-&gt;elastic)
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools&gt;=4.22.0 (from matplotlib&gt;=3.3.4-&gt;ase-&gt;elastic)
+  Downloading fonttools-4.53.1-cp311-cp311-macosx_11_0_arm64.whl.metadata (162 kB)
+[2K     [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m162.6/162.6 kB[0m [31m8.2 MB/s[0m eta [36m0:00:00[0m
+[?25hCollecting kiwisolver&gt;=1.3.1 (from matplotlib&gt;=3.3.4-&gt;ase-&gt;elastic)
+  Downloading kiwisolver-1.4.5-cp311-cp311-macosx_11_0_arm64.whl.metadata (6.4 kB)
+Requirement already satisfied: packaging&gt;=20.0 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from matplotlib&gt;=3.3.4-&gt;ase-&gt;elastic) (24.1)
+Collecting pillow&gt;=8 (from matplotlib&gt;=3.3.4-&gt;ase-&gt;elastic)
+  Downloading pillow-10.4.0-cp311-cp311-macosx_11_0_arm64.whl.metadata (9.2 kB)
+Collecting pyparsing&gt;=2.3.1 (from matplotlib&gt;=3.3.4-&gt;ase-&gt;elastic)
+  Downloading pyparsing-3.1.2-py3-none-any.whl.metadata (5.1 kB)
+Requirement already satisfied: python-dateutil&gt;=2.7 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from matplotlib&gt;=3.3.4-&gt;ase-&gt;elastic) (2.9.0.post0)
+Requirement already satisfied: six&gt;=1.5 in /Users/waleed/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib&gt;=3.3.4-&gt;ase-&gt;elastic) (1.16.0)
+Downloading elastic-5.2.3.6-py3-none-any.whl (626 kB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m627.0/627.0 kB[0m [31m22.9 MB/s[0m eta [36m0:00:00[0m
+[?25hDownloading ase-3.23.0-py3-none-any.whl (2.9 MB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m2.9/2.9 MB[0m [31m58.9 MB/s[0m eta [36m0:00:00[0m31m77.9 MB/s[0m eta [36m0:00:01[0m
+[?25hUsing cached click-8.1.7-py3-none-any.whl (97 kB)
+Downloading spglib-2.4.0-cp311-cp311-macosx_11_0_arm64.whl (793 kB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m793.7/793.7 kB[0m [31m37.4 MB/s[0m eta [36m0:00:00[0m
+[?25hDownloading matplotlib-3.9.1-cp311-cp311-macosx_11_0_arm64.whl (7.8 MB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m7.8/7.8 MB[0m [31m56.8 MB/s[0m eta [36m0:00:00[0m MB/s[0m eta [36m0:00:01[0m:01[0m
+[?25hDownloading contourpy-1.2.1-cp311-cp311-macosx_11_0_arm64.whl (245 kB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m245.9/245.9 kB[0m [31m7.1 MB/s[0m eta [36m0:00:00[0m
+[?25hDownloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading fonttools-4.53.1-cp311-cp311-macosx_11_0_arm64.whl (2.2 MB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m2.2/2.2 MB[0m [31m46.8 MB/s[0m eta [36m0:00:00[0mm eta [36m0:00:01[0m
+[?25hDownloading kiwisolver-1.4.5-cp311-cp311-macosx_11_0_arm64.whl (66 kB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m66.2/66.2 kB[0m [31m5.9 MB/s[0m eta [36m0:00:00[0m
+[?25hDownloading pillow-10.4.0-cp311-cp311-macosx_11_0_arm64.whl (3.4 MB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m3.4/3.4 MB[0m [31m37.6 MB/s[0m eta [36m0:00:00[0mm eta [36m0:00:01[0m[36m0:00:01[0m
+[?25hDownloading pyparsing-3.1.2-py3-none-any.whl (103 kB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m103.2/103.2 kB[0m [31m12.9 MB/s[0m eta [36m0:00:00[0m
+[?25hInstalling collected packages: spglib, pyparsing, pillow, kiwisolver, fonttools, cycler, contourpy, click, matplotlib, ase, elastic
+Successfully installed ase-3.23.0 click-8.1.7 contourpy-1.2.1 cycler-0.12.1 elastic-5.2.3.6 fonttools-4.53.1 kiwisolver-1.4.5 matplotlib-3.9.1 pillow-10.4.0 pyparsing-3.1.2 spglib-2.4.0
+
+[1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m A new release of pip is available: [0m[31;49m24.0[0m[39;49m -&gt; [0m[32;49m24.1.2[0m
+[1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m To update, run: [0m[32;49mpip install --upgrade pip[0m
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Import the libs</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> openai <span style="color:#f92672">import</span> OpenAI
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> elasticsearch <span style="color:#f92672">import</span> Elasticsearch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tqdm.auto <span style="color:#f92672">import</span> tqdm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span></code></pre></div><p>We need to start an <code>ollama</code> client object by using the OpenAI API spec. We don&rsquo;t need to have an OpenAI key here, because we&rsquo;re just going to leverage the ollama service running on our GPU rig</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>client <span style="color:#f92672">=</span> OpenAI(
+</span></span><span style="display:flex;"><span>    base_url<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;http://192.168.50.49:11434/v1/&#39;</span>,
+</span></span><span style="display:flex;"><span>    api_key<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;ollama&#39;</span>,
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>We first download all the documents from the FAQ and store them in a list called <code>documents</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Get all the documents from the FAQ:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docs_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://github.com/DataTalksClub/llm-zoomcamp/blob/main/01-intro/documents.json?raw=1&#39;</span>
+</span></span><span style="display:flex;"><span>docs_response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(docs_url)
+</span></span><span style="display:flex;"><span>documents_raw <span style="color:#f92672">=</span> docs_response<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>documents <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> course <span style="color:#f92672">in</span> documents_raw:
+</span></span><span style="display:flex;"><span>    course_name <span style="color:#f92672">=</span> course[<span style="color:#e6db74">&#39;course&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> course[<span style="color:#e6db74">&#39;documents&#39;</span>]:
+</span></span><span style="display:flex;"><span>        doc[<span style="color:#e6db74">&#39;course&#39;</span>] <span style="color:#f92672">=</span> course_name
+</span></span><span style="display:flex;"><span>        documents<span style="color:#f92672">.</span>append(doc)
+</span></span></code></pre></div><p>Now we set up the Elasticsearch database and index all our documents</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Make sure the Elasticsearch service is pointed to the remote machine</span>
+</span></span><span style="display:flex;"><span>es_client <span style="color:#f92672">=</span> Elasticsearch(<span style="color:#e6db74">&#39;http://192.168.50.49:9200&#39;</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>index_settings <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;number_of_shards&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;number_of_replicas&#34;</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mappings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;text&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;section&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;question&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;course&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;keyword&#34;</span>} 
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>index_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;course-questions&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> es_client<span style="color:#f92672">.</span>indices<span style="color:#f92672">.</span>exists(index<span style="color:#f92672">=</span>index_name):
+</span></span><span style="display:flex;"><span>    es_client<span style="color:#f92672">.</span>indices<span style="color:#f92672">.</span>delete(index<span style="color:#f92672">=</span>index_name)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Index </span><span style="color:#e6db74">{</span>index_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> deleted.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Index </span><span style="color:#e6db74">{</span>index_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> does not exist.&#34;</span>)
+</span></span><span style="display:flex;"><span>    es_client<span style="color:#f92672">.</span>indices<span style="color:#f92672">.</span>create(index<span style="color:#f92672">=</span>index_name, body<span style="color:#f92672">=</span>index_settings)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Index the documents</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> tqdm(documents):
+</span></span><span style="display:flex;"><span>    es_client<span style="color:#f92672">.</span>index(index<span style="color:#f92672">=</span>index_name, document<span style="color:#f92672">=</span>doc)
+</span></span></code></pre></div><pre><code>Index course-questions deleted.
+
+
+100%|██████████| 948/948 [00:07&lt;00:00, 124.09it/s]
+</code></pre>
+<p>Now we can start building out the steps in our RAG, starting with the <code>search</code> function</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Create the search function:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">elastic_search</span>(query):
+</span></span><span style="display:flex;"><span>    search_query <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;size&#34;</span>: <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;query&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;bool&#34;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;must&#34;</span>: {
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;multi_match&#34;</span>: {
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;query&#34;</span>: query,
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;fields&#34;</span>: [<span style="color:#e6db74">&#34;question^3&#34;</span>, <span style="color:#e6db74">&#34;text&#34;</span>, <span style="color:#e6db74">&#34;section&#34;</span>],
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;best_fields&#34;</span>
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                },
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;filter&#34;</span>: {
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;term&#34;</span>: {
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;course&#34;</span>: <span style="color:#e6db74">&#34;data-engineering-zoomcamp&#34;</span>
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> es_client<span style="color:#f92672">.</span>search(index<span style="color:#f92672">=</span>index_name, body<span style="color:#f92672">=</span>search_query)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    result_docs <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> hit <span style="color:#f92672">in</span> response[<span style="color:#e6db74">&#39;hits&#39;</span>][<span style="color:#e6db74">&#39;hits&#39;</span>]:
+</span></span><span style="display:flex;"><span>        result_docs<span style="color:#f92672">.</span>append(hit[<span style="color:#e6db74">&#39;_source&#39;</span>])
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result_docs
+</span></span></code></pre></div><p>Next, we create our prompt builder</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Create the build prompt function:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_prompt</span>(query, search_results):
+</span></span><span style="display:flex;"><span>    prompt_template <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">You&#39;re a course teaching assistant. Answer the QUESTION based on the CONTEXT from the FAQ database.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Use only the facts from the CONTEXT when answering the QUESTION.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">QUESTION: </span><span style="color:#e6db74">{question}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">CONTEXT: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#e6db74">{context}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    context <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> search_results:
+</span></span><span style="display:flex;"><span>        context <span style="color:#f92672">=</span> context <span style="color:#f92672">+</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;section: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;section&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">question: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;question&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">answer: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;text&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> prompt_template<span style="color:#f92672">.</span>format(question<span style="color:#f92672">=</span>query, context<span style="color:#f92672">=</span>context)<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> prompt
+</span></span></code></pre></div><p>And finally we create our <code>llm</code> function but make sure to specify <code>phi3</code> as the model we&rsquo;re using</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Create the LLM function, this time invoking our ollama hosted model instead of GPT:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">llm</span>(prompt):
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>chat<span style="color:#f92672">.</span>completions<span style="color:#f92672">.</span>create(
+</span></span><span style="display:flex;"><span>        model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;phi3&#39;</span>,
+</span></span><span style="display:flex;"><span>        messages<span style="color:#f92672">=</span>[{<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: prompt}]
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>choices[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>message<span style="color:#f92672">.</span>content
+</span></span></code></pre></div><p>And now we put it all together in our <code>rag</code> function</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Finally, create the RAG function:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rag</span>(query):
+</span></span><span style="display:flex;"><span>    search_results <span style="color:#f92672">=</span> elastic_search(query)
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> build_prompt(query, search_results)
+</span></span><span style="display:flex;"><span>    answer <span style="color:#f92672">=</span> llm(prompt)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> answer
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;I just disovered the course. Can I still join it?&#39;</span>
+</span></span><span style="display:flex;"><span>rag(query)
+</span></span></code></pre></div><pre><code>' Yes, you can still join if there is an upcoming session starting soon or in a few weeks. Courses often have multiple sessions to accommodate different schedules and learning preferences of students. Please check for any openings through our FAQ page where we list details about current course offerings including start dates, times, capacity remaining, etc., so you can register if available.'
+</code></pre>
+<p>Hmm, something isn&rsquo;t right. This response doesn&rsquo;t look like it&rsquo;s actually referencing the documents we index in elasticsearch.
+I&rsquo;ll troubleshoot that later&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(_)
+</span></span></code></pre></div><pre><code> Yes, you can still join if there is an upcoming session starting soon or in a few weeks. Courses often have multiple sessions to accommodate different schedules and learning preferences of students. Please check for any openings through our FAQ page where we list details about current course offerings including start dates, times, capacity remaining, etc., so you can register if available.
+</code></pre>
+<h2 id="29-creating-a-streamlit-ui">2.9 Creating a Streamlit UI</h2>
+<ul>
+<li>
+<p>For this section, we take the flow above and we put it into a streamlit application.</p>
+</li>
+<li>
+<p>To do that, I&rsquo;m going to head over to another python file <a href="https://github.com/waleedayoub/llm-zoomcamp/blob/main/cohorts/2024/02-open-source/qa-app.py">here</a></p>
+</li>
+<li>
+<p>But before I go, here&rsquo;s a basic way to set up a Streamlit app locally</p>
+</li>
+<li>
+<p>First install the streamlit library</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install streamlit
+</span></span></code></pre></div><ul>
+<li>The main part here is the <code>main()</code> function:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> streamlit <span style="color:#66d9ef">as</span> st
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rag_function</span>(input_text):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Simulating a long-running process</span>
+</span></span><span style="display:flex;"><span>    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Output for &#39;</span><span style="color:#e6db74">{</span>input_text<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    st<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#34;QA App&#34;</span>)
+</span></span><span style="display:flex;"><span>    input_text <span style="color:#f92672">=</span> st<span style="color:#f92672">.</span>text_input(<span style="color:#e6db74">&#34;Enter your question:&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> st<span style="color:#f92672">.</span>button(<span style="color:#e6db74">&#34;Ask&#34;</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> st<span style="color:#f92672">.</span>spinner(<span style="color:#e6db74">&#34;Running RAG function...&#34;</span>):
+</span></span><span style="display:flex;"><span>            output <span style="color:#f92672">=</span> rag_function(input_text)
+</span></span><span style="display:flex;"><span>            st<span style="color:#f92672">.</span>success(output)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><ul>
+<li>And then to run it:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>streamlit run app.py
+</span></span></code></pre></div><h2 id="bonus-ollama--openwebui--elastic-in-docker-with-gpu">Bonus Ollama + OpenWebUI + Elastic in Docker with GPU</h2>
+<ul>
+<li>So now, since I actually <em>do</em> have a GPU on a gaming rig called <code>gaming</code>, I&rsquo;m going to rebuild my docker containers to do a few things:</li>
+</ul>
+<ol>
+<li>Enable GPU support on the running instance of docker on that machine</li>
+<li>Add OpenWebUI for a slick ChatGPT-like interface</li>
+<li>Deploy it!</li>
+</ol>
+<p>So let&rsquo;s go through these step by step:</p>
+<ol>
+<li>To enable GPU support in Docker, I need to install the <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installation">Nvidia container toolkit</a>
+<ul>
+<li>The instructions in the link above are comprehensive but I just followed Ollama&rsquo;s provided instructions <a href="https://github.com/ollama/ollama/blob/main/docs/docker.md">here</a> using <code>apt</code></li>
+<li>To restart Docker, I had to actually go do it on my windows machine since <code>restart</code> and <code>systemctl</code> commands didn&rsquo;t seem to work in WSL</li>
+<li>The last thing you need to do is ensure the <code>docker run</code> or <code>docker-compose</code> specify GPUs as part of the resources the ollama service needs to deploy (see docker-compose below):</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span>deploy:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  resources:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    reservations:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      devices:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        - capabilities: <span style="color:#f92672">[</span> gpu <span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+<li>To add OpenWebUI, add a service in the docker-compose for OpenWebUI, specificying the ollama service in the <code>OLLAMA_BASE_URL</code> environment variable</li>
+<li>Lastly, we deploy using the following docker-compose:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-docker" data-lang="docker"><span style="display:flex;"><span>version: <span style="color:#e6db74">&#39;3.8&#39;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>services:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>elasticsearch:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    container_name: elasticsearch<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    environment:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - discovery.type<span style="color:#f92672">=</span>single-node<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - xpack.security.enabled<span style="color:#f92672">=</span>false<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - <span style="color:#e6db74">&#34;9200:9200&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - <span style="color:#e6db74">&#34;9300:9300&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>ollama:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    image: ollama/ollama<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    container_name: ollama<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    deploy:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    resources:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        reservations:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        devices:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            - capabilities: <span style="color:#f92672">[</span> gpu <span style="color:#f92672">]</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    volumes:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - ollama:/root/.ollama<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - <span style="color:#e6db74">&#34;11434:11434&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    restart: unless-stopped<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>open-webui:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    image: ghcr.io/open-webui/open-webui:main<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    container_name: open-webui<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    environment:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - OLLAMA_BASE_URL<span style="color:#f92672">=</span>http://192.168.50.49:11434<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    volumes:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - open-webui:/app/backend/data<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - <span style="color:#e6db74">&#34;3000:8080&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    depends_on:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    - ollama<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    deploy:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    restart_policy:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        condition: always<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>volumes:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>ollama:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>open-webui:<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></li>
+</ol>
+<ul>
+<li>And there we have it, we&rsquo;ve got ollama and openwebui running using the full power of my Nvidia RTX 3080!</li>
+<li>You&rsquo;ll know it&rsquo;s working in two ways: 1. The instruct/completion models return their responses way faster and 2. You&rsquo;ll be using way more RAM, especially when the models are churning their responses:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Every 2.0s: nvidia-smi                                                                                                                                                                                            gaming: Sun Jul <span style="color:#ae81ff">14</span> 07:48:15 <span style="color:#ae81ff">2024</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sun Jul <span style="color:#ae81ff">14</span> 07:48:15 <span style="color:#ae81ff">2024</span>
+</span></span><span style="display:flex;"><span>+-----------------------------------------------------------------------------------------+
+</span></span><span style="display:flex;"><span>| NVIDIA-SMI 555.58.02              Driver Version: 556.12         CUDA Version: 12.5     |
+</span></span><span style="display:flex;"><span>|-----------------------------------------+------------------------+----------------------+
+</span></span><span style="display:flex;"><span>| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+</span></span><span style="display:flex;"><span>| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+</span></span><span style="display:flex;"><span>|                                         |                        |               MIG M. |
+</span></span><span style="display:flex;"><span>|<span style="color:#f92672">=========================================</span>+<span style="color:#f92672">========================</span>+<span style="color:#f92672">======================</span>|
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">0</span>  NVIDIA GeForce RTX <span style="color:#ae81ff">3080</span>        On  |   00000000:2B:00.0 Off |                  N/A |
+</span></span><span style="display:flex;"><span>|  0%   33C    P8             28W /  380W |    1018MiB /  10240MiB |      8%      Default |
+</span></span><span style="display:flex;"><span>|                                         |                        |                  N/A |
+</span></span><span style="display:flex;"><span>+-----------------------------------------+------------------------+----------------------+
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>+-----------------------------------------------------------------------------------------+
+</span></span><span style="display:flex;"><span>| Processes:                                                                              |
+</span></span><span style="display:flex;"><span>|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+</span></span><span style="display:flex;"><span>|        ID   ID                                                               Usage      |
+</span></span><span style="display:flex;"><span>|<span style="color:#f92672">=========================================================================================</span>|
+</span></span><span style="display:flex;"><span>|    <span style="color:#ae81ff">0</span>   N/A  N/A        <span style="color:#ae81ff">24</span>      G   /Xwayland                                   N/A      |
+</span></span><span style="display:flex;"><span>|    <span style="color:#ae81ff">0</span>   N/A  N/A        <span style="color:#ae81ff">39</span>      G   /Xwayland                                   N/A      |
+</span></span><span style="display:flex;"><span>+-----------------------------------------------------------------------------------------+
+</span></span></code></pre></div>
+</div>
+
+</section>
+<footer id="footer">
+    <strong></strong>
+    <div class="social">
+        &nbsp;
+<a href="mailto:info@waleedayoub.com" target="_blank" rel="me" title="Email" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+	<polyline points="22,6 12,13 2,6"></polyline>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://github.com/waleedayoub" target="_blank" rel="me" title="Github" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path
+		d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+	</path>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://www.linkedin.com/in/waleedayoub/" target="_blank" rel="me" title="Linkedin" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+	<rect x="2" y="9" width="4" height="12"></rect>
+	<circle cx="4" cy="4" r="2"></circle>
+</svg>
+</a>
+&nbsp;
+    </div><strong></strong>
+    <p style="color:grey;"></p>
+</footer>
+</div>
+    </body>
+</html>

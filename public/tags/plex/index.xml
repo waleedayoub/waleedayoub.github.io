@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>plex on Waleed Ayoub</title>
-    <link>https://waleedayoub.com/tags/plex/</link>
-    <description>Recent content in plex on Waleed Ayoub</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <title>Plex on Waleed Ayoub</title>
+    <link>http://localhost:1313/tags/plex/</link>
+    <description>Recent content in Plex on Waleed Ayoub</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Dec 2023 09:56:51 -0500</lastBuildDate><atom:link href="https://waleedayoub.com/tags/plex/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Dec 2023 09:56:51 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/plex/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Synology Media Centre Setup</title>
-      <link>https://waleedayoub.com/post/synology-media-centre-setup/</link>
+      <link>http://localhost:1313/post/synology-media-centre-setup/</link>
       <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
-      
-      <guid>https://waleedayoub.com/post/synology-media-centre-setup/</guid>
-      <description>Synology Media Configuration This is my attempt at publishing a write up on a rough timeliens of my journey setting up an open source media centre on my Synology DSM713+. It includes a configuration guide and links to scripts that should help others work through their own setups.
-Table of Contents Introduction The Setup Applications System details What is OpenVPN? Ok, so now What is tun? UnRar-ing files after download Attempt 1 - Unrar script Switching to qBittorrent The VPN challenge - some options Making life easy - SOCKS5 Important - remote path mapping Attempt 2 - Another failed Unrar script That didn&amp;rsquo;t work either - no more scripts Final docker-compose Further Resources Introduction So a while back, motivated by a desire to make more use out of my Synology DSM713+ NAS, I decided to explore ways to turn it into a self-managed but highly automated media centre.</description>
+      <guid>http://localhost:1313/post/synology-media-centre-setup/</guid>
+      <description>&lt;h1 id=&#34;synology-media-configuration&#34;&gt;Synology Media Configuration&lt;/h1&gt;&#xA;&lt;p&gt;This is my attempt at publishing a write up on a rough timeliens of my journey setting up an open source media centre on my Synology DSM713+.&#xA;It includes a configuration guide and links to scripts that should help others work through their own setups.&lt;/p&gt;&#xA;&lt;h2 id=&#34;table-of-contents&#34;&gt;Table of Contents&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#the-setup&#34;&gt;The Setup&lt;/a&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#applications&#34;&gt;Applications&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#system-details&#34;&gt;System details&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#what-is-openvpn&#34;&gt;What is OpenVPN?&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#ok-so-now-what-is-tun&#34;&gt;Ok, so now What is tun?&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#running-a-script-to-extract-rard-or-zipd-files&#34;&gt;UnRar-ing files after download&lt;/a&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#the-first-unrar-script&#34;&gt;Attempt 1 - Unrar script&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#switching-to-qbittorrent&#34;&gt;Switching to qBittorrent&lt;/a&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#some-options&#34;&gt;The VPN challenge - some options&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#using-socks5-proxy---torguard-and-qbittorrent&#34;&gt;Making life easy - SOCKS5&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#remote-path-mapping-between-sonarr-and-qbittorrent&#34;&gt;Important - remote path mapping&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#the-second-failed-unrar-script&#34;&gt;Attempt 2 - Another failed Unrar script&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#that-didnt-actually-work&#34;&gt;That didn&amp;rsquo;t work either - no more scripts&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#final-docker-compose&#34;&gt;Final docker-compose&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#further-resources&#34;&gt;Further Resources&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;So a while back, motivated by a desire to make more use out of my &lt;a href=&#34;https://www.synology.com/en-global/support/download/DS713+?version=7.1#system&#34;&gt;Synology DSM713+ NAS&lt;/a&gt;, I decided to explore ways to turn it into a self-managed but highly automated media centre.&#xA;It must have been at most four years ago when I started this project because &lt;a href=&#34;https://www.reddit.com/r/synology/comments/eahndo/synology_media_advanced_setup_guide/&#34;&gt;this Reddit post&lt;/a&gt; from December 2019 was my original starting point. It also explains why I started off using Transmission as a my client instead of qbittorrent.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

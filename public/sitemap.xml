@@ -2,50 +2,190 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://waleedayoub.com/</loc>
+    <loc>http://localhost:1313/tags/agents/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/huggingface/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/huggingface-agents_unit1/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/huggingface-agents/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/index/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/llm/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/python/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-03-03T12:29:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/datatalksclub/</loc>
+    <lastmod>2024-08-06T14:50:46-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/llmzoomcamp_week4-monitoring-evaluation_notes/</loc>
+    <lastmod>2024-08-06T14:50:46-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/llm-zoomcamp-2024/</loc>
+    <lastmod>2024-08-06T14:50:46-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/llmzoomcamp_week3-vector-search_notes/</loc>
+    <lastmod>2024-07-19T15:16:18-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/llmzoomcamp_week2-open-source_notes/</loc>
+    <lastmod>2024-07-10T16:56:37-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/codespaces/</loc>
+    <lastmod>2024-07-04T07:28:08-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/github/</loc>
+    <lastmod>2024-07-04T07:28:08-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/managing-dev-environments_local-vs-codespaces/</loc>
+    <lastmod>2024-07-04T07:28:08-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/secrets/</loc>
+    <lastmod>2024-07-04T07:28:08-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/llmzoomcamp_week1-intro_notes/</loc>
+    <lastmod>2024-06-29T08:11:46-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/data-engineering/</loc>
+    <lastmod>2024-02-12T07:56:52-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/dlthub/</loc>
+    <lastmod>2024-02-12T07:56:52-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/learning-to-use-dlthub/</loc>
+    <lastmod>2024-02-12T07:56:52-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/sql/</loc>
+    <lastmod>2024-02-12T07:56:52-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/torontoopendata/</loc>
+    <lastmod>2024-02-12T07:56:52-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/obsidian-first-year-review/</loc>
+    <lastmod>2024-01-03T09:41:04-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/bigquery/</loc>
+    <lastmod>2024-01-03T09:40:43-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/gcp/</loc>
+    <lastmod>2024-01-03T09:40:43-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/prefect/</loc>
+    <lastmod>2024-01-03T09:40:43-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/toronto-bicycle-data/</loc>
+    <lastmod>2024-01-03T09:40:43-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/terraform/</loc>
+    <lastmod>2024-01-03T09:40:43-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/jackett/</loc>
     <lastmod>2023-12-11T09:56:51-05:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/jackett/</loc>
+    <loc>http://localhost:1313/tags/plex/</loc>
     <lastmod>2023-12-11T09:56:51-05:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/plex/</loc>
+    <loc>http://localhost:1313/tags/radarr/</loc>
     <lastmod>2023-12-11T09:56:51-05:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/post/</loc>
+    <loc>http://localhost:1313/tags/sonarr/</loc>
     <lastmod>2023-12-11T09:56:51-05:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/radarr/</loc>
+    <loc>http://localhost:1313/tags/synology/</loc>
     <lastmod>2023-12-11T09:56:51-05:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/sonarr/</loc>
+    <loc>http://localhost:1313/post/synology-media-centre-setup/</loc>
     <lastmod>2023-12-11T09:56:51-05:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/synology/</loc>
+    <loc>http://localhost:1313/tags/vpn/</loc>
     <lastmod>2023-12-11T09:56:51-05:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/post/synology-media-centre-setup/</loc>
-    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+    <loc>http://localhost:1313/tags/git/</loc>
+    <lastmod>2023-10-16T19:08:29-04:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/</loc>
-    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+    <loc>http://localhost:1313/post/mlzoomcamp-week5-homework-poetry/</loc>
+    <lastmod>2023-10-16T19:08:29-04:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/vpn/</loc>
-    <lastmod>2023-12-11T09:56:51-05:00</lastmod>
+    <loc>http://localhost:1313/tags/mlzoomcamp/</loc>
+    <lastmod>2023-10-16T19:08:29-04:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/datatalksclub/</loc>
+    <loc>http://localhost:1313/tags/poetry/</loc>
+    <lastmod>2023-10-16T19:08:29-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/pyenv/</loc>
+    <lastmod>2023-10-16T19:08:29-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/git-setup-datatalksclub/</loc>
     <lastmod>2023-09-05T22:40:29-04:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/git/</loc>
-    <lastmod>2023-09-05T22:40:29-04:00</lastmod>
-  </url><url>
-    <loc>https://waleedayoub.com/post/git-setup-datatalksclub/</loc>
-    <lastmod>2023-09-05T22:40:29-04:00</lastmod>
-  </url><url>
-    <loc>https://waleedayoub.com/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2023-09-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://waleedayoub.com/tags/index/</loc>
+    <loc>http://localhost:1313/tags/css/</loc>
+    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/html/</loc>
+    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/markdown/</loc>
+    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/markdown-syntax/</loc>
+    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/syntax/</loc>
+    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/themes/</loc>
+    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/themes-guide/</loc>
+    <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/privacy/</loc>
+    <lastmod>2019-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/rich-content/</loc>
+    <lastmod>2019-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/shortcodes/</loc>
+    <lastmod>2019-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/placeholder-text/</loc>
+    <lastmod>2019-03-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/text/</loc>
+    <lastmod>2019-03-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/math-typesetting/</loc>
+    <lastmod>2019-03-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/emoji/</loc>
+    <lastmod>2019-03-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/emoji-support/</loc>
+    <lastmod>2019-03-05T00:00:00+00:00</lastmod>
   </url>
 </urlset>

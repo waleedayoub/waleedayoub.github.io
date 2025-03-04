@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang=""><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>LLM Zoomcamp Week 4 - Monitoring and Evaluation Notes | Waleed Ayoub</title>
+    <meta name="description" content="LLM Zoomcamp Week 4 - Monitoring and Evaluation Notes">
+    <meta property="og:site_name" content="LLM Zoomcamp Week 4 - Monitoring and Evaluation Notes" />
+    <meta property="og:title" content="Waleed Ayoub" />
+    <meta property="og:description" content="LLM Zoomcamp - Week 4 Notes In this section the focus is on the following:
+Extending the evaluation work we did in section 3 to monitor answer quality over time
+How to look at answer quality with user feedback and interaction
+How to store all this data and visualize it, etc.
+But before all that, let&rsquo;s do a quick recap of where we are.
+Table of Contents Recap 4.1 Intro 4.2 Differences Between Online and Offline Evaluation (with RAGs) Techniques For Offline Evaluation 4.3 Offline Evaluation for our RAG System Load our FAQ Documents with Document IDs Load ground truth dataset we create using LLMs Cosine Similarity metric Evaluating GPT-3.5-turbo vs GPT-4o-mini 4.4 Offline RAG Evaluation - Cosine Similarity 4.5 Offline RAG Evaluation - LLM as a Judge 4.6 Capturing User Feedback 4.7 Monitoring the System Recap A quick recap of what the first three sections have been about:
+" />
+    <meta property="og:image" content="http://localhost:1313/images/headshot-waleed.png" />
+    <meta name="keywords" content="" />
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+        integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+        integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous">
+        </script>
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);">
+        </script>
+    
+    <meta name="keywords" content="waleed, data, python">
+    <link rel="icon" type="image/svg" href='http://localhost:1313/images/logo.png' />
+    <meta name="author" content='waleed'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.145.0">
+    
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+
+    <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
+
+    
+
+    
+    
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({ startOnLoad: true });
+        });
+    </script>
+    
+</head><body>
+      <div class="line" id="scrollIndicator"></div>
+      <div class="main"><div class="title">
+  <div class="name">
+    <h2><a href="http://localhost:1313/"
+	   style="text-decoration: none; color: inherit;">Waleed Ayoub</a></h2>
+  </div>
+  <div class="color-scheme">
+    <input type="checkbox" class="checkbox" id="chk" />
+    <label class="label" for="chk">
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"></path></svg>
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 160c-52.9 0-96 43.1-96
+										96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z"></path></svg>
+      <div class="ball"></div>
+    </label>
+  </div>
+</div>
+<script>
+  const themeSetter = (theme) => {
+      document.body.classList.toggle('dark')
+      localStorage.setItem('theme', theme)
+      blockSwitcher()
+  }
+
+  const blockSwitcher = () => [...document.getElementsByTagName("BLOCKQUOTE")]
+	.forEach(b => b.classList.toggle('dark'))
+
+  const styleSwapper = () => {
+      document.body.classList.add('back-transition')
+      if (localStorage.getItem('theme') === 'dark') themeSetter('light')
+      else if (localStorage.getItem('theme') === 'light') themeSetter('dark')
+  }
+
+  if (localStorage.getItem('theme') === 'dark'){
+      themeSetter('dark')
+      document.addEventListener("DOMContentLoaded", blockSwitcher)
+  }
+ else localStorage.setItem('theme', 'light')
+
+  document.getElementById('chk').addEventListener('change',styleSwapper);
+
+  window.addEventListener("scroll", () => {
+      let height = document.documentElement.scrollHeight
+          - document.documentElement.clientHeight;
+      if(height >= 500){
+	  let winScroll = document.body.scrollTop
+              || document.documentElement.scrollTop;
+	  let scrolled = (winScroll / height) * 100;
+	  document.getElementById("scrollIndicator").style.width = scrolled + "%";
+      }
+  });
+</script>
+
+<section class="intro">
+  
+  <div class="post-header">
+    <a class="go-back" href="http://localhost:1313/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+    <h2 class="post-title">LLM Zoomcamp Week 4 - Monitoring and Evaluation Notes</h2>
+</div>
+
+<p>By <a href="">waleed</a></p>
+
+<p class="post-dets">Published on: August 6, 2024
+  | Reading Time: 18 min | Last Modified: August 6, 2024
+  <br>
+</p>
+<span class="tags">
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+  
+</span>
+
+<div class="content">
+  <h1 id="llm-zoomcamp---week-4-notes">LLM Zoomcamp - Week 4 Notes <!-- omit from toc --></h1>
+<p>In this section the focus is on the following:</p>
+<ul>
+<li>
+<p>Extending the evaluation work we did in section 3 to monitor answer quality over time</p>
+</li>
+<li>
+<p>How to look at answer quality with user feedback and interaction</p>
+</li>
+<li>
+<p>How to store all this data and visualize it, etc.</p>
+</li>
+<li>
+<p>But before all that, let&rsquo;s do a quick recap of where we are.</p>
+</li>
+</ul>
+<h2 id="table-of-contents">Table of Contents <!-- omit from toc --></h2>
+<ul>
+<li><a href="#recap">Recap</a></li>
+<li><a href="#41-intro">4.1 Intro</a></li>
+<li><a href="#42-differences-between-online-and-offline-evaluation-with-rags">4.2 Differences Between Online and Offline Evaluation (with RAGs)</a>
+<ul>
+<li><a href="#techniques-for-offline-evaluation">Techniques For Offline Evaluation</a></li>
+</ul>
+</li>
+<li><a href="#43-offline-evaluation-for-our-rag-system">4.3 Offline Evaluation for our RAG System</a>
+<ul>
+<li><a href="#load-our-faq-documents-with-document-ids">Load our FAQ Documents with Document IDs</a></li>
+<li><a href="#load-ground-truth-dataset-we-create-using-llms">Load ground truth dataset we create using LLMs</a></li>
+<li><a href="#cosine-similarity-metric">Cosine Similarity metric</a></li>
+<li><a href="#evaluating-gpt-35-turbo-vs-gpt-4o-mini">Evaluating GPT-3.5-turbo vs GPT-4o-mini</a></li>
+</ul>
+</li>
+<li><a href="#44-offline-rag-evaluation---cosine-similarity">4.4 Offline RAG Evaluation - Cosine Similarity</a></li>
+<li><a href="#45-offline-rag-evaluation---llm-as-a-judge">4.5 Offline RAG Evaluation - LLM as a Judge</a></li>
+<li><a href="#46-capturing-user-feedback">4.6 Capturing User Feedback</a></li>
+<li><a href="#47-monitoring-the-system">4.7 Monitoring the System</a></li>
+</ul>
+<h2 id="recap">Recap</h2>
+<p>A quick recap of what the first three sections have been about:</p>
+<ul>
+<li>Let&rsquo;s chart with the visual of what we created and map it back to our <code>rag</code> function:
+<div class="mermaid-wrapper">
+    <pre class="mermaid">  graph TD
+      A[User] -->|Q| B[Knowledge DB]
+      B -->|Relevant Documents D1, D2, ..., DN| C[Context = Prompt + Q + Documents]
+      A -->|Q| C
+      C -->|Q| D[LLM]
+      D -->|Answer| A
+      subgraph Context
+          direction LR
+          D1
+          D2
+          D3
+          D4
+          ...
+          DN
+      end
+      B -.-> D1
+      B -.-> D2
+      B -.-> D3
+      B -.-> D4
+      B -.-> ...
+      B -.-> DN
+      classDef entity fill:#f9f,stroke:#333,stroke-width:4px;
+    </pre>
+</div>
+<ul>
+<li>and the function itself was:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rag</span>(query):
+</span></span><span style="display:flex;"><span>  search_results <span style="color:#f92672">=</span> search(query)
+</span></span><span style="display:flex;"><span>  prompt <span style="color:#f92672">=</span> prompt_builder(query, search_results)
+</span></span><span style="display:flex;"><span>  answer <span style="color:#f92672">=</span> llm(prompt)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> answer
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>In section 1:
+<ul>
+<li>We built the scaffold for the function above</li>
+<li>We learned all about what a RAG is, how to apply a common &ldquo;search&rdquo; problem using a source document as context, how to implement one using OpenAI&rsquo;s GPT models, and how to use Elasticsearch to do &ldquo;semantic&rdquo; or &ldquo;keyword&rdquo; search to simplify the size of the documents being passed to the LLM</li>
+</ul>
+</li>
+<li>In section 2:
+<ul>
+<li>We implemented various versions of the <code>llm</code> function</li>
+<li>We focused further on self-hosted LLMs and how to effectively replicate everything we did in section 1 but using <code>ollama</code> as a platform to access self-hosted models</li>
+<li>I further set up my windows gaming PC to act as a server running 3 containers: <code>ollama</code>, <code>openwebui</code> and <code>elasticsearch</code> in order to have &ldquo;always on&rdquo; access to these services</li>
+</ul>
+</li>
+<li>In section 3:
+<ul>
+<li>We experimented with various implementations of the <code>search</code> function</li>
+<li>We switched from doing a straight &ldquo;semantic&rdquo; or &ldquo;keyword&rdquo; search using Elasticsearch to creating embeddings in order to do vector search. The main difference here is that instead of relying on Elasticsearch&rsquo;s Lucine engine to look up relevant documents based on a text query, we were using various <code>encoding</code> algorithms like cosine distance, SBERT models, etc.</li>
+<li>We then built a ground-truth dataset using LLMs in order to evaluate the quality of our retrieval system and compared the performance of &ldquo;semantic&rdquo; search and &ldquo;vector&rdquo; search in retrieving the most relevant documents for a given query</li>
+</ul>
+</li>
+</ul>
+<h2 id="41-intro">4.1 Intro</h2>
+<ul>
+<li>Monitoring RAG systems is done primarily to guarantee the quality of outputs don&rsquo;t degrade over time</li>
+<li>The steps to monitor answer quality of LLMs is comprised of a few steps:
+<ul>
+<li>Compute various kinds of quality metrics, such as:
+<ul>
+<li>Vector similarity between an expected or ideal answer and the one the LLM produces</li>
+<li>Using LLMs as judges to assess &ldquo;toxicity&rdquo; of the answer it provides
+<ul>
+<li>We can use pre-trained models that specialize at assessing &ldquo;toxicity&rdquo; from Huggingface</li>
+</ul>
+</li>
+<li>Using LLM as judges to assess the quality of the answer it provides</li>
+</ul>
+</li>
+<li>Store all these metrics in a relational database
+<ul>
+<li>We&rsquo;ll be using <code>postgres</code> to store all this data deployed in a docker container</li>
+</ul>
+</li>
+<li>Using tools like <code>Grafana</code> to visualize metrics over time</li>
+<li>Incorporate a user feedback loop to collect user feedback
+<ul>
+<li>We&rsquo;ll also use Grafana to visualize this</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>There are other things one could monitor:
+<ul>
+<li>Other quality metrics like: bias/fairness, topic clustering, textual user feedback (vs binary or categorical)</li>
+<li>System metrics like the 4x golden signals: latency, traffic, errors (especially those a user sees), and saturation (CPU/GPU usage)</li>
+<li>Cost metrics: token and infra costs of running vector stores and LLMs</li>
+</ul>
+</li>
+</ul>
+<h2 id="42-differences-between-online-and-offline-evaluation-with-rags">4.2 Differences Between Online and Offline Evaluation (with RAGs)</h2>
+<ul>
+<li>Building on the steps from the previous sections, now we&rsquo;re going to construct evaluation for the entire RAG system
+<ul>
+<li>How good is retrieval? How good is our prompt? Which LLM works best?</li>
+</ul>
+</li>
+<li>There are generally two types of evaluation:
+<ul>
+<li>Offline:
+<ul>
+<li>Evaluating the quality of a system before deploying it</li>
+<li>In the case of the previous section, we experimented with different retrieval techniques and measured <code>hit rate</code> and <code>mrr</code> before selecting a method that produced the best results</li>
+</ul>
+</li>
+<li>Online
+<ul>
+<li>Evaluating the quality of a system after it&rsquo;s been deployed</li>
+<li>For example, running A/B tests between two different system configurations, user feedback</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>In a related sense, we have monitoring, where we observe the overall health of the system:
+<ul>
+<li>User feedback on how good the answer is, etc.</li>
+</ul>
+</li>
+</ul>
+<h3 id="techniques-for-offline-evaluation">Techniques For Offline Evaluation</h3>
+<ul>
+<li>Examples of techniques:
+<ul>
+<li>Cosine similarity: Evaluating how close the response from an LLM is to a ground truth dataset
+<ul>
+<li>In section 3, for example, we ran a workflow like this:
+<ul>
+<li><code>answer_original -&gt; create questions -&gt; answer_llm</code></li>
+<li>So we compared <code>cosine(answer_original, answer_llm)</code> in order to assess how well our retrieval system was at retrieving relevant documents to our questions</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>LLM as a judge
+<ul>
+<li>We can also compute the similarity by asking the LLM to tell us!</li>
+<li>So instead of using cosine similarity, we can create a function like this: <code>llm_judge(answer_original, answer_llm)</code></li>
+<li>In certain cases, where we don&rsquo;t actually have an original answer (i.e. it&rsquo;s not in our ground truth dataset), we can compute something like this: <code>llm_judge(question, answer_llm)</code> where we ask it to tell us how good an answer is to the question provided</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>In a similar sense, we can also compute the quality not just of the retrieved documents / answers to a question, but if our LLM is creating an answer using retrieved documents as context, we can also measure how well the LLM writes its own answer</li>
+</ul>
+<h2 id="43-offline-evaluation-for-our-rag-system">4.3 Offline Evaluation for our RAG System</h2>
+<ul>
+<li>So now we&rsquo;re going to build the evaluation system for our entire RAG system
+<ul>
+<li>That is, we are going to evaluate how well our <code>answer = llm(prompt)</code> part answers the question</li>
+</ul>
+</li>
+<li>So let&rsquo;s start by bringing in all the various components of our previous system:</li>
+</ul>
+<h3 id="load-our-faq-documents-with-document-ids">Load our FAQ documents with document IDs</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>base_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://github.com/DataTalksClub/llm-zoomcamp/blob/main/&#39;</span>
+</span></span><span style="display:flex;"><span>relative_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;03-vector-search/eval/documents-with-ids.json&#39;</span>
+</span></span><span style="display:flex;"><span>docs_url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>base_url<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>relative_url<span style="color:#e6db74">}</span><span style="color:#e6db74">?raw=1&#39;</span>
+</span></span><span style="display:flex;"><span>docs_response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(docs_url)
+</span></span><span style="display:flex;"><span>documents <span style="color:#f92672">=</span> docs_response<span style="color:#f92672">.</span>json()
+</span></span></code></pre></div><h3 id="load-ground-truth-dataset-we-create-using-llms">Load ground truth dataset we create using LLMs</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>base_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://github.com/DataTalksClub/llm-zoomcamp/blob/main/&#39;</span>
+</span></span><span style="display:flex;"><span>relative_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;03-vector-search/eval/ground-truth-data.csv&#39;</span>
+</span></span><span style="display:flex;"><span>gt_url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>base_url<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>relative_url<span style="color:#e6db74">}</span><span style="color:#e6db74">?raw=1&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>df_ground_truth <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(gt_url)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## filter to machine learning zoomcamp only</span>
+</span></span><span style="display:flex;"><span>df_ground_truth <span style="color:#f92672">=</span> df_ground_truth[df_ground_truth[<span style="color:#e6db74">&#39;course&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;machine-learning-zoomcamp&#39;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## convert to dictionary</span>
+</span></span><span style="display:flex;"><span>ground_truth <span style="color:#f92672">=</span> df_ground_truth<span style="color:#f92672">.</span>to_dict(orient<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;records&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>ground_truth[<span style="color:#ae81ff">10</span>]
+</span></span></code></pre></div><pre><code>{'question': 'Are sessions recorded if I miss one?',
+ 'course': 'machine-learning-zoomcamp',
+ 'document': '5170565b'}
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## re-index the document to have the document id be the key and the quesetion/course be the value</span>
+</span></span><span style="display:flex;"><span>doc_index <span style="color:#f92672">=</span> {d[<span style="color:#e6db74">&#39;id&#39;</span>]: d <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> documents}
+</span></span><span style="display:flex;"><span>print(doc_index[<span style="color:#e6db74">&#39;5170565b&#39;</span>][<span style="color:#e6db74">&#39;text&#39;</span>])
+</span></span></code></pre></div><pre><code>Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
+</code></pre>
+<ul>
+<li>Now, we index the data based on the most successful vector search approach we evaluated in the previous section</li>
+<li>Let&rsquo;s recall that the best approach was the one where we embedded a concatenation of the <code>question</code> and <code>text</code> vs just either alone</li>
+<li>So let&rsquo;s go through all the steps now to initiate our Elasticsearch database, create our embeddings and index them</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Load a pre-trained embedding model</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sentence_transformers <span style="color:#f92672">import</span> SentenceTransformer, util
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model <span style="color:#f92672">=</span> SentenceTransformer(<span style="color:#e6db74">&#39;multi-qa-MiniLM-L6-cos-v1&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Set up your elasticsearch client</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> elasticsearch <span style="color:#f92672">import</span> Elasticsearch
+</span></span><span style="display:flex;"><span>es_client <span style="color:#f92672">=</span> Elasticsearch(<span style="color:#e6db74">&#34;http://192.168.50.49:9200&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>es_client<span style="color:#f92672">.</span>info()
+</span></span></code></pre></div><pre><code>ObjectApiResponse({'name': 'b3a351c3296c', 'cluster_name': 'docker-cluster', 'cluster_uuid': 'OJZEGlS9RR6yoR11cShgug', 'version': {'number': '8.4.3', 'build_flavor': 'default', 'build_type': 'docker', 'build_hash': '42f05b9372a9a4a470db3b52817899b99a76ee73', 'build_date': '2022-10-04T07:17:24.662462378Z', 'build_snapshot': False, 'lucene_version': '9.3.0', 'minimum_wire_compatibility_version': '7.17.0', 'minimum_index_compatibility_version': '7.0.0'}, 'tagline': 'You Know, for Search'})
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## define the schema for the index</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## we will use concated question and text</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>index_settings <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;number_of_shards&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;number_of_replicas&#34;</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mappings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;text&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;section&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;question&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;course&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;keyword&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;id&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;keyword&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;question_text_vector&#34;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;dense_vector&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;dims&#34;</span>: <span style="color:#ae81ff">384</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;index&#34;</span>: <span style="color:#66d9ef">True</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;similarity&#34;</span>: <span style="color:#e6db74">&#34;cosine&#34;</span>
+</span></span><span style="display:flex;"><span>            },
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>index_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;course-questions&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> es_client<span style="color:#f92672">.</span>indices<span style="color:#f92672">.</span>exists(index<span style="color:#f92672">=</span>index_name):
+</span></span><span style="display:flex;"><span>    es_client<span style="color:#f92672">.</span>indices<span style="color:#f92672">.</span>delete(index<span style="color:#f92672">=</span>index_name)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Index </span><span style="color:#e6db74">{</span>index_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> deleted.&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>es_client<span style="color:#f92672">.</span>indices<span style="color:#f92672">.</span>create(index<span style="color:#f92672">=</span>index_name, body<span style="color:#f92672">=</span>index_settings)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Index </span><span style="color:#e6db74">{</span>index_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> created.&#34;</span>)
+</span></span></code></pre></div><pre><code>Index course-questions deleted.
+Index course-questions created.
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Create the embeddings for question_text_vector and index them in elasticsearch</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tqdm.auto <span style="color:#f92672">import</span> tqdm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> tqdm(documents):
+</span></span><span style="display:flex;"><span>    question <span style="color:#f92672">=</span> doc[<span style="color:#e6db74">&#39;question&#39;</span>]
+</span></span><span style="display:flex;"><span>    text <span style="color:#f92672">=</span> doc[<span style="color:#e6db74">&#39;text&#39;</span>]
+</span></span><span style="display:flex;"><span>    doc[<span style="color:#e6db74">&#39;question_text_vector&#39;</span>] <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>encode(question <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#f92672">+</span> text)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    es_client<span style="color:#f92672">.</span>index(index<span style="color:#f92672">=</span>index_name, body<span style="color:#f92672">=</span>doc)
+</span></span></code></pre></div><pre><code>100%|██████████| 948/948 [01:36&lt;00:00,  9.83it/s]
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">elastic_search_knn</span>(user_query, query_vector, course_filter):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Define the KNN query</span>
+</span></span><span style="display:flex;"><span>    knn_query <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;field&#34;</span>: user_query,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;query_vector&#34;</span>: query_vector,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;k&#34;</span>: <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;num_candidates&#34;</span>: <span style="color:#ae81ff">10000</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;filter&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;term&#34;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;course&#34;</span>: course_filter
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    search_query <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;knn&#34;</span>: knn_query,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;_source&#34;</span>: [<span style="color:#e6db74">&#34;text&#34;</span>, <span style="color:#e6db74">&#34;section&#34;</span>, <span style="color:#e6db74">&#34;question&#34;</span>, <span style="color:#e6db74">&#34;course&#34;</span>, <span style="color:#e6db74">&#34;id&#34;</span>]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Execute the KNN search</span>
+</span></span><span style="display:flex;"><span>    es_results <span style="color:#f92672">=</span> es_client<span style="color:#f92672">.</span>search(index<span style="color:#f92672">=</span>index_name,
+</span></span><span style="display:flex;"><span>                           body<span style="color:#f92672">=</span>search_query
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    result_docs <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Extract the relevant documents from the search results</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> hit <span style="color:#f92672">in</span> es_results[<span style="color:#e6db74">&#39;hits&#39;</span>][<span style="color:#e6db74">&#39;hits&#39;</span>]:
+</span></span><span style="display:flex;"><span>        result_docs<span style="color:#f92672">.</span>append(hit[<span style="color:#e6db74">&#39;_source&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result_docs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">question_text_vector_knn</span>(q):
+</span></span><span style="display:flex;"><span>    question <span style="color:#f92672">=</span> q[<span style="color:#e6db74">&#39;question&#39;</span>]
+</span></span><span style="display:flex;"><span>    course <span style="color:#f92672">=</span> q[<span style="color:#e6db74">&#39;course&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    v_q <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>encode(question)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> elastic_search_knn(<span style="color:#e6db74">&#34;question_text_vector&#34;</span>, v_q, course)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>question_text_vector_knn(dict(
+</span></span><span style="display:flex;"><span>    question <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Are sessions recorded if I miss one?&#34;</span>,
+</span></span><span style="display:flex;"><span>    course <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;machine-learning-zoomcamp&#34;</span>
+</span></span><span style="display:flex;"><span>))
+</span></span></code></pre></div><pre><code>[{'question': 'What if I miss a session?',
+  'course': 'machine-learning-zoomcamp',
+  'section': 'General course-related questions',
+  'text': 'Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.',
+  'id': '5170565b'},
+ {'question': 'Is it going to be live? When?',
+  'course': 'machine-learning-zoomcamp',
+  'section': 'General course-related questions',
+  'text': 'The course videos are pre-recorded, you can start watching the course right now.\nWe will also occasionally have office hours - live sessions where we will answer your questions. The office hours sessions are recorded too.\nYou can see the office hours as well as the pre-recorded course videos in the course playlist on YouTube.',
+  'id': '39fda9f0'},
+ {'question': 'The same accuracy on epochs',
+  'course': 'machine-learning-zoomcamp',
+  'section': '8. Neural Networks and Deep Learning',
+  'text': &quot;Problem description\nThe accuracy and the loss are both still the same or nearly the same while training.\nSolution description\nIn the homework, you should set class_mode='binary' while reading the data.\nAlso, problem occurs when you choose the wrong optimizer, batch size, or learning rate\nAdded by Ekaterina Kutovaia&quot;,
+  'id': '7d11d5ce'},
+ {'question': 'Useful Resource for Missing Data Treatment\nhttps://www.kaggle.com/code/parulpandey/a-guide-to-handling-missing-values-in-python/notebook',
+  'course': 'machine-learning-zoomcamp',
+  'section': '2. Machine Learning for Regression',
+  'text': '(Hrithik Kumar Advani)',
+  'id': '81b8e8d0'},
+ {'question': 'Will I get a certificate if I missed the midterm project?',
+  'course': 'machine-learning-zoomcamp',
+  'section': 'General course-related questions',
+  'text': &quot;Yes, it's possible. See the previous answer.&quot;,
+  'id': '1d644223'}]
+</code></pre>
+<p>Now we can build our original rag function, but this time, instead of using a semantic search, we&rsquo;ll use our <code>question_text_bector_knn</code> function in order to produce results for rettrieval</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_prompt</span>(query, search_results):
+</span></span><span style="display:flex;"><span>    prompt_template <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">You&#39;re a course teaching assistant. Answer the QUESTION based on the CONTEXT from the FAQ database.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Use only the facts from the CONTEXT when answering the QUESTION.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">QUESTION: </span><span style="color:#e6db74">{question}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">CONTEXT: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#e6db74">{context}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    context <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> search_results:
+</span></span><span style="display:flex;"><span>        context <span style="color:#f92672">=</span> context <span style="color:#f92672">+</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;section: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;section&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">question: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;question&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">answer: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;text&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> prompt_template<span style="color:#f92672">.</span>format(question<span style="color:#f92672">=</span>query, context<span style="color:#f92672">=</span>context)<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> prompt
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> openai <span style="color:#f92672">import</span> OpenAI
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client <span style="color:#f92672">=</span> OpenAI()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">llm</span>(prompt, model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpt-4o&#34;</span>):
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>chat<span style="color:#f92672">.</span>completions<span style="color:#f92672">.</span>create(
+</span></span><span style="display:flex;"><span>        model<span style="color:#f92672">=</span>model,
+</span></span><span style="display:flex;"><span>        messages<span style="color:#f92672">=</span>[
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>,
+</span></span><span style="display:flex;"><span>             <span style="color:#e6db74">&#34;content&#34;</span>: prompt}
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>choices[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>message<span style="color:#f92672">.</span>content
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rag</span>(query: dict, model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gpt-4o&#39;</span>) <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span>    search_results <span style="color:#f92672">=</span> question_text_vector_knn(query)
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> build_prompt(query[<span style="color:#e6db74">&#39;question&#39;</span>], search_results)
+</span></span><span style="display:flex;"><span>    answer <span style="color:#f92672">=</span> llm(prompt, model<span style="color:#f92672">=</span>model)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> answer
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>ground_truth[<span style="color:#ae81ff">10</span>]
+</span></span></code></pre></div><pre><code>{'question': 'Are sessions recorded if I miss one?',
+ 'course': 'machine-learning-zoomcamp',
+ 'document': '5170565b'}
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rag(ground_truth[<span style="color:#ae81ff">10</span>])
+</span></span></code></pre></div><pre><code>'Yes, sessions are recorded if you miss one. You will still have access to everything that was covered and can also ask questions in advance for office hours or in Slack.'
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>doc_index[<span style="color:#e6db74">&#39;5170565b&#39;</span>][<span style="color:#e6db74">&#39;text&#39;</span>]
+</span></span></code></pre></div><pre><code>'Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.'
+</code></pre>
+<h3 id="cosine-similarity-metric">Cosine Similarity metric</h3>
+<ul>
+<li>Now that we have the original answer and the answer produced by an LLM, we can compute a similarity metric</li>
+<li>To do that, we need to create embeddings out of both answers we have</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>answer_orig <span style="color:#f92672">=</span> rag(ground_truth[<span style="color:#ae81ff">10</span>])
+</span></span><span style="display:flex;"><span>answer_llm <span style="color:#f92672">=</span> doc_index[<span style="color:#e6db74">&#39;5170565b&#39;</span>][<span style="color:#e6db74">&#39;text&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(answer_orig)
+</span></span><span style="display:flex;"><span>print(answer_llm)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>v_orig <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>encode(answer_orig)
+</span></span><span style="display:flex;"><span>v_llm <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>encode(answer_llm)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>v_llm<span style="color:#f92672">.</span>dot(v_orig)
+</span></span></code></pre></div><pre><code>Yes, sessions are recorded if you miss one. Everything is recorded, including office hours, so you won’t miss any content. You can ask your questions for office hours in advance, and these will be addressed during the live stream. Additionally, you can always ask questions in Slack.
+Everything is recorded, so you won’t miss anything. You will be able to ask your questions for office hours in advance and we will cover them during the live stream. Also, you can always ask questions in Slack.
+
+
+
+
+
+0.80153173
+</code></pre>
+<ul>
+<li>Now we&rsquo;re ready to iterate over the entire set of questions in the ground_truth dataset, we can produce an answer from the LLM</li>
+<li>And then for each answer produced, we can compute the similarity metric between it and the original answer</li>
+<li>Let&rsquo;s try running it once with GPT-4o and then again with GPT-4o-mini to see the results and cost difference</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>answers <span style="color:#f92672">=</span> {}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, rec <span style="color:#f92672">in</span> enumerate(tqdm(ground_truth)):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">in</span> answers:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>    answer_llm <span style="color:#f92672">=</span> rag(rec, model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gpt-4o-mini&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    doc_id <span style="color:#f92672">=</span> rec[<span style="color:#e6db74">&#39;document&#39;</span>]
+</span></span><span style="display:flex;"><span>    original_doc <span style="color:#f92672">=</span> doc_index[doc_id]
+</span></span><span style="display:flex;"><span>    answer_orig <span style="color:#f92672">=</span> original_doc[<span style="color:#e6db74">&#39;text&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    answers[i] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;answer_llm&#39;</span>: answer_llm,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;answer_orig&#39;</span>: answer_orig,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;document_id&#39;</span>: doc_id,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;question&#39;</span>: rec[<span style="color:#e6db74">&#39;question&#39;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;course&#39;</span>: rec[<span style="color:#e6db74">&#39;course&#39;</span>]
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><pre><code>100%|██████████| 1830/1830 [1:21:13&lt;00:00,  2.66s/it]
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Let&#39;s put it into a dictionary where each of the fields we care about is the key:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>results_gpt4o_mini <span style="color:#f92672">=</span> [<span style="color:#66d9ef">None</span>] <span style="color:#f92672">*</span> len(ground_truth)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, val <span style="color:#f92672">in</span> answers<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>    results_gpt4o_mini[i] <span style="color:#f92672">=</span> val<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>    results_gpt4o_mini[i]<span style="color:#f92672">.</span>update(ground_truth[i])  <span style="color:#75715e"># merge the two dictionaries</span>
+</span></span></code></pre></div><p>Let&rsquo;s export this data to a csv for now before we go back and re-run this with gpt-4o or an alternative model</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span>df_gpt4o_mini <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(results_gpt4o_mini)
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span>mkdir data
+</span></span><span style="display:flex;"><span>df_gpt4o_mini<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#39;data/results_gpt4o_mini.csv&#39;</span>, index<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div><pre><code>huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+</code></pre>
+<ul>
+<li>Ok, now before we go ahead and run this same code with another model, let&rsquo;s first implement some multi-threading so we can call the OpenAI API in parallel to speed up the processing</li>
+<li>Oh! and by the way, gpt-4o-mini cost wayyyyyy less than running even a fraction of gpt-4o. However, from a time perspective, it took 1h:21m to run the whole thing which is really slow. I&rsquo;m curious how long it&rsquo;d take to run gpt-3.5-turbo, or gpt-4o for that matter&hellip;</li>
+<li><img src="04-monitoring-evaluation_notes_files/image.png" alt="image.png"></li>
+</ul>
+<h3 id="evaluating-gpt-35-turbo-vs-gpt-4o-mini">Evaluating GPT-3.5-turbo vs GPT-4o-mini</h3>
+<ul>
+<li>Let&rsquo;s run the same thing as above but by just changing the model we use from <code>gpt-4o-mini</code> to <code>gpt-3.5-turbo</code></li>
+<li>Before we do that, let&rsquo;s copy in the code to run this process in parallel
+<ul>
+<li>A few important things to note with this code:
+<ul>
+<li>How it works:
+<ul>
+<li>It&rsquo;s basically just applying a function <code>f</code> to a iterable sequence of elements <code>seq</code> in parallel</li>
+<li>Some notes on <code>max_workers</code>:
+<ol>
+<li>It sets the number of workers to 6, which might be too high or low. The main considerations for this parameter are:
+<ol>
+<li>CPU Cores. It shouldn&rsquo;t exceed the number of CPU Cores. You can run <code>sysctl -n hw.ncpu</code> to find out</li>
+<li>Make sure the tasks you&rsquo;re running in the function <code>f</code> aren&rsquo;t CPU bound. If the tasks are I/O bound, you can benefit from having more workers</li>
+<li>Overall load on your system. More workers means more load, means your system becomes unusable</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ok, let&rsquo;s go!</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span>sysctl <span style="color:#f92672">-</span>n hw<span style="color:#f92672">.</span>ncpu
+</span></span></code></pre></div><pre><code>8
+
+
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> tqdm.auto <span style="color:#f92672">import</span> tqdm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> concurrent.futures <span style="color:#f92672">import</span> ThreadPoolExecutor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">map_progress</span>(pool, seq, f):
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> tqdm(total<span style="color:#f92672">=</span>len(seq)) <span style="color:#66d9ef">as</span> progress:
+</span></span><span style="display:flex;"><span>        futures <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> el <span style="color:#f92672">in</span> seq:
+</span></span><span style="display:flex;"><span>            future <span style="color:#f92672">=</span> pool<span style="color:#f92672">.</span>submit(f, el)
+</span></span><span style="display:flex;"><span>            future<span style="color:#f92672">.</span>add_done_callback(<span style="color:#66d9ef">lambda</span> p: progress<span style="color:#f92672">.</span>update())
+</span></span><span style="display:flex;"><span>            futures<span style="color:#f92672">.</span>append(future)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> future <span style="color:#f92672">in</span> futures:
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> future<span style="color:#f92672">.</span>result()
+</span></span><span style="display:flex;"><span>            results<span style="color:#f92672">.</span>append(result)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> results
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Let&#39;s take our code from above and put it into a function that we can use with map_progress</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## We&#39;ll parameterize the model here as well</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">process_record</span>(rec, model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gpt-4o-mini&#39;</span>):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    answer_llm <span style="color:#f92672">=</span> rag(rec, model<span style="color:#f92672">=</span>model)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    doc_id <span style="color:#f92672">=</span> rec[<span style="color:#e6db74">&#39;document&#39;</span>]
+</span></span><span style="display:flex;"><span>    original_doc <span style="color:#f92672">=</span> doc_index[doc_id]
+</span></span><span style="display:flex;"><span>    answer_orig <span style="color:#f92672">=</span> original_doc[<span style="color:#e6db74">&#39;text&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;answer_llm&#39;</span>: answer_llm,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;answer_orig&#39;</span>: answer_orig,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;document_id&#39;</span>: doc_id,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;question&#39;</span>: rec[<span style="color:#e6db74">&#39;question&#39;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;course&#39;</span>: rec[<span style="color:#e6db74">&#39;course&#39;</span>]
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>process_record(ground_truth[<span style="color:#ae81ff">5</span>])
+</span></span></code></pre></div><pre><code>{'answer_llm': 'The course videos are pre-recorded, so you can start watching them right now.',
+ 'answer_orig': 'The course videos are pre-recorded, you can start watching the course right now.\nWe will also occasionally have office hours - live sessions where we will answer your questions. The office hours sessions are recorded too.\nYou can see the office hours as well as the pre-recorded course videos in the course playlist on YouTube.',
+ 'document_id': '39fda9f0',
+ 'question': 'Are the course videos live or pre-recorded?',
+ 'course': 'machine-learning-zoomcamp'}
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> partial
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>process_record_withmodel <span style="color:#f92672">=</span> partial(process_record, model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gpt-3.5-turbo&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">## Set the number of workers to use (see note above on how to set this)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># pool = ThreadPoolExecutor(max_workers=1)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># results_gpt35turbo = map_progress(pool, ground_truth, process_record_withmodel)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, rec <span style="color:#f92672">in</span> enumerate(tqdm(ground_truth)):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">in</span> answers:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>    answer_llm <span style="color:#f92672">=</span> rag(rec, model<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gpt-3.5-turbo&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    doc_id <span style="color:#f92672">=</span> rec[<span style="color:#e6db74">&#39;document&#39;</span>]
+</span></span><span style="display:flex;"><span>    original_doc <span style="color:#f92672">=</span> doc_index[doc_id]
+</span></span><span style="display:flex;"><span>    answer_orig <span style="color:#f92672">=</span> original_doc[<span style="color:#e6db74">&#39;text&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    answers[i] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;answer_llm&#39;</span>: answer_llm,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;answer_orig&#39;</span>: answer_orig,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;document_id&#39;</span>: doc_id,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;question&#39;</span>: rec[<span style="color:#e6db74">&#39;question&#39;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;course&#39;</span>: rec[<span style="color:#e6db74">&#39;course&#39;</span>]
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><pre><code>  0%|          | 0/1830 [00:17&lt;?, ?it/s]
+
+
+
+---------------------------------------------------------------------------
+
+RateLimitError                            Traceback (most recent call last)
+
+Cell In[98], line 8
+      6 if i in answers:
+      7     continue
+----&gt; 8 answer_llm = rag(rec, model='gpt-3.5-turbo')
+     10 doc_id = rec['document']
+     11 original_doc = doc_index[doc_id]
+
+
+Cell In[51], line 4, in rag(query, model)
+      2 search_results = question_text_vector_knn(query)
+      3 prompt = build_prompt(query['question'], search_results)
+----&gt; 4 answer = llm(prompt, model=model)
+      5 return answer
+
+
+Cell In[35], line 2, in llm(prompt, model)
+      1 def llm(prompt, model=&quot;gpt-4o&quot;):
+----&gt; 2     response = client.chat.completions.create(
+      3         model=model,
+      4         messages=[
+      5             {&quot;role&quot;: &quot;user&quot;,
+      6              &quot;content&quot;: prompt}
+      7         ]
+      8     )
+      9     return response.choices[0].message.content
+
+
+File ~/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages/openai/_utils/_utils.py:277, in required_args.&lt;locals&gt;.inner.&lt;locals&gt;.wrapper(*args, **kwargs)
+    275             msg = f&quot;Missing required argument: {quote(missing[0])}&quot;
+    276     raise TypeError(msg)
+--&gt; 277 return func(*args, **kwargs)
+
+
+File ~/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages/openai/resources/chat/completions.py:643, in Completions.create(self, messages, model, frequency_penalty, function_call, functions, logit_bias, logprobs, max_tokens, n, parallel_tool_calls, presence_penalty, response_format, seed, service_tier, stop, stream, stream_options, temperature, tool_choice, tools, top_logprobs, top_p, user, extra_headers, extra_query, extra_body, timeout)
+    609 @required_args([&quot;messages&quot;, &quot;model&quot;], [&quot;messages&quot;, &quot;model&quot;, &quot;stream&quot;])
+    610 def create(
+    611     self,
+   (...)
+    641     timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    642 ) -&gt; ChatCompletion | Stream[ChatCompletionChunk]:
+--&gt; 643     return self._post(
+    644         &quot;/chat/completions&quot;,
+    645         body=maybe_transform(
+    646             {
+    647                 &quot;messages&quot;: messages,
+    648                 &quot;model&quot;: model,
+    649                 &quot;frequency_penalty&quot;: frequency_penalty,
+    650                 &quot;function_call&quot;: function_call,
+    651                 &quot;functions&quot;: functions,
+    652                 &quot;logit_bias&quot;: logit_bias,
+    653                 &quot;logprobs&quot;: logprobs,
+    654                 &quot;max_tokens&quot;: max_tokens,
+    655                 &quot;n&quot;: n,
+    656                 &quot;parallel_tool_calls&quot;: parallel_tool_calls,
+    657                 &quot;presence_penalty&quot;: presence_penalty,
+    658                 &quot;response_format&quot;: response_format,
+    659                 &quot;seed&quot;: seed,
+    660                 &quot;service_tier&quot;: service_tier,
+    661                 &quot;stop&quot;: stop,
+    662                 &quot;stream&quot;: stream,
+    663                 &quot;stream_options&quot;: stream_options,
+    664                 &quot;temperature&quot;: temperature,
+    665                 &quot;tool_choice&quot;: tool_choice,
+    666                 &quot;tools&quot;: tools,
+    667                 &quot;top_logprobs&quot;: top_logprobs,
+    668                 &quot;top_p&quot;: top_p,
+    669                 &quot;user&quot;: user,
+    670             },
+    671             completion_create_params.CompletionCreateParams,
+    672         ),
+    673         options=make_request_options(
+    674             extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+    675         ),
+    676         cast_to=ChatCompletion,
+    677         stream=stream or False,
+    678         stream_cls=Stream[ChatCompletionChunk],
+    679     )
+
+
+File ~/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages/openai/_base_client.py:1266, in SyncAPIClient.post(self, path, cast_to, body, options, files, stream, stream_cls)
+   1252 def post(
+   1253     self,
+   1254     path: str,
+   (...)
+   1261     stream_cls: type[_StreamT] | None = None,
+   1262 ) -&gt; ResponseT | _StreamT:
+   1263     opts = FinalRequestOptions.construct(
+   1264         method=&quot;post&quot;, url=path, json_data=body, files=to_httpx_files(files), **options
+   1265     )
+-&gt; 1266     return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+
+
+File ~/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages/openai/_base_client.py:942, in SyncAPIClient.request(self, cast_to, options, remaining_retries, stream, stream_cls)
+    933 def request(
+    934     self,
+    935     cast_to: Type[ResponseT],
+   (...)
+    940     stream_cls: type[_StreamT] | None = None,
+    941 ) -&gt; ResponseT | _StreamT:
+--&gt; 942     return self._request(
+    943         cast_to=cast_to,
+    944         options=options,
+    945         stream=stream,
+    946         stream_cls=stream_cls,
+    947         remaining_retries=remaining_retries,
+    948     )
+
+
+File ~/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages/openai/_base_client.py:1031, in SyncAPIClient._request(self, cast_to, options, remaining_retries, stream, stream_cls)
+   1029 if retries &gt; 0 and self._should_retry(err.response):
+   1030     err.response.close()
+-&gt; 1031     return self._retry_request(
+   1032         input_options,
+   1033         cast_to,
+   1034         retries,
+   1035         err.response.headers,
+   1036         stream=stream,
+   1037         stream_cls=stream_cls,
+   1038     )
+   1040 # If the response is streamed then we need to explicitly read the response
+   1041 # to completion before attempting to access the response text.
+   1042 if not err.response.is_closed:
+
+
+File ~/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages/openai/_base_client.py:1079, in SyncAPIClient._retry_request(self, options, cast_to, remaining_retries, response_headers, stream, stream_cls)
+   1075 # In a synchronous context we are blocking the entire thread. Up to the library user to run the client in a
+   1076 # different thread if necessary.
+   1077 time.sleep(timeout)
+-&gt; 1079 return self._request(
+   1080     options=options,
+   1081     cast_to=cast_to,
+   1082     remaining_retries=remaining,
+   1083     stream=stream,
+   1084     stream_cls=stream_cls,
+   1085 )
+
+
+File ~/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages/openai/_base_client.py:1031, in SyncAPIClient._request(self, cast_to, options, remaining_retries, stream, stream_cls)
+   1029 if retries &gt; 0 and self._should_retry(err.response):
+   1030     err.response.close()
+-&gt; 1031     return self._retry_request(
+   1032         input_options,
+   1033         cast_to,
+   1034         retries,
+   1035         err.response.headers,
+   1036         stream=stream,
+   1037         stream_cls=stream_cls,
+   1038     )
+   1040 # If the response is streamed then we need to explicitly read the response
+   1041 # to completion before attempting to access the response text.
+   1042 if not err.response.is_closed:
+
+
+File ~/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages/openai/_base_client.py:1079, in SyncAPIClient._retry_request(self, options, cast_to, remaining_retries, response_headers, stream, stream_cls)
+   1075 # In a synchronous context we are blocking the entire thread. Up to the library user to run the client in a
+   1076 # different thread if necessary.
+   1077 time.sleep(timeout)
+-&gt; 1079 return self._request(
+   1080     options=options,
+   1081     cast_to=cast_to,
+   1082     remaining_retries=remaining,
+   1083     stream=stream,
+   1084     stream_cls=stream_cls,
+   1085 )
+
+
+File ~/Documents/school/datatalksclub/llm-zoomcamp/llm-zoom/lib/python3.11/site-packages/openai/_base_client.py:1046, in SyncAPIClient._request(self, cast_to, options, remaining_retries, stream, stream_cls)
+   1043         err.response.read()
+   1045     log.debug(&quot;Re-raising status error&quot;)
+-&gt; 1046     raise self._make_status_error_from_response(err.response) from None
+   1048 return self._process_response(
+   1049     cast_to=cast_to,
+   1050     options=options,
+   (...)
+   1053     stream_cls=stream_cls,
+   1054 )
+
+
+RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-3.5-turbo in organization org-eIKGSFHll2tdA0DA5cB4dKva on requests per day (RPD): Limit 10000, Used 10000, Requested 1. Please try again in 8.64s. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'requests', 'param': None, 'code': 'rate_limit_exceeded'}}
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>results_gpt35_turbo <span style="color:#f92672">=</span> [<span style="color:#66d9ef">None</span>] <span style="color:#f92672">*</span> len(ground_truth)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, val <span style="color:#f92672">in</span> answers<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>    results_gpt35_turbo[i] <span style="color:#f92672">=</span> val<span style="color:#f92672">.</span>copy()
+</span></span><span style="display:flex;"><span>    results_gpt35_turbo[i]<span style="color:#f92672">.</span>update(ground_truth[i])  <span style="color:#75715e"># merge the two dictionaries</span>
+</span></span></code></pre></div><ul>
+<li>I keep hitting API rate limits with the code above so I&rsquo;m going to change the max_workers back to 1 just to avoid this&hellip;</li>
+<li>I need to implement some kind of retry capability. ChatGPT suggests using <code>tenacity</code> and applying some retry logic to the API call</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df_gpt35_turbo <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(results_gpt35turbo)
+</span></span><span style="display:flex;"><span>df_gpt35_turbo<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#39;data/results_gpt35_turbo.csv&#39;</span>, index<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span></code></pre></div><h2 id="44-offline-rag-evaluation---cosine-similarity">4.4 Offline RAG Evaluation - Cosine Similarity</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># TODO</span>
+</span></span></code></pre></div><h2 id="45-offline-rag-evaluation---llm-as-a-judge">4.5 Offline RAG Evaluation - LLM as a Judge</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># TODO</span>
+</span></span></code></pre></div><h2 id="46-capturing-user-feedback">4.6 Capturing User Feedback</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># TODO</span>
+</span></span></code></pre></div><h2 id="47-monitoring-the-system">4.7 Monitoring the System</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># TODO</span>
+</span></span></code></pre></div>
+</div>
+
+</section>
+<footer id="footer">
+    <strong></strong>
+    <div class="social">
+        &nbsp;
+<a href="mailto:info@waleedayoub.com" target="_blank" rel="me" title="Email" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+	<polyline points="22,6 12,13 2,6"></polyline>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://github.com/waleedayoub" target="_blank" rel="me" title="Github" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path
+		d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+	</path>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://www.linkedin.com/in/waleedayoub/" target="_blank" rel="me" title="Linkedin" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+	<rect x="2" y="9" width="4" height="12"></rect>
+	<circle cx="4" cy="4" r="2"></circle>
+</svg>
+</a>
+&nbsp;
+    </div><strong></strong>
+    <p style="color:grey;"></p>
+</footer>
+</div>
+    </body>
+</html>

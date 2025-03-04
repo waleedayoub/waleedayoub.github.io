@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pyenv on Waleed Ayoub</title>
+    <link>http://localhost:1313/tags/pyenv/</link>
+    <description>Recent content in Pyenv on Waleed Ayoub</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 16 Oct 2023 19:08:29 -0400</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/pyenv/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ML Zoomcamp Week 5 Homework Using Poetry and Pyenv</title>
+      <link>http://localhost:1313/post/mlzoomcamp-week5-homework-poetry/</link>
+      <pubDate>Mon, 16 Oct 2023 19:08:29 -0400</pubDate>
+      <guid>http://localhost:1313/post/mlzoomcamp-week5-homework-poetry/</guid>
+      <description>&lt;p&gt;In order to do week5 homework, you need to use pipenv to manage python packages and dependencies&lt;/p&gt;&#xA;&lt;p&gt;An alternative toolset would be to use poetry with pyenv&lt;/p&gt;&#xA;&lt;p&gt;In this case, you would split the management of python applications from python versions:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;poetry would be used to manage packages, dependencies and ensure project reproducibility&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Whereas pyenv would be used to manage python versions&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Install both&lt;/p&gt;&#xA;&lt;p&gt;In your homework directory, you can run poetry init to initialize a poetry project&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

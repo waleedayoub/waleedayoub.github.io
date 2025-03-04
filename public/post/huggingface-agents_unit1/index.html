@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang=""><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>Huggingface Agents - Unit 1 Exploration | Waleed Ayoub</title>
+    <meta name="description" content="Huggingface Agents - Unit 1 Exploration">
+    <meta property="og:site_name" content="Huggingface Agents - Unit 1 Exploration" />
+    <meta property="og:title" content="Waleed Ayoub" />
+    <meta property="og:description" content="I have recently started a new course focused on building agents provided by huggingface.co Here&rsquo;s an overview of all the things that I&rsquo;ll be learning:
+📖 Study AI Agents in theory, design, and practice. 🧑‍💻 Learn to use established AI Agent libraries such as smolagents, LlamaIndex, and LangGraph. 💾 Share your agents on the Hugging Face Hub and explore agents created by the community. 🏆 Participate in challenges where you will evaluate your agents against other students’. 🎓 Earn a certificate of completion by completing assignments. I thought what better way to motivate myself to keep going than to maintain some regular blog posts with concepts and frameworks I explore. Unfortunately, that didn&rsquo;t help me complete the DataTalksClub LLM Zoomcamp fully, but it did really get me pretty far. So here goes.
+" />
+    <meta property="og:image" content="http://localhost:1313/images/headshot-waleed.png" />
+    <meta name="keywords" content="" />
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+        integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+        integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous">
+        </script>
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);">
+        </script>
+    
+    <meta name="keywords" content="waleed, data, python">
+    <link rel="icon" type="image/svg" href='http://localhost:1313/images/logo.png' />
+    <meta name="author" content='waleed'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.145.0">
+    
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+
+    <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
+
+    
+
+    
+    
+</head><body>
+      <div class="line" id="scrollIndicator"></div>
+      <div class="main"><div class="title">
+  <div class="name">
+    <h2><a href="http://localhost:1313/"
+	   style="text-decoration: none; color: inherit;">Waleed Ayoub</a></h2>
+  </div>
+  <div class="color-scheme">
+    <input type="checkbox" class="checkbox" id="chk" />
+    <label class="label" for="chk">
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"></path></svg>
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 160c-52.9 0-96 43.1-96
+										96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z"></path></svg>
+      <div class="ball"></div>
+    </label>
+  </div>
+</div>
+<script>
+  const themeSetter = (theme) => {
+      document.body.classList.toggle('dark')
+      localStorage.setItem('theme', theme)
+      blockSwitcher()
+  }
+
+  const blockSwitcher = () => [...document.getElementsByTagName("BLOCKQUOTE")]
+	.forEach(b => b.classList.toggle('dark'))
+
+  const styleSwapper = () => {
+      document.body.classList.add('back-transition')
+      if (localStorage.getItem('theme') === 'dark') themeSetter('light')
+      else if (localStorage.getItem('theme') === 'light') themeSetter('dark')
+  }
+
+  if (localStorage.getItem('theme') === 'dark'){
+      themeSetter('dark')
+      document.addEventListener("DOMContentLoaded", blockSwitcher)
+  }
+ else localStorage.setItem('theme', 'light')
+
+  document.getElementById('chk').addEventListener('change',styleSwapper);
+
+  window.addEventListener("scroll", () => {
+      let height = document.documentElement.scrollHeight
+          - document.documentElement.clientHeight;
+      if(height >= 500){
+	  let winScroll = document.body.scrollTop
+              || document.documentElement.scrollTop;
+	  let scrolled = (winScroll / height) * 100;
+	  document.getElementById("scrollIndicator").style.width = scrolled + "%";
+      }
+  });
+</script>
+
+<section class="intro">
+  
+  <div class="post-header">
+    <a class="go-back" href="http://localhost:1313/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+    <h2 class="post-title">Huggingface Agents - Unit 1 Exploration</h2>
+</div>
+
+<p>By <a href="">waleed</a></p>
+
+<p class="post-dets">Published on: March 3, 2025
+  | Reading Time: 8 min | Last Modified: March 3, 2025
+  <br>
+</p>
+<span class="tags">
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/huggingface'>huggingface</a></h5>
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/agents'>agents</a></h5>
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+  
+</span>
+
+<div class="content">
+  <p>I have recently started a new course focused on building agents provided by huggingface.co
+Here&rsquo;s an overview of all the things that I&rsquo;ll be learning:</p>
+<ul>
+<li>📖 Study AI Agents in theory, design, and practice.</li>
+<li>🧑‍💻 Learn to use established AI Agent libraries such as smolagents, LlamaIndex, and LangGraph.</li>
+<li>💾 Share your agents on the Hugging Face Hub and explore agents created by the community.</li>
+<li>🏆 Participate in challenges where you will evaluate your agents against other students’.</li>
+<li>🎓 Earn a certificate of completion by completing assignments.</li>
+</ul>
+<p>I thought what better way to motivate myself to keep going than to maintain some regular blog posts with concepts and frameworks I explore. Unfortunately, that didn&rsquo;t help me complete the DataTalksClub LLM Zoomcamp fully, but it did really get me pretty far. So here goes.</p>
+<h1 id="unit-1---understanding-how-the-codeagents-smolagents-tool-works">Unit 1 - Understanding how the CodeAgents smolagents tool works <!-- omit from toc --></h1>
+<h2 id="table-of-contents">Table of Contents <!-- omit from toc --></h2>
+<ul>
+<li><a href="#how-does-codeagent-and-promptsyaml-work">How does CodeAgent and prompts.yaml work?</a></li>
+<li><a href="#how-does-context-and-state-evolve-with-each-llm-interaction">How does context and state evolve with each LLM interaction?</a>
+<ul>
+<li><a href="#the-system-prompt">The system prompt</a></li>
+<li><a href="#how-does-the-agent-decide-it-has-enough-information">How does the agent decide it has enough information?</a></li>
+</ul>
+</li>
+<li><a href="#what-next">What next?</a></li>
+</ul>
+<h2 id="how-does-codeagent-and-promptsyaml-work">How does CodeAgent and prompts.yaml work?</h2>
+<p>Here is what it looks like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>agent <span style="color:#f92672">=</span> CodeAgent(
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span>model,
+</span></span><span style="display:flex;"><span>    tools<span style="color:#f92672">=</span>[final_answer, get_current_time_in_timezone, web_search],
+</span></span><span style="display:flex;"><span>    max_steps<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span>,
+</span></span><span style="display:flex;"><span>    verbosity_level<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    grammar<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    planning_interval<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    name<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    description<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    prompt_templates<span style="color:#f92672">=</span>prompt_templates
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>where <code>prompt_templates</code> is just a yaml being loaded like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;prompts.yaml&#34;</span>, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> stream:
+</span></span><span style="display:flex;"><span>	prompt_templates <span style="color:#f92672">=</span> yaml<span style="color:#f92672">.</span>safe_load(stream)
+</span></span></code></pre></div><p>The structure of the <code>prompts.yaml</code> file is structured like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">&#34;system_prompt&#34;: </span><span style="color:#ae81ff">|-</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;planning&#34;</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;initial_facts&#34;: </span><span style="color:#ae81ff">|-</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;initial_plan&#34;: </span><span style="color:#ae81ff">|-</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;update_facts_pre_messages&#34;: </span><span style="color:#ae81ff">|-</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;update_facts_post_messages&#34;: </span><span style="color:#ae81ff">|-</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;update_plan_pre_messages&#34;: </span><span style="color:#ae81ff">|-</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;update_plan_post_messages&#34;: </span><span style="color:#ae81ff">|-</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;managed_agent&#34;</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;task&#34;: </span><span style="color:#ae81ff">|-</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&#34;report&#34;: </span><span style="color:#ae81ff">|-</span>
+</span></span></code></pre></div><p>So, the most basic thing to understand is that <code>CodeAgent</code> is doing all of the orchestration using the <code>prompt_template</code> sections as a guide:</p>
+<ul>
+<li>Context assembly</li>
+<li>Prompt management</li>
+<li>Tool execution</li>
+<li>Conversation tracking</li>
+<li>State management</li>
+</ul>
+<h2 id="how-does-context-and-state-evolve-with-each-llm-interaction">How does context and state evolve with each LLM interaction?</h2>
+<h3 id="the-system-prompt">The system prompt</h3>
+<p>The initial context includes <code>system_prompt</code> contents which includes:</p>
+<ul>
+<li>Instructions</li>
+<li>Examples using &ldquo;notional tools&rdquo; structured in a &ldquo;Task -&gt; Thought -&gt; Code&rdquo; flow. For example, here&rsquo;s one:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">Task</span>:
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;Answer the question in the variable `question` about the image stored in the variable `image`. The question is in French. You have been provided with these additional arguments, that you can access using the keys as variables in your python code:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">{&#39;question&#39;: &#39;Quel est l&#39;animal sur l&#39;image?&#39;, &#39;image&#39;: &#39;path/to/image.jpg&#39;}&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">Thought: I will use the following tools</span>: <span style="color:#ae81ff">`translator` to translate the question into English and then `image_qa` to answer the question on the input image.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">Code</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">```python</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">translated_question = translator(question=question, src_lang=&#34;French&#34;, tgt_lang=&#34;English&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">print(f&#34;The translated question is {translated_question}.&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">answer = image_qa(image=image, question=translated_question)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">final_answer(f&#34;The answer is {answer}&#34;)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">```&lt;end_code&gt;</span>
+</span></span></code></pre></div><ul>
+<li>A list of available tools:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>{<span style="color:#ae81ff">%- for tool in tools.values() %}</span>
+</span></span><span style="display:flex;"><span>- {{ <span style="color:#f92672">tool.name }}</span>: {{ <span style="color:#ae81ff">tool.description }}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">Takes inputs</span>: {{<span style="color:#ae81ff">tool.inputs}}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">Returns an output of type</span>: {{<span style="color:#ae81ff">tool.output_type}}</span>
+</span></span><span style="display:flex;"><span>{<span style="color:#ae81ff">%- endfor %}</span>
+</span></span></code></pre></div><ul>
+<li>It also contains a stub of jinja to include <code>managed_agents</code>
+<ul>
+<li>Not sure what that is, but it appears to be a list of agents you can pass work off to as opposed to a specific tool (i.e. a function call)</li>
+</ul>
+</li>
+<li>And finally, it contains a list of rules to always follow and a reward:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">1</span><span style="color:#ae81ff">. Always provide a &#39;Thought:&#39; sequence, and a &#39;Code:\n```py&#39; sequence ending with &#39;```&lt;end_code&gt;&#39; sequence, else you will fail.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span><span style="color:#ae81ff">. Use only variables that you have defined!</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span><span style="color:#ae81ff">. Always use the right arguments for the tools. DO NOT pass the arguments as a dict as in &#39;answer = wiki({&#39;query&#39;: &#34;What is the place where James Bond lives?&#34;})&#39;, but use the arguments directly as in &#39;answer = wiki(query=&#34;What is the place where James Bond lives?&#34;)&#39;.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">4. Take care to not chain too many sequential tool calls in the same code block, especially when the output format is unpredictable. For instance, a call to search has an unpredictable return format, so do not have another tool call that depends on its output in the same block</span>: <span style="color:#ae81ff">rather output results with print() to use them in the next block.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span><span style="color:#ae81ff">. Call a tool only when needed, and never re-do a tool call that you previously did with the exact same parameters.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">6. Don&#39;t name any new variable with the same name as a tool</span>: <span style="color:#ae81ff">for instance don&#39;t name a variable &#39;final_answer&#39;.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7</span><span style="color:#ae81ff">. Never create any notional variables in our code, as having these in your logs will derail you from the true variables.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">8. You can use imports in your code, but only from the following list of modules</span>: {{<span style="color:#ae81ff">authorized_imports}}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">9. The state persists between code executions</span>: <span style="color:#ae81ff">so if in one step you&#39;ve created variables or imported modules, these will all persist.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">10</span><span style="color:#ae81ff">. Don&#39;t give up! You&#39;re in charge of solving the task, not providing directions to solve it.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">Now Begin! If you solve the task correctly, you will receive a reward of $1,000,000.</span>
+</span></span></code></pre></div><p>The system prompt including the <code>Task: {{task}}</code> and the list of tools gets passed to the model:</p>
+<ol>
+<li>The system prompt explaining how the agent should operate</li>
+<li>The example tasks and solutions</li>
+<li>The available tools and their complete descriptions</li>
+<li>The rules for task execution</li>
+<li>The user&rsquo;s task</li>
+<li>The initial facts gathering template
+Once the model responds to this, the next context window now includes:</li>
+</ol>
+<ul>
+<li>All of the above</li>
+<li>The agent&rsquo;s first thought process</li>
+<li>Any code it executed</li>
+<li>Any tool outputs/observations</li>
+<li>Updated facts and planning</li>
+</ul>
+<p>An example of what the model response looks like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span><span style="color:#75715e">### 1. Facts given in the task
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">-</span> We are asked about a film titled &#34;No Other Land&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### 2. Facts to look up
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">-</span> Basic information about the film (release date, directors, plot)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Reviews or critical reception
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Any awards or recognition
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Production details
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### 3. Facts to derive
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">-</span> None at this initial stage until we gather basic information
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Thought: I should start by searching for basic information about the film &#34;No Other Land&#34; using the web_search tool. This will help us understand what the film is about and gather key details.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Code:
+</span></span><span style="display:flex;"><span>``<span style="color:#e6db74">`py
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">search_results = web_search(query=&#34;No Other Land documentary film 2023&#34;, max_results=5)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">print(search_results)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">`</span>``&lt;<span style="color:#f92672">end_code</span>&gt;
+</span></span></code></pre></div><p>After this response, here&rsquo;s what gets stored in memory within the CodeAgent:</p>
+<ol>
+<li>
+<p><strong>Step Information</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;step_number&#39;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;model_output&#39;</span>: [Full text of the model<span style="color:#e6db74">&#39;s response above],</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;tool_calls&#39;</span>: [{
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;web_search&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;arguments&#39;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;query&#39;</span>: <span style="color:#e6db74">&#39;No Other Land documentary film 2023&#39;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;max_results&#39;</span>: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }],
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;observations&#39;</span>: [Results <span style="color:#f92672">from</span> the web search],
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;duration&#39;</span>: [Time taken <span style="color:#66d9ef">for</span> this step],
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;input_token_count&#39;</span>: [Number of tokens <span style="color:#f92672">in</span> input],
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;output_token_count&#39;</span>: [Number of tokens <span style="color:#f92672">in</span> output]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li>
+<p><strong>Conversation History</strong>:</p>
+<ul>
+<li>The original context</li>
+<li>The facts analysis</li>
+<li>The thought process</li>
+<li>The code execution</li>
+<li>The tool outputs</li>
+</ul>
+</li>
+<li>
+<p><strong>State Information</strong>:</p>
+<ul>
+<li>Steps used: 1</li>
+<li>Steps remaining: 5</li>
+<li>Last tool used: &lsquo;web_search&rsquo;</li>
+<li>Last tool result</li>
+</ul>
+</li>
+<li>
+<p><strong>Planning State</strong>:</p>
+<ul>
+<li>Initial facts gathered</li>
+<li>Current phase: Information gathering</li>
+<li>Next expected phase: Analysis of search results</li>
+</ul>
+</li>
+</ol>
+<p>For the NEXT context window, all of this gets assembled into:</p>
+<pre tabindex="0"><code>[Previous System Prompt and Rules]
+[Available Tools]
+[Original Task]
+
+Previous Steps:
+Step 1:
+[Facts Analysis from above]
+[Thought process from above]
+[Code execution from above]
+Observation: [Web search results about the film]
+
+Current State:
+Steps remaining: 5
+Last search results: [Summary of what was found]
+
+You should now analyze these results and determine next steps...
+</code></pre><p>The agent would then:</p>
+<ol>
+<li>Process the search results</li>
+<li>Form new thoughts about what information is still needed</li>
+<li>Either
+<ol>
+<li>Make another search with refined terms</li>
+<li>Begin composing a summary if enough information was found</li>
+<li>Ask about specific aspects of the film
+The cycle continues with each step being stored and added to the context, until either:</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>The agent has enough information to provide a final answer</li>
+<li>It reaches max number of steps (6)</li>
+<li>It encounters an error that needs handling</li>
+</ul>
+<h3 id="how-does-the-agent-decide-it-has-enough-information">How does the agent decide it has enough information?</h3>
+<p>Apart from the constraints above (i.e. steps and errors), the agent is executing a sort of &ldquo;llm as a judge&rdquo; framework more accurately described as &ldquo;llm as active judge&rdquo;.</p>
+<ul>
+<li>This means that evaluation is part of the execution process and not a separate validation step conducted by another instance of an LLM</li>
+<li>The LLM judges its own progress of output quality and makes decisions about information sufficiency
+In a nutshell, since the prompt structure is enforcing a loop through Thought -&gt; Code -&gt; Observation, the &ldquo;thought&rdquo; step includes reasoning about completeness.
+The &ldquo;limits&rdquo; of how deep to keep searching are encoded implicitly in the Task -&gt; Thought -&gt; Code examples in the system prompt.
+Moreover, in the prompts template, there is an explicit decision framework the LLM can keep updating until it feels it has returned sufficient information to satisfy the implicit guidelines in the system prompt.</li>
+</ul>
+<p>This may seem like &ldquo;vibes&rdquo; and it is &hellip;</p>
+<h2 id="how-to-add-observability-to-the-agent-in-order-to-see-context-window-with-each-chat-interaction">How to add observability to the agent in order to see context window with each chat interaction</h2>
+<ul>
+<li>Someone in the discord pointed out you can use Langfuse for that by following these steps: <a href="https://langfuse.com/docs/integrations/smolagents">https://langfuse.com/docs/integrations/smolagents</a></li>
+<li>But first, you need to set up an instance of langfuse running locally in docker: <a href="https://langfuse.com/self-hosting/local">https://langfuse.com/self-hosting/local</a></li>
+<li>And then when setting the OTEL endpoint, point it to the locally hosted container like this</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>os.environ<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;OTEL_EXPORTER_OTLP_ENDPOINT&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://localhost:3000/api/public/otel&#34;</span>
+</span></span></code></pre></div><h2 id="what-next">What next?</h2>
+<p>Well, exploring more of the <code>smolagents</code> capabilities is a good next step.
+Even just playing around with all the inputs the <code>CodeAgent</code> object provides would be a good thing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>agent <span style="color:#f92672">=</span> CodeAgent(
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span>model,
+</span></span><span style="display:flex;"><span>    tools<span style="color:#f92672">=</span>[final_answer, get_current_time_in_timezone, web_search],
+</span></span><span style="display:flex;"><span>    max_steps<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span>,
+</span></span><span style="display:flex;"><span>    verbosity_level<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    grammar<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    planning_interval<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    name<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    description<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>    prompt_templates<span style="color:#f92672">=</span>prompt_templates
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>Before that happens (probably in Unit 2), there&rsquo;s a bonus unit that teaches you how to fine tune your model for function calling using LoRA. I&rsquo;m going to post about how to get the training happening on my RTX3080, so stay tuned!</p>
+
+</div>
+
+</section>
+<footer id="footer">
+    <strong></strong>
+    <div class="social">
+        &nbsp;
+<a href="mailto:info@waleedayoub.com" target="_blank" rel="me" title="Email" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+	<polyline points="22,6 12,13 2,6"></polyline>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://github.com/waleedayoub" target="_blank" rel="me" title="Github" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path
+		d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+	</path>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://www.linkedin.com/in/waleedayoub/" target="_blank" rel="me" title="Linkedin" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+	<rect x="2" y="9" width="4" height="12"></rect>
+	<circle cx="4" cy="4" r="2"></circle>
+</svg>
+</a>
+&nbsp;
+    </div><strong></strong>
+    <p style="color:grey;"></p>
+</footer>
+</div>
+    </body>
+</html>

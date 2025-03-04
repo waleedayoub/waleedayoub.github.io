@@ -2,91 +2,249 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Waleed Ayoub</title>
-    <link>https://waleedayoub.com/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Waleed Ayoub</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Dec 2023 09:56:51 -0500</lastBuildDate><atom:link href="https://waleedayoub.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 Mar 2025 12:29:19 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>jackett</title>
-      <link>https://waleedayoub.com/tags/jackett/</link>
-      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
-      
-      <guid>https://waleedayoub.com/tags/jackett/</guid>
+      <title>Agents</title>
+      <link>http://localhost:1313/tags/agents/</link>
+      <pubDate>Mon, 03 Mar 2025 12:29:19 -0500</pubDate>
+      <guid>http://localhost:1313/tags/agents/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>plex</title>
-      <link>https://waleedayoub.com/tags/plex/</link>
-      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
-      
-      <guid>https://waleedayoub.com/tags/plex/</guid>
+      <title>Huggingface</title>
+      <link>http://localhost:1313/tags/huggingface/</link>
+      <pubDate>Mon, 03 Mar 2025 12:29:19 -0500</pubDate>
+      <guid>http://localhost:1313/tags/huggingface/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>radarr</title>
-      <link>https://waleedayoub.com/tags/radarr/</link>
-      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
-      
-      <guid>https://waleedayoub.com/tags/radarr/</guid>
+      <title>Index</title>
+      <link>http://localhost:1313/tags/index/</link>
+      <pubDate>Mon, 03 Mar 2025 12:29:19 -0500</pubDate>
+      <guid>http://localhost:1313/tags/index/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>sonarr</title>
-      <link>https://waleedayoub.com/tags/sonarr/</link>
-      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
-      
-      <guid>https://waleedayoub.com/tags/sonarr/</guid>
+      <title>LLM</title>
+      <link>http://localhost:1313/tags/llm/</link>
+      <pubDate>Mon, 03 Mar 2025 12:29:19 -0500</pubDate>
+      <guid>http://localhost:1313/tags/llm/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>synology</title>
-      <link>https://waleedayoub.com/tags/synology/</link>
-      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
-      
-      <guid>https://waleedayoub.com/tags/synology/</guid>
+      <title>Python</title>
+      <link>http://localhost:1313/tags/python/</link>
+      <pubDate>Mon, 03 Mar 2025 12:29:19 -0500</pubDate>
+      <guid>http://localhost:1313/tags/python/</guid>
       <description></description>
     </item>
-    
+    <item>
+      <title>Datatalksclub</title>
+      <link>http://localhost:1313/tags/datatalksclub/</link>
+      <pubDate>Tue, 06 Aug 2024 14:50:46 -0400</pubDate>
+      <guid>http://localhost:1313/tags/datatalksclub/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Codespaces</title>
+      <link>http://localhost:1313/tags/codespaces/</link>
+      <pubDate>Thu, 04 Jul 2024 07:28:08 -0400</pubDate>
+      <guid>http://localhost:1313/tags/codespaces/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Github</title>
+      <link>http://localhost:1313/tags/github/</link>
+      <pubDate>Thu, 04 Jul 2024 07:28:08 -0400</pubDate>
+      <guid>http://localhost:1313/tags/github/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Secrets</title>
+      <link>http://localhost:1313/tags/secrets/</link>
+      <pubDate>Thu, 04 Jul 2024 07:28:08 -0400</pubDate>
+      <guid>http://localhost:1313/tags/secrets/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Data Engineering</title>
+      <link>http://localhost:1313/tags/data-engineering/</link>
+      <pubDate>Mon, 12 Feb 2024 07:56:52 -0500</pubDate>
+      <guid>http://localhost:1313/tags/data-engineering/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dlthub</title>
+      <link>http://localhost:1313/tags/dlthub/</link>
+      <pubDate>Mon, 12 Feb 2024 07:56:52 -0500</pubDate>
+      <guid>http://localhost:1313/tags/dlthub/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sql</title>
+      <link>http://localhost:1313/tags/sql/</link>
+      <pubDate>Mon, 12 Feb 2024 07:56:52 -0500</pubDate>
+      <guid>http://localhost:1313/tags/sql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Torontoopendata</title>
+      <link>http://localhost:1313/tags/torontoopendata/</link>
+      <pubDate>Mon, 12 Feb 2024 07:56:52 -0500</pubDate>
+      <guid>http://localhost:1313/tags/torontoopendata/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bigquery</title>
+      <link>http://localhost:1313/tags/bigquery/</link>
+      <pubDate>Wed, 03 Jan 2024 09:40:43 -0500</pubDate>
+      <guid>http://localhost:1313/tags/bigquery/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gcp</title>
+      <link>http://localhost:1313/tags/gcp/</link>
+      <pubDate>Wed, 03 Jan 2024 09:40:43 -0500</pubDate>
+      <guid>http://localhost:1313/tags/gcp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Prefect</title>
+      <link>http://localhost:1313/tags/prefect/</link>
+      <pubDate>Wed, 03 Jan 2024 09:40:43 -0500</pubDate>
+      <guid>http://localhost:1313/tags/prefect/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Terraform</title>
+      <link>http://localhost:1313/tags/terraform/</link>
+      <pubDate>Wed, 03 Jan 2024 09:40:43 -0500</pubDate>
+      <guid>http://localhost:1313/tags/terraform/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Jackett</title>
+      <link>http://localhost:1313/tags/jackett/</link>
+      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
+      <guid>http://localhost:1313/tags/jackett/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Plex</title>
+      <link>http://localhost:1313/tags/plex/</link>
+      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
+      <guid>http://localhost:1313/tags/plex/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Radarr</title>
+      <link>http://localhost:1313/tags/radarr/</link>
+      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
+      <guid>http://localhost:1313/tags/radarr/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sonarr</title>
+      <link>http://localhost:1313/tags/sonarr/</link>
+      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
+      <guid>http://localhost:1313/tags/sonarr/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Synology</title>
+      <link>http://localhost:1313/tags/synology/</link>
+      <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
+      <guid>http://localhost:1313/tags/synology/</guid>
+      <description></description>
+    </item>
     <item>
       <title>VPN</title>
-      <link>https://waleedayoub.com/tags/vpn/</link>
+      <link>http://localhost:1313/tags/vpn/</link>
       <pubDate>Mon, 11 Dec 2023 09:56:51 -0500</pubDate>
-      
-      <guid>https://waleedayoub.com/tags/vpn/</guid>
+      <guid>http://localhost:1313/tags/vpn/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>datatalksclub</title>
-      <link>https://waleedayoub.com/tags/datatalksclub/</link>
-      <pubDate>Tue, 05 Sep 2023 22:40:29 -0400</pubDate>
-      
-      <guid>https://waleedayoub.com/tags/datatalksclub/</guid>
+      <title>Git</title>
+      <link>http://localhost:1313/tags/git/</link>
+      <pubDate>Mon, 16 Oct 2023 19:08:29 -0400</pubDate>
+      <guid>http://localhost:1313/tags/git/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>git</title>
-      <link>https://waleedayoub.com/tags/git/</link>
-      <pubDate>Tue, 05 Sep 2023 22:40:29 -0400</pubDate>
-      
-      <guid>https://waleedayoub.com/tags/git/</guid>
+      <title>Mlzoomcamp</title>
+      <link>http://localhost:1313/tags/mlzoomcamp/</link>
+      <pubDate>Mon, 16 Oct 2023 19:08:29 -0400</pubDate>
+      <guid>http://localhost:1313/tags/mlzoomcamp/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>index</title>
-      <link>https://waleedayoub.com/tags/index/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://waleedayoub.com/tags/index/</guid>
+      <title>Poetry</title>
+      <link>http://localhost:1313/tags/poetry/</link>
+      <pubDate>Mon, 16 Oct 2023 19:08:29 -0400</pubDate>
+      <guid>http://localhost:1313/tags/poetry/</guid>
       <description></description>
     </item>
-    
+    <item>
+      <title>Pyenv</title>
+      <link>http://localhost:1313/tags/pyenv/</link>
+      <pubDate>Mon, 16 Oct 2023 19:08:29 -0400</pubDate>
+      <guid>http://localhost:1313/tags/pyenv/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Css</title>
+      <link>http://localhost:1313/tags/css/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/css/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Html</title>
+      <link>http://localhost:1313/tags/html/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/html/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Markdown</title>
+      <link>http://localhost:1313/tags/markdown/</link>
+      <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/markdown/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Privacy</title>
+      <link>http://localhost:1313/tags/privacy/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/privacy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shortcodes</title>
+      <link>http://localhost:1313/tags/shortcodes/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/shortcodes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Text</title>
+      <link>http://localhost:1313/tags/text/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/text/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Emoji</title>
+      <link>http://localhost:1313/tags/emoji/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/emoji/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

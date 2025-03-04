@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang=""><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>Bigquery | Waleed Ayoub</title>
+    <meta name="description" content="Bigquery">
+    <meta property="og:site_name" content="Bigquery" />
+    <meta property="og:title" content="Waleed Ayoub" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="http://localhost:1313/images/headshot-waleed.png" />
+    <meta name="keywords" content="" />
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+        integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+        integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous">
+        </script>
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);">
+        </script>
+    
+    <meta name="keywords" content="waleed, data, python">
+    <link rel="icon" type="image/svg" href='http://localhost:1313/images/logo.png' />
+    <meta name="author" content='waleed'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.145.0">
+    
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+
+    <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
+
+    
+
+    
+    
+    <link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/bigquery/index.xml" title="Waleed Ayoub" />
+    
+</head><body>
+      <div class="line" id="scrollIndicator"></div>
+      <div class="main"><div class="title">
+  <div class="name">
+    <h2><a href="http://localhost:1313/"
+	   style="text-decoration: none; color: inherit;">Waleed Ayoub</a></h2>
+  </div>
+  <div class="color-scheme">
+    <input type="checkbox" class="checkbox" id="chk" />
+    <label class="label" for="chk">
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"></path></svg>
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 160c-52.9 0-96 43.1-96
+										96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z"></path></svg>
+      <div class="ball"></div>
+    </label>
+  </div>
+</div>
+<script>
+  const themeSetter = (theme) => {
+      document.body.classList.toggle('dark')
+      localStorage.setItem('theme', theme)
+      blockSwitcher()
+  }
+
+  const blockSwitcher = () => [...document.getElementsByTagName("BLOCKQUOTE")]
+	.forEach(b => b.classList.toggle('dark'))
+
+  const styleSwapper = () => {
+      document.body.classList.add('back-transition')
+      if (localStorage.getItem('theme') === 'dark') themeSetter('light')
+      else if (localStorage.getItem('theme') === 'light') themeSetter('dark')
+  }
+
+  if (localStorage.getItem('theme') === 'dark'){
+      themeSetter('dark')
+      document.addEventListener("DOMContentLoaded", blockSwitcher)
+  }
+ else localStorage.setItem('theme', 'light')
+
+  document.getElementById('chk').addEventListener('change',styleSwapper);
+
+  window.addEventListener("scroll", () => {
+      let height = document.documentElement.scrollHeight
+          - document.documentElement.clientHeight;
+      if(height >= 500){
+	  let winScroll = document.body.scrollTop
+              || document.documentElement.scrollTop;
+	  let scrolled = (winScroll / height) * 100;
+	  document.getElementById("scrollIndicator").style.width = scrolled + "%";
+      }
+  });
+</script>
+
+<br>
+	<div style="display:flex;align-items:center;">
+		<a class="go-back" href="http://localhost:1313/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5
+						21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6
+						6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+	<h2 class="post-title">Bigquery</h2>
+	</div>
+        
+        
+          
+            <div class="post-item">
+              
+                <well class="well">
+                  <h3><a class="link" href="http://localhost:1313/post/toronto-bicycle-data/">Prefect.io POC - Building ETL Pipeline for Toronto Bicycle Data</a>
+                    
+                    by <a class="link" href="">waleed</a></h3>
+                  
+                    <h4>January 3, 2024 | Reading Time: 4 min </h4>
+                    <span class="tags">
+                        
+                        <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
+                        
+                        <h5><a class="tag" href='http://localhost:1313/tags/prefect'>prefect</a></h5>
+                        
+                        <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+                        
+                        <h5><a class="tag" href='http://localhost:1313/tags/sql'>sql</a></h5>
+                        
+                        <h5><a class="tag" href='http://localhost:1313/tags/terraform'>terraform</a></h5>
+                        
+                        <h5><a class="tag" href='http://localhost:1313/tags/gcp'>gcp</a></h5>
+                        
+                        <h5><a class="tag" href='http://localhost:1313/tags/bigquery'>bigquery</a></h5>
+                        
+                    </span>
+                    <p><h1 id="toronto-bicycle-data-engineering">Toronto Bicycle Data Engineering</h1>
+<ul>
+<li>You can find all the code for this project here: <a href="https://github.com/waleedayoub/toronto-bicycle-data">https://github.com/waleedayoub/toronto-bicycle-data</a></li>
+<li>This was a project I explored as part of the <a href="https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_7_project/README.md">final project</a> of the datatalks club data engineering zoomcamp</li>
+</ul>
+<h2 id="project-description">Project Description</h2>
+<ul>
+<li>The goal of this project is to examine historical bike share ridership going as far back as 2016 in the city of Toronto, Ontario.</li>
+<li>The city of Toronto has an open data sharing mandate, and all bike share data can be found here: <a href="https://open.toronto.ca/dataset/bike-share-toronto/">https://open.toronto.ca/dataset/bike-share-toronto/</a></li>
+<li>Unfortunately, the data is not consistently named or labeled across years (2014-2022, inclusively), so there is a need to perform quite a bit of processing to handle it.
+<ul>
+<li>For example, in some years, data is stored in tabs in XLSX files, whereas in other years, they are CSVs broken down by quarters, or in other cases, by months, in CSV files</li>
+</ul>
+</li>
+<li>Given that this analysis focuses on historical ridership, a batch processing pipeline is sufficient, and can be scheduled to run monthly or quarterly.</li>
+<li>It is unclear how often the data refreshes, but the following program handles edge cases and checks whether data has been updated before triggering pipelines</li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<ul>
+<li>The architecture for this project is kept fairly simple:</li>
+</ul>
+<div style="max-width: 100%; overflow: hidden;">
+    <img src="/images/bikedataarch.png" alt="Data arch for toronto bicycle data" style="width: 100%; height: auto;">
+</div>
+<h2 id="data-sources">Data sources</h2>
+<h3 id="toronto">Toronto</h3>
+<ul>
+<li>Ridership data: <a href="https://open.toronto.ca/dataset/bike-share-toronto-ridership-data/">https://open.toronto.ca/dataset/bike-share-toronto-ridership-data/</a></li>
+<li>For batch data, here&rsquo;s an example of how to access the ridership data API:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>base_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://ckan0.cf.opendata.inter.prod-toronto.ca&#34;</span>
+</span></span><span style="display:flex;"><span>package_url <span style="color:#f92672">=</span> base_url <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/api/3/action/package_show&#34;</span>
+</span></span><span style="display:flex;"><span>params <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;bike-share-toronto-ridership-data&#34;</span>}
+</span></span></code></pre></div></li>
+<li>If you do a GET request on the package_url with params provided like this:
+<code>resource = requests.get(url, params=params).json()</code>
+<ul>
+<li>You can then grab the url where the data is stored like this:
+<code>resource[&quot;result&quot;][&quot;resources&quot;][&quot;url&quot;]</code></li>
+<li>And the url will be something like this:
+<a href="https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/7e876c24-177c-4605-9cef-e50dd74c617f/resource/85326868-508c-497e-b139-b698aaf27bbf/download/bikeshare-ridership-2014-2015.xlsx">https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/7e876c24-177c-4605-9cef-e50dd74c617f/resource/85326868-508c-497e-b139-b698aaf27bbf/download/bikeshare-ridership-2014-2015.xlsx</a></li>
+<li>You can then do another GET request on that URL and write to a file in Python</li>
+</ul>
+</li>
+</ul>
+<h2 id="deployment-instructions">Deployment instructions</h2>
+<h3 id="technologies-used">Technologies used</h3>
+<ul>
+<li>GCP / Cloud Storage / BigQuery / Looker</li>
+<li>Terraform</li>
+<li>Prefect / DBT</li>
+<li>Python 3.9.16 / virtualenv</li>
+</ul>
+<h3 id="things-you-need-to-install--versions">Things you need to install + versions</h3>
+<ul>
+<li>Google cloud SDK: <a href="https://cloud.google.com/sdk/docs/install">https://cloud.google.com/sdk/docs/install</a></li>
+<li>Terraform 1.4.5: <a href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli">https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli</a></li>
+<li>Python: make sure you&rsquo;re running 3.9.16</li>
+<li>Prefect 2.10.4: <a href="https://docs.prefect.io/latest/getting-started/installation/">https://docs.prefect.io/latest/getting-started/installation/</a>
+<ul>
+<li>It is <em>very</em> important to get the prefect version right as GCS block&rsquo;s <code>upload_from_dataframe()</code> <a href="https://prefecthq.github.io/prefect-gcp/cloud_storage/#prefect_gcp.cloud_storage.GcsBucket.upload_from_dataframe">method</a> doesn&rsquo;t work in older versions</li>
+</ul>
+</li>
+</ul>
+<h3 id="step-0">Step 0</h3>
+<ul>
+<li>Clone or copy this repo: <code>git clone git@github.com:waleedayoub/toronto-bicycle-data.git</code></li>
+</ul>
+<h3 id="step-1---initial-setup--gcp">Step 1 - Initial Setup + GCP</h3>
+<ol>
+<li>
+<p>Create a service account in GCP and download the service account json (In the IAM &amp; Admin section of the GCP console)</p></p>
+                </well>
+                            
+            </div><br>
+          
+        
+<footer id="footer">
+    <strong></strong>
+    <div class="social">
+        &nbsp;
+<a href="mailto:info@waleedayoub.com" target="_blank" rel="me" title="Email" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+	<polyline points="22,6 12,13 2,6"></polyline>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://github.com/waleedayoub" target="_blank" rel="me" title="Github" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path
+		d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+	</path>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://www.linkedin.com/in/waleedayoub/" target="_blank" rel="me" title="Linkedin" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+	<rect x="2" y="9" width="4" height="12"></rect>
+	<circle cx="4" cy="4" r="2"></circle>
+</svg>
+</a>
+&nbsp;
+    </div><strong></strong>
+    <p style="color:grey;"></p>
+</footer>
+</div>
+    </body>
+</html>

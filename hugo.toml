@@ -1,7 +1,12 @@
 baseURL = 'https://waleedayoub.com'
 languageCode = 'en-us'
 title = 'Waleed Ayoub'
-paginate = "10" # Number of posts per page
+# Replace the old config
+# paginate = 10
+
+# With the new config
+[pagination]
+  pagerSize = 10
 #disqusShortname = "" # Enable comments by entering your Disqus shortname
 #googleAnalytics = "" # Enable Google Analytics by entering your tracking id
 #-------------------------------------------------------------------------------

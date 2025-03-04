@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Huggingface-Agents on Waleed Ayoub</title>
+    <link>http://localhost:1313/series/huggingface-agents/</link>
+    <description>Recent content in Huggingface-Agents on Waleed Ayoub</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 03 Mar 2025 12:29:19 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/series/huggingface-agents/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Huggingface Agents - Unit 1 Exploration</title>
+      <link>http://localhost:1313/post/huggingface-agents_unit1/</link>
+      <pubDate>Mon, 03 Mar 2025 12:29:19 -0500</pubDate>
+      <guid>http://localhost:1313/post/huggingface-agents_unit1/</guid>
+      <description>&lt;p&gt;I have recently started a new course focused on building agents provided by huggingface.co&#xA;Here&amp;rsquo;s an overview of all the things that I&amp;rsquo;ll be learning:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;📖 Study AI Agents in theory, design, and practice.&lt;/li&gt;&#xA;&lt;li&gt;🧑‍💻 Learn to use established AI Agent libraries such as smolagents, LlamaIndex, and LangGraph.&lt;/li&gt;&#xA;&lt;li&gt;💾 Share your agents on the Hugging Face Hub and explore agents created by the community.&lt;/li&gt;&#xA;&lt;li&gt;🏆 Participate in challenges where you will evaluate your agents against other students’.&lt;/li&gt;&#xA;&lt;li&gt;🎓 Earn a certificate of completion by completing assignments.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;I thought what better way to motivate myself to keep going than to maintain some regular blog posts with concepts and frameworks I explore. Unfortunately, that didn&amp;rsquo;t help me complete the DataTalksClub LLM Zoomcamp fully, but it did really get me pretty far. So here goes.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

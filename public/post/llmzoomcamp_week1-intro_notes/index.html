@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang=""><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>LLM Zoomcamp Week 1 - Intro Notes | Waleed Ayoub</title>
+    <meta name="description" content="LLM Zoomcamp Week 1 - Intro Notes">
+    <meta property="og:site_name" content="LLM Zoomcamp Week 1 - Intro Notes" />
+    <meta property="og:title" content="Waleed Ayoub" />
+    <meta property="og:description" content="LLM Zoomcamp - Week 1 Notes This is the first week of the new LLM Zoomcamp hosted by DataTalksClub. I&rsquo;ve found their content really helpful in the past, having completed the Data Engineering Zoomcamp a year ago and successively attempted (but never finished!) the other two zoomcamps they offer.
+In order to give me the best chance of completing this one, I&rsquo;ve decided to publish my notes on my blog. Hope that helps me see this one through!
+" />
+    <meta property="og:image" content="http://localhost:1313/images/headshot-waleed.png" />
+    <meta name="keywords" content="" />
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+        integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+        integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous">
+        </script>
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);">
+        </script>
+    
+    <meta name="keywords" content="waleed, data, python">
+    <link rel="icon" type="image/svg" href='http://localhost:1313/images/logo.png' />
+    <meta name="author" content='waleed'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.145.0">
+    
+    <link rel="stylesheet" href="http://localhost:1313/sass/main.min.a669fc379ca0ba4d389af69be2682407e7bca16d368f2e7ad5b83c0cd80029b3.css" type="text/css" media="screen">
+
+    <link rel="stylesheet" href="http://localhost:1313/css/custom-style.css">
+
+    
+
+    
+    
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({ startOnLoad: true });
+        });
+    </script>
+    
+</head><body>
+      <div class="line" id="scrollIndicator"></div>
+      <div class="main"><div class="title">
+  <div class="name">
+    <h2><a href="http://localhost:1313/"
+	   style="text-decoration: none; color: inherit;">Waleed Ayoub</a></h2>
+  </div>
+  <div class="color-scheme">
+    <input type="checkbox" class="checkbox" id="chk" />
+    <label class="label" for="chk">
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"></path></svg>
+						<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 160c-52.9 0-96 43.1-96
+										96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z"></path></svg>
+      <div class="ball"></div>
+    </label>
+  </div>
+</div>
+<script>
+  const themeSetter = (theme) => {
+      document.body.classList.toggle('dark')
+      localStorage.setItem('theme', theme)
+      blockSwitcher()
+  }
+
+  const blockSwitcher = () => [...document.getElementsByTagName("BLOCKQUOTE")]
+	.forEach(b => b.classList.toggle('dark'))
+
+  const styleSwapper = () => {
+      document.body.classList.add('back-transition')
+      if (localStorage.getItem('theme') === 'dark') themeSetter('light')
+      else if (localStorage.getItem('theme') === 'light') themeSetter('dark')
+  }
+
+  if (localStorage.getItem('theme') === 'dark'){
+      themeSetter('dark')
+      document.addEventListener("DOMContentLoaded", blockSwitcher)
+  }
+ else localStorage.setItem('theme', 'light')
+
+  document.getElementById('chk').addEventListener('change',styleSwapper);
+
+  window.addEventListener("scroll", () => {
+      let height = document.documentElement.scrollHeight
+          - document.documentElement.clientHeight;
+      if(height >= 500){
+	  let winScroll = document.body.scrollTop
+              || document.documentElement.scrollTop;
+	  let scrolled = (winScroll / height) * 100;
+	  document.getElementById("scrollIndicator").style.width = scrolled + "%";
+      }
+  });
+</script>
+
+<section class="intro">
+  
+  <div class="post-header">
+    <a class="go-back" href="http://localhost:1313/"><svg aria-hidden="true" focusable="false" data-prefix="far" class="back-icon" data-icon="caret-square-left" height="25px" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M272 157.1v197.8c0 10.7-13 16.1-20.5 8.5l-98.3-98.9c-4.7-4.7-4.7-12.2 0-16.9l98.3-98.9c7.5-7.7 20.5-2.3 20.5 8.4zM448 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg> </a>
+    <h2 class="post-title">LLM Zoomcamp Week 1 - Intro Notes</h2>
+</div>
+
+<p>By <a href="">waleed</a></p>
+
+<p class="post-dets">Published on: June 29, 2024
+  | Reading Time: 23 min | Last Modified: June 29, 2024
+  <br>
+</p>
+<span class="tags">
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/datatalksclub'>datatalksclub</a></h5>
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/LLM'>LLM</a></h5>
+  
+  <h5><a class="tag" href='http://localhost:1313/tags/python'>python</a></h5>
+  
+</span>
+
+<div class="content">
+  <h1 id="llm-zoomcamp---week-1-notes">LLM Zoomcamp - Week 1 Notes</h1>
+<p>This is the first week of the new <a href="https://github.com/DataTalksClub/llm-zoomcamp/tree/main">LLM Zoomcamp</a> hosted by <a href="https://datatalks.club/">DataTalksClub</a>.
+I&rsquo;ve found their content really helpful in the past, having completed the Data Engineering Zoomcamp a year ago and successively attempted (but never finished!) the other two zoomcamps they offer.</p>
+<p>In order to give me the best chance of completing this one, I&rsquo;ve decided to publish my notes on my blog. Hope that helps me see this one through!</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#week-1">Week 1</a></li>
+<li><a href="#retrieval-and-search">1.3 Retrieval and Search</a></li>
+<li><a href="#generating-answers-with-openai-gpt-4-0">1.4 Generating Answers with OpenAI GPT 4.0</a></li>
+<li><a href="#the-rag-flow-cleaning-and-modularizing-code">1.5 The RAG Flow Cleaning and Modularizing Code</a></li>
+<li><a href="#search-with-elasticsearch">1.6 Search with Elasticsearch</a>
+<ul>
+<li><a href="#putting-it-all-together">Putting it all together</a></li>
+</ul>
+</li>
+<li><a href="#bonus-calculating-the-costs">Bonus: Calculating the Costs</a>
+<ul>
+<li><a href="">Method 1 - Using tiktoken</a></li>
+<li><a href="">Method 2 - Getting tokens from the API call</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="week-1">Week 1</h2>
+<p>The first week is all about setting up a basic RAG (Retrieval Augmented Generation) workflow, comprised of three components:</p>
+<ul>
+<li>A search engine: This serves primarily to pre-process the source documents. The main reason for doing this is to limit the size of the prompt given context window limitations</li>
+<li>A prompt builder: This composes the question, some user prompts and the source document into a string that gets passed to the LLM</li>
+<li>LLM: This is just an API call to the LLM of choice that takes the prompt from the previous step as an input</li>
+</ul>
+<p>This is what we&rsquo;ll be implementing:</p>
+<div class="mermaid-wrapper">
+    <pre class="mermaid">graph TD
+    A[User] -->|Q| B[Knowledge DB]
+    B -->|Relevant Documents D1, D2, ..., DN| C[Context = Prompt + Q + Documents]
+    A -->|Q| C
+    C -->|Q| D[LLM]
+    D -->|Answer| A
+    subgraph Context
+        direction LR
+        D1
+        D2
+        D3
+        D4
+        ...
+        DN
+    end
+    B -.-> D1
+    B -.-> D2
+    B -.-> D3
+    B -.-> D4
+    B -.-> ...
+    B -.-> DN
+    classDef entity fill:#f9f,stroke:#333,stroke-width:4px;
+    </pre>
+</div>
+<p>Let&rsquo;s start by importing a bunch of things:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> openai <span style="color:#f92672">import</span> OpenAI
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>client <span style="color:#f92672">=</span> OpenAI()
+</span></span></code></pre></div><h2 id="13-retrieval-and-search">1.3 Retrieval and Search</h2>
+<ul>
+<li>Before jumping into using elasticsearch to index our documents, we&rsquo;re going to use the search engine build by DTC</li>
+<li>In order to do that, I need to import minsearch.py (the search engine library)</li>
+<li>Once that&rsquo;s done, we need to understand a few things about how <code>minsearch</code> is implemented:
+<ul>
+<li><code>minsearch.Index()</code> is the method used to index a document and takes a few parameters: <code>text_fields</code> and <code>keyword_fields</code>
+<ul>
+<li>text_fields: the fields we use to search</li>
+<li>keyword_fields: the fields used to group the data (i.e. similar to a WHERE clause in SQL)</li>
+</ul>
+</li>
+<li>So for example, if you pass a query like: <em><strong>&ldquo;How do I execute a command in a running docker container?&rdquo;</strong></em> the search engine would filter results by <code>keyword_fields</code> and would search through <code>text_fields</code></li>
+<li>index.fit() is the method used to specify the document you want to <em>fit</em> your Index to. So in this case, you would pass it the document containing all the data with the relevant keyword_fields and text_fields</li>
+<li>index.search():
+<ul>
+<li>This is the method used to actually search the fitted document for the specific question</li>
+<li>All the <code>text_fields</code> you search through are given equal weighting. If you want to change that, you can use a parameter called <code>boost</code> which allows you to <em><strong>relatively</strong></em> overweight or underweight certain <code>text_fields</code> by passing it a dictionary with <code>{text_field: weight}</code></li>
+<li>There are two other parameters, that are pretty straightforward: <code>filter_dict</code> which just lets you filter based on a <code>keyword_fields</code> again as a dict of the form <code>{&quot;keyword_fields&quot;: &quot;value&quot;}</code> entry and <code>num_results</code> which just limits the number of elements it returns</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Map the relative path in order to import minsearch.py</span>
+</span></span><span style="display:flex;"><span>current_dir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getcwd()
+</span></span><span style="display:flex;"><span>intro_dir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>abspath(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(current_dir, <span style="color:#e6db74">&#34;../../../01-intro&#34;</span>))
+</span></span><span style="display:flex;"><span>sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(intro_dir)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> minsearch
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># import the FAQ documents (already parsed into json) into a list called documents</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docs_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://github.com/DataTalksClub/llm-zoomcamp/blob/main/01-intro/documents.json?raw=1&#39;</span>
+</span></span><span style="display:flex;"><span>docs_response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(docs_url)
+</span></span><span style="display:flex;"><span>documents_raw <span style="color:#f92672">=</span> docs_response<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>documents <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> course <span style="color:#f92672">in</span> documents_raw:
+</span></span><span style="display:flex;"><span>    course_name <span style="color:#f92672">=</span> course[<span style="color:#e6db74">&#39;course&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> course[<span style="color:#e6db74">&#39;documents&#39;</span>]:
+</span></span><span style="display:flex;"><span>        doc[<span style="color:#e6db74">&#39;course&#39;</span>] <span style="color:#f92672">=</span> course_name
+</span></span><span style="display:flex;"><span>        documents<span style="color:#f92672">.</span>append(doc)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>field_names <span style="color:#f92672">=</span> {key <span style="color:#66d9ef">for</span> document <span style="color:#f92672">in</span> documents <span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> document<span style="color:#f92672">.</span>keys()}
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Field names:&#34;</span>, list(field_names));
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">courses:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>,<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join({course[<span style="color:#e6db74">&#39;course&#39;</span>] <span style="color:#66d9ef">for</span> course <span style="color:#f92672">in</span> documents_raw}))
+</span></span></code></pre></div><pre><code>Field names: ['section', 'text', 'course', 'question']
+
+courses:
+ data-engineering-zoomcamp
+mlops-zoomcamp
+machine-learning-zoomcamp
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Index based on the fields in our FAQ document</span>
+</span></span><span style="display:flex;"><span>index <span style="color:#f92672">=</span> minsearch<span style="color:#f92672">.</span>Index(
+</span></span><span style="display:flex;"><span>    text_fields<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;question&#34;</span>, <span style="color:#e6db74">&#34;text&#34;</span>, <span style="color:#e6db74">&#34;section&#34;</span>],
+</span></span><span style="display:flex;"><span>    keyword_fields<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;course&#34;</span>]
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>question <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;How do I execute a command in a running docker container?&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>index<span style="color:#f92672">.</span>fit(documents)
+</span></span></code></pre></div><pre><code>&lt;minsearch.Index at 0x7beed7782170&gt;
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>boost <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;question&#34;</span>:<span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;text&#34;</span>:<span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;section&#34;</span>:<span style="color:#ae81ff">0.5</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> index<span style="color:#f92672">.</span>search(
+</span></span><span style="display:flex;"><span>    query <span style="color:#f92672">=</span> question,
+</span></span><span style="display:flex;"><span>    filter_dict <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;course&#34;</span>:<span style="color:#e6db74">&#34;data-engineering-zoomcamp&#34;</span>},
+</span></span><span style="display:flex;"><span>    boost_dict <span style="color:#f92672">=</span> boost,
+</span></span><span style="display:flex;"><span>    num_results <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>results[<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><pre><code>{'text': 'In case running pgcli  locally causes issues or you do not want to install it locally you can use it running in a Docker container instead.\nBelow the usage with values used in the videos of the course for:\nnetwork name (docker network)\npostgres related variables for pgcli\nHostname\nUsername\nPort\nDatabase name\n$ docker run -it --rm --network pg-network ai2ys/dockerized-pgcli:4.0.1\n175dd47cda07:/# pgcli -h pg-database -U root -p 5432 -d ny_taxi\nPassword for root:\nServer: PostgreSQL 16.1 (Debian 16.1-1.pgdg120+1)\nVersion: 4.0.1\nHome: http://pgcli.com\nroot@pg-database:ny_taxi&gt; \\dt\n+--------+------------------+-------+-------+\n| Schema | Name             | Type  | Owner |\n|--------+------------------+-------+-------|\n| public | yellow_taxi_data | table | root  |\n+--------+------------------+-------+-------+\nSELECT 1\nTime: 0.009s\nroot@pg-database:ny_taxi&gt;',
+ 'section': 'Module 1: Docker and Terraform',
+ 'question': 'PGCLI - running in a Docker container',
+ 'course': 'data-engineering-zoomcamp'}
+</code></pre>
+<h2 id="14-generating-answers-with-openai-gpt-40">1.4 Generating Answers with OpenAI GPT 4.0</h2>
+<ul>
+<li>In this section, we&rsquo;ll be packaging up the response from our basic search engine in 1.3 and passing it as part of the context to the OpenAI API</li>
+<li>Using the completions API is pretty straightforward for basic usage.
+<ul>
+<li>The documentation for the compeletions API can be found here: <a href="https://platform.openai.com/docs/api-reference/chat/create">https://platform.openai.com/docs/api-reference/chat/create</a></li>
+</ul>
+</li>
+<li>The general structure of this section is as follows:
+<ul>
+<li>Assume a set of results are generated based on the minsearch (or any search engine) in the previous section</li>
+<li>Based on how it&rsquo;s implemented, <code>index.search()</code> returns a list containing entries for each result it returns
+<ul>
+<li>Each result is stored as a dictionary with key-value pairs consisting of {&rsquo;text&rsquo;, &lsquo;section&rsquo;, &lsquo;question&rsquo;,&lsquo;course&rsquo;}</li>
+</ul>
+</li>
+<li>We want to build a context that includes instructions to the LLM to restrict its answers to content from the results above <em>AND</em> the relevant content from those results for it to analyze</li>
+<li>We pass that context as a prompt to the LLM and get results back</li>
+<li>That&rsquo;s it!</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>prompt_template <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">You&#39;re a teaching assistant for a bootcamp course.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Restrict your answers to the QUESTION to the content in CONTEXT only.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">QUESTION: </span><span style="color:#e6db74">{question}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">CONTEXT: </span><span style="color:#e6db74">{context}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#f92672">.</span>strip()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>context <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> results:
+</span></span><span style="display:flex;"><span>    context <span style="color:#f92672">=</span> context <span style="color:#f92672">+</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;section: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;section&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">question: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;question&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">answer: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;text&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>prompt <span style="color:#f92672">=</span> prompt_template<span style="color:#f92672">.</span>format(question<span style="color:#f92672">=</span>question, context<span style="color:#f92672">=</span>context)<span style="color:#f92672">.</span>strip()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(prompt)
+</span></span></code></pre></div><pre><code>You're a teaching assistant for a bootcamp course.
+Restrict your answers to the QUESTION to the content in CONTEXT only.
+
+QUESTION: How do I execute a command in a running docker container?
+
+CONTEXT: section: Module 1: Docker and Terraform
+question: PGCLI - running in a Docker container
+answer: In case running pgcli  locally causes issues or you do not want to install it locally you can use it running in a Docker container instead.
+Below the usage with values used in the videos of the course for:
+network name (docker network)
+postgres related variables for pgcli
+Hostname
+Username
+Port
+Database name
+$ docker run -it --rm --network pg-network ai2ys/dockerized-pgcli:4.0.1
+175dd47cda07:/# pgcli -h pg-database -U root -p 5432 -d ny_taxi
+Password for root:
+Server: PostgreSQL 16.1 (Debian 16.1-1.pgdg120+1)
+Version: 4.0.1
+Home: http://pgcli.com
+root@pg-database:ny_taxi&gt; \dt
++--------+------------------+-------+-------+
+| Schema | Name             | Type  | Owner |
+|--------+------------------+-------+-------|
+| public | yellow_taxi_data | table | root  |
++--------+------------------+-------+-------+
+SELECT 1
+Time: 0.009s
+root@pg-database:ny_taxi&gt;
+
+section: Module 1: Docker and Terraform
+question: Docker - Error response from daemon: Conflict. The container name &quot;pg-database&quot; is already in use by container “xxx”.  You have to remove (or rename) that container to be able to reuse that name.
+answer: Sometimes, when you try to restart a docker image configured with a network name, the above message appears. In this case, use the following command with the appropriate container name:
+&gt;&gt;&gt; If the container is running state, use docker stop &lt;container_name&gt;
+&gt;&gt;&gt; then, docker rm pg-database
+Or use docker start instead of docker run in order to restart the docker image without removing it.
+
+section: Module 1: Docker and Terraform
+question: Docker - Cannot pip install on Docker container (Windows)
+answer: You may have this error:
+Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;pip._vendor.u
+rllib3.connection.HTTPSConnection object at 0x7efe331cf790&gt;: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')':
+/simple/pandas/
+Possible solution might be:
+$ winpty docker run -it --dns=8.8.8.8 --entrypoint=bash python:3.9
+
+section: Module 1: Docker and Terraform
+question: Docker - Cannot connect to Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+answer: Make sure you're able to start the Docker daemon, and check the issue immediately down below:
+And don’t forget to update the wsl in powershell the  command is wsl –update
+
+section: Module 6: streaming with kafka
+question: How do I check compatibility of local and container Spark versions?
+answer: You can check the version of your local spark using spark-submit --version. In the build.sh file of the Python folder, make sure that SPARK_VERSION matches your local version. Similarly, make sure the pyspark you pip installed also matches this version.
+
+section: Module 1: Docker and Terraform
+question: Docker - docker pull dbpage
+answer: Whenever a `docker pull is performed (either manually or by `docker-compose up`), it attempts to fetch the given image name (pgadmin4, for the example above) from a repository (dbpage).
+IF the repository is public, the fetch and download happens without any issue whatsoever.
+For instance:
+docker pull postgres:13
+docker pull dpage/pgadmin4
+BE ADVISED:
+
+The Docker Images we'll be using throughout the Data Engineering Zoomcamp are all public (except when or if explicitly said otherwise by the instructors or co-instructors).
+
+Meaning: you are NOT required to perform a docker login to fetch them. 
+
+So if you get the message above saying &quot;docker login': denied: requested access to the resource is denied. That is most likely due to a typo in your image name:
+
+For instance:
+$ docker pull dbpage/pgadmin4
+Will throw that exception telling you &quot;repository does not exist or may require 'docker login'
+Error response from daemon: pull access denied for dbpage/pgadmin4, repository does not exist or 
+may require 'docker login': denied: requested access to the resource is denied
+But that actually happened because the actual image is dpage/pgadmin4 and NOT dbpage/pgadmin4
+How to fix it:
+$ docker pull dpage/pgadmin4
+EXTRA NOTES:
+In the real world, occasionally, when you're working for a company or closed organisation, the Docker image you're trying to fetch might be under a private repo that your DockerHub Username was granted access to.
+For which cases, you must first execute:
+$ docker login
+Fill in the details of your username and password.
+And only then perform the `docker pull` against that private repository
+Why am I encountering a &quot;permission denied&quot; error when creating a PostgreSQL Docker container for the New York Taxi Database with a mounted volume on macOS M1?
+Issue Description:
+When attempting to run a Docker command similar to the one below:
+docker run -it \
+-e POSTGRES_USER=&quot;root&quot; \
+-e POSTGRES_PASSWORD=&quot;root&quot; \
+-e POSTGRES_DB=&quot;ny_taxi&quot; \
+-v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+-p 5432:5432 \mount
+postgres:13
+You encounter the error message:
+docker: Error response from daemon: error while creating mount source path '/path/to/ny_taxi_postgres_data': chown /path/to/ny_taxi_postgres_data: permission denied.
+Solution:
+1- Stop Rancher Desktop:
+If you are using Rancher Desktop and face this issue, stop Rancher Desktop to resolve compatibility problems.
+2- Install Docker Desktop:
+Install Docker Desktop, ensuring that it is properly configured and has the required permissions.
+2-Retry Docker Command:
+Run the Docker command again after switching to Docker Desktop. This step resolves compatibility issues on some systems.
+Note: The issue occurred because Rancher Desktop was in use. Switching to Docker Desktop resolves compatibility problems and allows for the successful creation of PostgreSQL containers with mounted volumes for the New York Taxi Database on macOS M1.
+
+section: Workshop 2 - RisingWave
+question: Setup - source command.sh - error: “docker-compose” not found
+answer: If you encounter this error and are certain that you have docker compose installed, but typically run it as docker compose without the hyphen, then consider editing command.sh file by removing the hyphen from ‘docker-compose’. Example:
+start-cluster() {
+docker compose -f docker/docker-compose.yml up -d
+}
+
+section: Module 1: Docker and Terraform
+question: Docker-Compose - Error getting credentials after running docker-compose up -d
+answer: Installing pass via ‘sudo apt install pass’ helped to solve the issue. More about this can be found here: https://github.com/moby/buildkit/issues/1078
+
+section: Module 1: Docker and Terraform
+question: Docker - ERRO[0000] error waiting for container: context canceled
+answer: You might have installed docker via snap. Run “sudo snap status docker” to verify.
+If you have “error: unknown command &quot;status&quot;, see 'snap help'.” as a response than deinstall docker and install via the official website
+Bind for 0.0.0.0:5432 failed: port is a
+
+section: Module 2: Workflow Orchestration
+question: Docker: container crashed with status code 137.
+answer: It means your container consumed all available RAM allocated to it. It can happen in particular when working on Question#3 in the homework as the dataset is relatively large and containers eat a lot of memory in general.
+I would recommend restarting your computer and only starting the necessary processes to run the container. If that doesn’t work, allocate more resources to docker. If also that doesn’t work because your workstation is a potato, you can use an online compute environment service like GitPod, which is free under under 50 hours / month of use.
+
+section: Module 1: Docker and Terraform
+question: Docker - Docker network name
+answer: Get the network name via: $ docker network ls.
+
+section: Module 1: Docker and Terraform
+question: PGCLI - INKhould we run pgcli inside another docker container?
+answer: In this section of the course, the 5432 port of pgsql is mapped to your computer’s 5432 port. Which means you can access the postgres database via pgcli directly from your computer.
+So No, you don’t need to run it inside another container. Your local system will do.
+
+section: Module 1: Docker and Terraform
+question: GCP - Do I need to delete my instance in Google Cloud?
+answer: In this lecture, Alexey deleted his instance in Google Cloud. Do I have to do it?
+Nope. Do not delete your instance in Google Cloud platform. Otherwise, you have to do this twice for the week 1 readings.
+
+section: Module 1: Docker and Terraform
+question: Docker - Docker won't start or is stuck in settings (Windows 10 / 11)
+answer: First off, make sure you're running the latest version of Docker for Windows, which you can download from here. Sometimes using the menu to &quot;Upgrade&quot; doesn't work (which is another clear indicator for you to uninstall, and reinstall with the latest version)
+If docker is stuck on starting, first try to switch containers by right clicking the docker symbol from the running programs and switch the containers from windows to linux or vice versa
+[Windows 10 / 11 Pro Edition] The Pro Edition of Windows can run Docker either by using Hyper-V or WSL2 as its backend (Docker Engine)
+In order to use Hyper-V as its back-end, you MUST have it enabled first, which you can do by following the tutorial: Enable Hyper-V Option on Windows 10 / 11
+If you opt-in for WSL2, you can follow the same steps as detailed in the tutorial here
+
+section: General course-related questions
+question: How do I use Git / GitHub for this course?
+answer: After you create a GitHub account, you should clone the course repo to your local machine using the process outlined in this video: Git for Everybody: How to Clone a Repository from GitHub
+Having this local repository on your computer will make it easy for you to access the instructors’ code and make pull requests (if you want to add your own notes or make changes to the course content).
+You will probably also create your own repositories that host your notes, versions of your file, to do this. Here is a great tutorial that shows you how to do this: https://www.atlassian.com/git/tutorials/setting-up-a-repository
+Remember to ignore large database, .csv, and .gz files, and other files that should not be saved to a repository. Use .gitignore for this: https://www.atlassian.com/git/tutorials/saving-changes/gitignore NEVER store passwords or keys in a git repo (even if that repo is set to private).
+This is also a great resource: https://dangitgit.com/
+
+section: Module 1: Docker and Terraform
+question: Docker - The input device is not a TTY (Docker run for Windows)
+answer: You may have this error:
+$ docker run -it ubuntu bash
+the input device is not a TTY. If you are using mintty, try prefixing the command with 'winpty'
+error:
+Solution:
+Use winpty before docker command (source)
+$ winpty docker run -it ubuntu bash
+You also can make an alias:
+echo &quot;alias docker='winpty docker'&quot; &gt;&gt; ~/.bashrc
+OR
+echo &quot;alias docker='winpty docker'&quot; &gt;&gt; ~/.bash_profile
+
+section: Module 1: Docker and Terraform
+question: Docker - Connecting from VS Code
+answer: It’s very easy to manage your docker container, images, network and compose projects from VS Code.
+Just install the official extension and launch it from the left side icon.
+It will work even if your Docker runs on WSL2, as VS Code can easily connect with your Linux.
+Docker - How to stop a container?
+Use the following command:
+$ docker stop &lt;container_id&gt;
+
+section: Workshop 2 - RisingWave
+question: command.sh Error - source: no such file or directory: command.sh
+answer: Check the contents of the repository with ls - the command.sh file should be in the root folder
+If it is not, verify that you had cloned the correct repository - https://github.com/risingwavelabs/risingwave-data-talks-workshop-2024-03-04
+
+section: Module 1: Docker and Terraform
+question: Docker - Cannot install docker on MacOS/Windows 11 VM running on top of Linux (due to Nested virtualization).
+answer: terraformRun this command before starting your VM:
+On Intel CPU:
+modprobe -r kvm_intel
+modprobe kvm_intel nested=1
+On AMD CPU:
+modprobe -r kvm_amd
+modprobe kvm_amd nested=1
+
+section: Module 1: Docker and Terraform
+question: Docker-Compose - docker-compose still not available after changing .bashrc
+answer: This is happen to me after following 1.4.1 video where we are installing docker compose in our Google Cloud VM. In my case, the docker-compose file downloaded from github named docker-compose-linux-x86_64 while it is more convenient to use docker-compose command instead. So just change the docker-compose-linux-x86_64 into docker-compose.
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>response <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>chat<span style="color:#f92672">.</span>completions<span style="color:#f92672">.</span>create(
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;gpt-4o&#34;</span>,
+</span></span><span style="display:flex;"><span>    messages <span style="color:#f92672">=</span> [{<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: prompt}]
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(response<span style="color:#f92672">.</span>choices[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>message<span style="color:#f92672">.</span>content)
+</span></span></code></pre></div><pre><code>To execute a command in a running Docker container, you can use the `docker exec` command. 
+
+For example, to execute the command `pgcli -h pg-database -U root -p 5432 -d ny_taxi` inside a running Docker container with the name or ID `175dd47cda07`, you can use:
+
+```sh
+docker exec -it 175dd47cda07 pgcli -h pg-database -U root -p 5432 -d ny_taxi
+```
+
+Here:
+
+- `docker exec` is the command to run a command in a running container.
+- `-it` allows you to interact with the container.
+- `175dd47cda07` is the name or ID of the container in which you want to run the command.
+- `pgcli -h pg-database -U root -p 5432 -d ny_taxi` is the command you want to execute inside the container.
+
+Make sure to replace `175dd47cda07` with your actual container ID or name.
+</code></pre>
+<h2 id="15-the-rag-flow-cleaning-and-modularizing-code">1.5 The RAG Flow Cleaning and Modularizing Code</h2>
+<ul>
+<li>At this point, here is the general RAG flow we&rsquo;ve built</li>
+</ul>
+<div class="mermaid-wrapper">
+    <pre class="mermaid">graph TD
+    A[User] -->|Q| B[Knowledge DB]
+    B -->|Relevant Documents D1, D2, ..., DN| C[Context = Prompt + Q + Documents]
+    A -->|Q| C
+    C -->|Q| D[LLM]
+    D -->|Answer| A
+    subgraph Context
+        direction LR
+        D1
+        D2
+        D3
+        D4
+        ...
+        DN
+    end
+    B -.-> D1
+    B -.-> D2
+    B -.-> D3
+    B -.-> D4
+    B -.-> ...
+    B -.-> DN
+    classDef entity fill:#f9f,stroke:#333,stroke-width:4px;
+    </pre>
+</div>
+<ul>
+<li>So now we need to clean everything up and put it into useable functions</li>
+<li>The way we&rsquo;re going to do that is create 3 functions that pertain to each of the three steps in our RAG flow:
+<ul>
+<li><code>search(query)</code>: this function just takes in the question and returns the results of type list from the knowledge-base we&rsquo;ve implemented</li>
+<li><code>build_prompt</code>: this builds the prompt based on the user prompt + the question + the results from the knowledge base</li>
+<li><code>llm</code>: this takes the prompt from <code>build_prompt</code> and retuns the answer</li>
+<li>and finally, we can create a function that calls all the step functions before it called <code>rag</code> that takes in a query and produces an answer</li>
+</ul>
+</li>
+<li>This structure allows us to swap out each of the individual pieces without altering the whole flow
+<ul>
+<li>For example, later on we&rsquo;ll replace the <code>search(question)</code> implementation with a function that uses ElasticSearch instead of the basic <code>minsearch.py</code> search engine</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search</span>(query, num_results <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    boost <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;question&#34;</span>:<span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;text&#34;</span>:<span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;section&#34;</span>:<span style="color:#ae81ff">0.5</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> index<span style="color:#f92672">.</span>search(
+</span></span><span style="display:flex;"><span>        query <span style="color:#f92672">=</span> query,
+</span></span><span style="display:flex;"><span>        filter_dict <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;course&#34;</span>:<span style="color:#e6db74">&#34;data-engineering-zoomcamp&#34;</span>},
+</span></span><span style="display:flex;"><span>        boost_dict <span style="color:#f92672">=</span> boost,
+</span></span><span style="display:flex;"><span>        num_results <span style="color:#f92672">=</span> num_results
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> results
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build_prompt</span>(query, search_results):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># create a context string</span>
+</span></span><span style="display:flex;"><span>    context <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># iterate through the search_results and add results to the context string</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> search_results:
+</span></span><span style="display:flex;"><span>        context <span style="color:#f92672">=</span> context <span style="color:#f92672">+</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;section: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;section&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">question: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;question&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">answer: </span><span style="color:#e6db74">{</span>doc[<span style="color:#e6db74">&#39;text&#39;</span>]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># add a user prompt</span>
+</span></span><span style="display:flex;"><span>    prompt_template <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    You&#39;re a course teaching assistant. Answer the QUESTION based on the CONTEXT from the FAQ database.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Use only the facts from the CONTEXT when answering the QUESTION.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    QUESTION: </span><span style="color:#e6db74">{question}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    CONTEXT:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    </span><span style="color:#e6db74">{context}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span><span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> prompt_template<span style="color:#f92672">.</span>format(question<span style="color:#f92672">=</span>query, context<span style="color:#f92672">=</span>context)<span style="color:#f92672">.</span>strip()    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> prompt
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">llm</span>(prompt):
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>chat<span style="color:#f92672">.</span>completions<span style="color:#f92672">.</span>create(
+</span></span><span style="display:flex;"><span>        model <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;gpt-4o&#34;</span>,
+</span></span><span style="display:flex;"><span>        messages <span style="color:#f92672">=</span> [{<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: prompt}]
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>choices[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>message<span style="color:#f92672">.</span>content
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rag_minsearch</span>(question):
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> search(question, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># results = search_elastic(question)</span>
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> build_prompt(question, results)
+</span></span><span style="display:flex;"><span>    answer <span style="color:#f92672">=</span> llm(prompt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> answer
+</span></span></code></pre></div><h2 id="16-search-with-elasticsearch">1.6 Search with Elasticsearch</h2>
+<ul>
+<li>Now it&rsquo;s time to replace the minsearch implementation with elasticsearch
+<ul>
+<li>The reason <code>minsearch</code> was implemented in the first place was so that in the future if we deploy our RAG in an environment that can&rsquo;t host elasticsearch, we can use something small that runs in memory</li>
+</ul>
+</li>
+<li>To deploy elasticsearch, I simply just added a docker run command to a bash script called <code>run_elastic.sh</code> and made sure user had execute access (the original command had -it and &ndash;rm as parameters and I&rsquo;m not sure why):
+<ul>
+<li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>docker run <span style="color:#ae81ff">\
+</span></span></span></code></pre></div></li>
+</ul>
+&ndash;name elasticsearch <br>
+-p 9200:9200 <br>
+-p 9300:9300 <br>
+-e &ldquo;discovery.type=single-node&rdquo; <br>
+docker.elastic.co/elasticsearch/elasticsearch:8.4.3
+<pre tabindex="0"><code></code></pre></li>
+<li>You can check if your elastic instance is running by sending a curl request to it: <code>curl localhost:9200</code></li>
+<li>So now let&rsquo;s index our documents using Elasticsearch instead of minsearch. This happens in a few steps:
+<ol>
+<li>Create an instance of Elasticsearch class called <code>es_client</code> by using <code>Elasticsearch(url)</code></li>
+<li>Create your indices based on the fields of the documents you want indexed using <code>es_client.indices.create(index_name, index_settings)</code> method</li>
+<li>Index your document by iterating through each doc in document and adding them to the index using <code>es_client.index(index_name, body=[doc for doc in documents])</code></li>
+</ol>
+</li>
+<li>We can use <code>tqdm</code> while running the <code>index()</code> method to get a helpful progress bar</li>
+<li>Once we have our documents indexed, we can create a search_query</li>
+<li>Next, we need to actually search our index using our search_query:
+<ul>
+<li>To do this, we use <code>es_client.search(index_name, body=search_query)</code> method by passing our index_name and the search_query we constructed above</li>
+</ul>
+</li>
+<li>You can check that your instance matches your results from the <code>curl</code> API request above by using the <code>info()</code> method: <code>es_client.info()</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> elasticsearch <span style="color:#f92672">import</span> Elasticsearch
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>es_client <span style="color:#f92672">=</span> Elasticsearch(<span style="color:#e6db74">&#39;http://localhost:9200&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>index_settings <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;number_of_shards&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;number_of_replicas&#34;</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;mappings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;properties&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;text&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#&#34;section&#34;: {&#34;type&#34;: &#34;text&#34;},</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;question&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>},
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;course&#34;</span>: {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;keyword&#34;</span>}
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#index_name = &#34;course-questions&#34;</span>
+</span></span><span style="display:flex;"><span>index_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;course-questions-homework&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>es_client<span style="color:#f92672">.</span>indices<span style="color:#f92672">.</span>create(index<span style="color:#f92672">=</span>index_name, body<span style="color:#f92672">=</span>index_settings)
+</span></span></code></pre></div><pre><code>{'acknowledged': True,
+ 'shards_acknowledged': True,
+ 'index': 'course-questions-homework'}
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> tqdm.auto <span style="color:#f92672">import</span> tqdm
+</span></span></code></pre></div><pre><code>/usr/local/python/3.10.13/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> tqdm(documents):
+</span></span><span style="display:flex;"><span>    es_client<span style="color:#f92672">.</span>index(index<span style="color:#f92672">=</span>index_name, body<span style="color:#f92672">=</span>doc)
+</span></span></code></pre></div><pre><code>100%|████████████████████████████████████████████████████████████████████| 948/948 [00:24&lt;00:00, 38.50it/s]
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>search_query <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;size&#34;</span>: <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;query&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;bool&#34;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;must&#34;</span>: {
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;multi_match&#34;</span>: {
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;query&#34;</span>: question,
+</span></span><span style="display:flex;"><span>                        <span style="color:#75715e">#&#34;fields&#34;: [&#34;question^3&#34;, &#34;text&#34;, &#34;section^0.5&#34;],</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;fields&#34;</span>: [<span style="color:#e6db74">&#34;question^4&#34;</span>, <span style="color:#e6db74">&#34;text&#34;</span>],
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;best_fields&#34;</span>
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                },
+</span></span><span style="display:flex;"><span>                 <span style="color:#e6db74">&#34;filter&#34;</span>: {
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;term&#34;</span>: {
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;course&#34;</span>: <span style="color:#e6db74">&#34;machine-learning-zoomcamp&#34;</span>
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>es_client<span style="color:#f92672">.</span>search(index<span style="color:#f92672">=</span>index_name, body<span style="color:#f92672">=</span>search_query)[<span style="color:#e6db74">&#39;hits&#39;</span>][<span style="color:#e6db74">&#39;hits&#39;</span>][<span style="color:#ae81ff">2</span>][<span style="color:#e6db74">&#39;_source&#39;</span>][<span style="color:#e6db74">&#39;question&#39;</span>]
+</span></span></code></pre></div><pre><code>'How do I copy files from a different folder into docker container’s working directory?'
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">search_elastic</span>(question):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># create your search query</span>
+</span></span><span style="display:flex;"><span>    search_query <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;size&#34;</span>: <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;query&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;bool&#34;</span>: {
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;must&#34;</span>: {
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;multi_match&#34;</span>: {
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;query&#34;</span>: question,
+</span></span><span style="display:flex;"><span>                        <span style="color:#75715e">#&#34;fields&#34;: [&#34;question^3&#34;, &#34;text&#34;, &#34;section^0.5&#34;],</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;fields&#34;</span>: [<span style="color:#e6db74">&#34;question^4&#34;</span>, <span style="color:#e6db74">&#34;text&#34;</span>],
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;best_fields&#34;</span>
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                },
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;filter&#34;</span>: {
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;term&#34;</span>: {
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;course&#34;</span>: <span style="color:#e6db74">&#34;machine-learning-zoomcamp&#34;</span>
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># pass the search query to the elasticsearch client</span>
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> es_client<span style="color:#f92672">.</span>search(index<span style="color:#f92672">=</span>index_name, body<span style="color:#f92672">=</span>search_query)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># iterate through the response and pull out the list with the results</span>
+</span></span><span style="display:flex;"><span>    result_docs <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> hit <span style="color:#f92672">in</span> response[<span style="color:#e6db74">&#39;hits&#39;</span>][<span style="color:#e6db74">&#39;hits&#39;</span>]:
+</span></span><span style="display:flex;"><span>        result_docs<span style="color:#f92672">.</span>append(hit[<span style="color:#e6db74">&#39;_source&#39;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result_docs
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>question
+</span></span></code></pre></div><pre><code>'How do I execute a command in a running docker container?'
+</code></pre>
+<h3 id="putting-it-all-together">Putting it all together</h3>
+<ul>
+<li>Put everything bag into one function that you can call by just passing the question</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rag_elastic</span>(question):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#results = search(question, 5)</span>
+</span></span><span style="display:flex;"><span>    results <span style="color:#f92672">=</span> search_elastic(question)
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> build_prompt(question, results)
+</span></span><span style="display:flex;"><span>    answer <span style="color:#f92672">=</span> llm(prompt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> answer
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>results1 <span style="color:#f92672">=</span> search_elastic(question)
+</span></span><span style="display:flex;"><span>print(results1[<span style="color:#ae81ff">2</span>])
+</span></span></code></pre></div><pre><code>{'text': 'You can copy files from your local machine into a Docker container using the docker cp command. Here\'s how to do it:\nIn the Dockerfile, you can provide the folder containing the files that you want to copy over. The basic syntax is as follows:\nCOPY [&quot;src/predict.py&quot;, &quot;models/xgb_model.bin&quot;, &quot;./&quot;]\t\t\t\t\t\t\t\t\t\t\tGopakumar Gopinathan', 'section': '5. Deploying Machine Learning Models', 'question': 'How do I copy files from a different folder into docker container’s working directory?', 'course': 'machine-learning-zoomcamp'}
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>prompt1 <span style="color:#f92672">=</span> build_prompt(question, results1)
+</span></span><span style="display:flex;"><span>len(prompt1)
+</span></span></code></pre></div><pre><code>1482
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>answer1 <span style="color:#f92672">=</span> llm(prompt1)
+</span></span><span style="display:flex;"><span>print(answer1)
+</span></span></code></pre></div><pre><code>To execute a command in a running Docker container, you can use the `docker exec` command. Here's how you can do it:
+
+1. First, you need to identify the container ID or name of the running container. You can do this by listing all running containers using the `docker ps` command.
+
+```sh
+docker ps
+```
+
+This will give you an output similar to this, where you can see the container ID and name:
+
+```sh
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+4a432e93f871        myimage             &quot;python app.py&quot;     5 minutes ago       Up 5 minute                              mystifying_babbage
+```
+
+2. Once you have the container ID or name, you can execute a command in the specific container using `docker exec`. For example, to start a bash session in the container, you would use:
+
+```sh
+docker exec -it &lt;container_id_or_name&gt; bash
+```
+
+Replace `&lt;container_id_or_name&gt;` with the actual container ID or name obtained from the `docker ps` command. For example:
+
+```sh
+docker exec -it 4a432e93f871 bash
+```
+
+3. After running this command, you will be inside the running container and can execute commands interactively.
+
+Alternatively, if you want to execute a specific command without opening an interactive shell, you can do so directly. For example, to list the contents of a directory inside the container, you might use:
+
+```sh
+docker exec -it &lt;container_id_or_name&gt; ls /path/in/container
+```
+
+For instance:
+
+```sh
+docker exec -it 4a432e93f871 ls /app
+```
+
+This will list the contents of the `/app` directory inside the running container.
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>len(answer1)
+</span></span></code></pre></div><pre><code>1617
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(answer)
+</span></span></code></pre></div><pre><code>Yes, you can still register for the course after the start date. You won’t be able to submit some of the homework assignments, but you can still participate in the course. To be eligible for a certificate, you need to submit 2 out of 3 course projects and review 3 peers’ projects by the deadline.
+</code></pre>
+<h2 id="bonus-calculating-the-costs-ungraded">Bonus: calculating the costs (ungraded)</h2>
+<ul>
+<li>In order to calculate the costs each time we call our <code>rag()</code> function we need to count the number of input and output tokens</li>
+<li>Here&rsquo;s the latest pricing table from OpenAI for the gpt-4o model:
+<ul>
+<li>Input tokens: $0.0050 / 1K input tokens</li>
+<li>Output tokens: $0.0150 / 1K output tokens</li>
+</ul>
+</li>
+<li>One way to calculate the tokens is to convert the prompt into tokens using the <code>tiktoken</code> library. You can do this in a few steps:
+<ol>
+<li>Create an <code>encoding</code> using the <code>encoding_for_model(model)</code> method</li>
+<li>Convert your prompt into tokens using <code>encoding_for_model.encode(prompt)</code></li>
+<li>The length of that token is what you can use to multiply by the costs above to get your input token cost</li>
+<li>To get the output token cost, take the response from the LLM API call and do the same thing!</li>
+</ol>
+</li>
+<li>Another way is to just use the output from the OpenAI <code>completions</code> API call as it provides that information</li>
+</ul>
+<h3 id="method-1---using-tiktoken">Method 1 - Using tiktoken</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span>pip install tiktoken
+</span></span></code></pre></div><pre><code>Collecting tiktoken
+  Downloading tiktoken-0.7.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting regex&gt;=2022.1.18 (from tiktoken)
+  Downloading regex-2024.5.15-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (40 kB)
+[2K     [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m40.9/40.9 kB[0m [31m1.3 MB/s[0m eta [36m0:00:00[0m
+[?25hRequirement already satisfied: requests&gt;=2.26.0 in /home/codespace/.local/lib/python3.10/site-packages (from tiktoken) (2.32.3)
+Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in /home/codespace/.local/lib/python3.10/site-packages (from requests&gt;=2.26.0-&gt;tiktoken) (3.3.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /home/codespace/.local/lib/python3.10/site-packages (from requests&gt;=2.26.0-&gt;tiktoken) (3.7)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /usr/local/python/3.10.13/lib/python3.10/site-packages (from requests&gt;=2.26.0-&gt;tiktoken) (1.26.19)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /home/codespace/.local/lib/python3.10/site-packages (from requests&gt;=2.26.0-&gt;tiktoken) (2024.2.2)
+Downloading tiktoken-0.7.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.1 MB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m1.1/1.1 MB[0m [31m23.3 MB/s[0m eta [36m0:00:00[0mm eta [36m0:00:01[0m
+[?25hDownloading regex-2024.5.15-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (775 kB)
+[2K   [38;2;114;156;31m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m775.1/775.1 kB[0m [31m21.6 MB/s[0m eta [36m0:00:00[0mm eta [36m0:00:01[0m
+[?25hInstalling collected packages: regex, tiktoken
+Successfully installed regex-2024.5.15 tiktoken-0.7.0
+
+[1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m A new release of pip is available: [0m[31;49m24.0[0m[39;49m -&gt; [0m[32;49m24.1.1[0m
+[1m[[0m[34;49mnotice[0m[1;39;49m][0m[39;49m To update, run: [0m[32;49mpython3 -m pip install --upgrade pip[0m
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> tiktoken
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>encoding <span style="color:#f92672">=</span> tiktoken<span style="color:#f92672">.</span>encoding_for_model(<span style="color:#e6db74">&#34;gpt-4o&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tokens <span style="color:#f92672">=</span> encoding<span style="color:#f92672">.</span>encode(prompt1)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Count the tokens</span>
+</span></span><span style="display:flex;"><span>number_of_tokens <span style="color:#f92672">=</span> len(tokens)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Number of tokens in the prompt: </span><span style="color:#e6db74">{</span>number_of_tokens<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><pre><code>Number of tokens in the prompt: 682
+</code></pre>
+<h3 id="method-2-using-openais-completions-api">Method 2: Using OpenAI&rsquo;s completions API</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>response <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>chat<span style="color:#f92672">.</span>completions<span style="color:#f92672">.</span>create(
+</span></span><span style="display:flex;"><span>        model <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;gpt-4o&#34;</span>,
+</span></span><span style="display:flex;"><span>        messages <span style="color:#f92672">=</span> [{<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: prompt}]
+</span></span><span style="display:flex;"><span>    )
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(response<span style="color:#f92672">.</span>usage)
+</span></span></code></pre></div>
+</div>
+
+</section>
+<footer id="footer">
+    <strong></strong>
+    <div class="social">
+        &nbsp;
+<a href="mailto:info@waleedayoub.com" target="_blank" rel="me" title="Email" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+	<polyline points="22,6 12,13 2,6"></polyline>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://github.com/waleedayoub" target="_blank" rel="me" title="Github" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path
+		d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+	</path>
+</svg>
+</a>
+&nbsp;&nbsp;
+<a href="https://www.linkedin.com/in/waleedayoub/" target="_blank" rel="me" title="Linkedin" referrerpolicy="no-referrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+	stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+	<rect x="2" y="9" width="4" height="12"></rect>
+	<circle cx="4" cy="4" r="2"></circle>
+</svg>
+</a>
+&nbsp;
+    </div><strong></strong>
+    <p style="color:grey;"></p>
+</footer>
+</div>
+    </body>
+</html>
