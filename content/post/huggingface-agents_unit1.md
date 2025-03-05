@@ -25,13 +25,14 @@ I thought what better way to motivate myself to keep going than to maintain some
 
 ## Table of Contents <!-- omit from toc -->
 - [How does CodeAgent and prompts.yaml work?](#how-does-codeagent-and-promptsyaml-work)
-- [How does context and state evolve with each LLM interaction?](#how-does-context-and-state-evolve-with-each-llm-interaction)
+- [What does the context window look like and how does the state evolve with each LLM interaction?](#what-does-the-context-window-look-like-and-how-does-the-state-evolve-with-each-llm-interaction)
   - [The system prompt](#the-system-prompt)
   - [How does the agent decide it has enough information?](#how-does-the-agent-decide-it-has-enough-information)
+- [How to add observability to the agent in order to see context window with each chat interaction](#how-to-add-observability-to-the-agent-in-order-to-see-context-window-with-each-chat-interaction)
 - [What next?](#what-next)
 
 ## How does CodeAgent and prompts.yaml work?
-Here is what it looks like:
+First, let's start with [`CodeAgent`](https://huggingface.co/docs/smolagents/reference/agents#smolagents.CodeAgent.grammar), the primary object in the `smolagents` library used to create agents. Here is what a basic instance of it looks like:
 
 ```python
 agent = CodeAgent(
@@ -46,7 +47,7 @@ agent = CodeAgent(
     prompt_templates=prompt_templates
 )
 ```
-where `prompt_templates` is just a yaml being loaded like this:
+The part I want to focus on is `prompt_templates`, which is just a yaml being loaded like this:
 ```python
 with open("prompts.yaml", 'r') as stream:
 	prompt_templates = yaml.safe_load(stream)
@@ -66,16 +67,18 @@ The structure of the `prompts.yaml` file is structured like this:
 	"task": |-
 	"report": |-
 ```
-So, the most basic thing to understand is that `CodeAgent` is doing all of the orchestration using the `prompt_template` sections as a guide:
+So, the most basic thing to understand is that `CodeAgent` is doing all of the orchestration of the LLM calls and is using the `prompt_template` sections as a guide. What is it orchestratin? This stuff:
 - Context assembly
 - Prompt management
 - Tool execution
 - Conversation tracking
 - State management
 
-## How does context and state evolve with each LLM interaction?
+In order to understand how `CodeAgent` uses `prompt_templates`, let's try to step through how the context that gets passed into each LLM call get built, what it includes and how all those sections above in the `prompt_template` influence the initial context window and then each successive LLM call.
+
+## What does the context window look like and how does the state evolve with each LLM interaction?
 ### The system prompt
-The initial context includes `system_prompt` contents which includes:
+The initial context includes a `system_prompt` section which includes:
 - Instructions
 - Examples using "notional tools" structured in a "Task -> Thought -> Code" flow. For example, here's one:
 ```yaml
