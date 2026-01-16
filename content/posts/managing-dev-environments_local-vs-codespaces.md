@@ -2,7 +2,6 @@
 title: "Managing Dev Environments - Local vs Codespaces"
 author: waleed
 description: "Comprehensive guide comparing local development environments with GitHub Codespaces, including best practices for environment setup, secrets management, and virtual environment configuration across different platforms."
-author: waleed
 tags: ["python", "github", "codespaces", "secrets"]
 date: 2024-07-04T07:28:08-04:00
 draft: false

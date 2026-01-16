@@ -1,15 +1,57 @@
-{{define "main"}}
-<div class="intro" style="align-items: center">
-  {{if .Site.Params.main.enabled }}
-  <img class="image" src='{{ .Site.Params.main.img | absURL }}' 
-	title="{{	.Site.Params.main.img_title }}" width="200px" 
-	alt="Author's picture or avatar or logo"/>
-  <ul>
-    <li class="intro-quote">{{ .Site.Params.main.quote }}</li>
-  </ul>
-  {{end}}
-  <p>{{ .Site.Params.main.description | safeHTML }}</p>
-</div>
-{{ partial "menu.html" . }}
-{{end}}
+{{ define "main" }}
+<div class = "container">
+    <div class="homepage-columns">
+        <!-- Left Column - Profile -->
+        <div class="left-column">
+            <div class="profile">
+                <img src="{{ .Site.Params.profilePhoto | default "/images/pfp.jpg" }}" alt="Profile Photo" class="profile-photo">
+            </div>
+            <div class="profile-description">
+                <p> {{ .Site.Params.profileDescription | markdownify }} </p>
+            </div>
 
+            <!-- Tags Section -->
+            {{ if .Site.Taxonomies.tags }}
+            <div class="homepage-tags-section">
+                <h3 class="homepage-tags-heading">Tags</h3>
+                <div class="homepage-tags-list">
+                    {{ range .Site.Taxonomies.tags.Alphabetical }}
+                    <a href="{{ .Page.RelPermalink }}" class="homepage-tag">{{ .Page.Title }}</a>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
+        </div>
+        <!-- Right Column - Posts -->
+        <div class="right-column">
+            <div>
+                <h1 class="year-heading-homepage">Updates</h1>
+                <p>{{ .Site.Params.profileUpdates | markdownify }}</p>
+            </div>
+      {{ $posts := where site.RegularPages "Type" "posts" }}
+      {{ range ($posts.ByDate.Reverse).GroupByDate "2006" }}
+            <div class="year-group">
+                <h1 class="year-heading-homepage">{{ .Key }}</h1>
+                <ul class="post-list-homepage">
+                    {{ range first 5 .Pages }}
+                    <li class="post-item-homepage">
+                        <span class="post-title-homepage">
+                            <a href="{{ .RelPermalink }}" class="post-title-homepage-link">{{ .Title }}</a>
+                        </span>
+                        <span class="dot-leader"></span>
+                        <span class="post-date-homepage">{{ .Date.Format "01.02" }}</span>
+                    </li>
+                    {{ end }}
+                </ul>
+            </div>
+            {{ else }}
+            <p>No posts yet. Check back soon!</p>
+            {{ end }}
+            <div class="all-posts-link-homepage">
+                <a href="/posts/">View All Posts --></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ end }}

@@ -1,108 +1,54 @@
 baseURL = 'https://waleedayoub.com'
 languageCode = 'en-us'
 title = 'Waleed Ayoub'
-# Replace the old config
-# paginate = 10
+theme = "drishtikon"
 
-# With the new config
 [pagination]
   pagerSize = 10
-#disqusShortname = "" # Enable comments by entering your Disqus shortname
-#googleAnalytics = "" # Enable Google Analytics by entering your tracking id
-#-------------------------------------------------------------------------------
-# DEFAULT SETTINGS
-#-------------------------------------------------------------------------------
-
-# Default Theme
-theme= "gruvhugo"
-# theme= "hugo-sustain"
-
-# Default Post Extension
-defaultExtension= "html"
-
-# Default metadata format for newly created frontmatter using
-# hugo new command. "toml", "yaml", or "json"
-metaDataFormat= "yaml"
 
 [taxonomies]
   tag      = "tags"
   category = "categories"
   series   = "series"
 
-[params.main]
-  enabled = true
-  enableKatex = true
-  metaKeywords = "waleed, data, python"
-  headerTitle = "Waleed Ayoub"
-  name = "waleed"
-  img = "images/headshot-waleed.png"
-  img_title = "It's me!"
-  icon = "images/logo.png"
-  quote = "Let's build something together!"
-  description= "Hi there, I’m Waleed Ayoub and I’ve spent 20 years working at the intersection of data, analytics, software development and product / technology leadership. I have a real passion for data-driven products and scaling teams – and have done a fair bit of hands on building, especially in enterprise b2b domains. I’m motivated by curiousity, good vibes and I’m always on the look out for interesting challenges. Check out my <a href=\"https://www.linkedin.com/in/waleedayoub\">Linkedin</a> and if you think we'd have something in common, please <a href=\"mailto:info@waleedayoub.com\">reach out!</a>"
-  licenseUrl = ""
+[params]
+  # Profile section (left column)
+  profilePhoto = "/images/headshot-waleed.png"
+  profileDescription = "Hi, I'm Waleed. I've spent 20+ years building data-driven products and scaling teams at the intersection of data, software, and product leadership. Motivated by curiosity and good vibes. [More about me](/about/) or [reach out](mailto:info@waleedayoub.com)."
 
- # Social icons
+  # Updates section (right column intro)
+  profileUpdates = "Let's build something together!"
 
-  [[params.social]]
-    name = "email"
-    url  = "mailto:info@waleedayoub.com"
+  # Social links
+  github = "https://github.com/waleedayoub"
+  email = "mailto:info@waleedayoub.com"
+  linkedin = "https://www.linkedin.com/in/waleedayoub/"
+  # pinterest = ""
+  # cv = "/cv.pdf"
 
-  [[params.social]]
-    name = "github"
-    url  = "https://github.com/waleedayoub"
+  # KaTeX math support
+  math = true
 
-  [[params.social]]
-    name = "linkedin"
-    url  = "https://www.linkedin.com/in/waleedayoub/"
-
-[params.style]
-  # add path to custom CSS files here
-  # custom_css = []
-  custom_css = ["css/custom-style.css"]
-  # add path to custom SCSS files here
-  custom_scss = []
+  # Color customization (uncomment to override defaults)
+  backgroundColor = "#f3f5f7"   # pale slate blue
+  # linksColor = "#805690"        # purple (default)
+  # textColor = "#333"            # dark gray (default)
 
 [menu]
   [[menu.main]]
-    identifier = "about"
-    name       = "About"
-    url        = "about"
+    identifier = "posts"
+    name       = "posts"
+    url        = "/posts/"
+    weight     = 1
 
   [[menu.main]]
-    identifier = "posts"
-    name       = "Posts"
-    url        = "post/"
+    identifier = "about"
+    name       = "about"
+    url        = "/about/"
+    weight     = 2
 
 [markup]
   defaultMarkdownHandler = "goldmark"
-  [markup.asciidocExt]
-    backend = "html5"
-    docType = "article"
-    extensions = []
-    failureLevel = "fatal"
-    noHeaderOrFooter = true
-    safeMode = "unsafe"
-    sectionNumbers = false
-    trace = false
-    verbose = true
-    workingFolderCurrent = false
-    [markup.asciidocExt.attributes]
-  [markup.blackFriday]
-    angledQuotes = false
-    footnoteAnchorPrefix = ""
-    footnoteReturnLinkContents = ""
-    fractions = true
-    hrefTargetBlank = false
-    latexDashes = true
-    nofollowLinks = false
-    noreferrerLinks = false
-    plainIDAnchors = true
-    skipHTML = false
-    smartDashes = true
-    smartypants = true
-    smartypantsQuotesNBSP = false
-    taskLists = true
   [markup.goldmark]
     [markup.goldmark.extensions]
       definitionList = true
@@ -128,7 +74,7 @@ metaDataFormat= "yaml"
     lineNos = false
     lineNumbersInTable = true
     noClasses = true
-    style = "monokai"
+    style = "catppuccin-mocha"
     tabWidth = 4
   [markup.tableOfContents]
     endLevel = 3

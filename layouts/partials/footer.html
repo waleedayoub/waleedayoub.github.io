@@ -1,7 +1,31 @@
-<footer id="footer">
-    <strong>{{- with .Site.Params.social }}</strong>
-    <div class="social">
-        {{ partial "social.html" . }}
-    </div><strong>{{- end }}</strong>
-    <p style="color:grey;">{{ .Site.Params.main.copyright | safeHTML }}</p>
+<footer>
+    <div class="site-footer">
+        <div class = "footer-links" >
+            {{ with .Site.Params.github }}
+            <a href="{{ . }}" target="_blank">
+                <span class="icon github-icon"></span>
+            </a>
+            {{ end }}
+            {{ with .Site.Params.email }}
+            <a href="{{ . }}">
+                <span class="icon email-icon"></span>
+            </a>
+            {{ end }}
+            {{ with .Site.Params.linkedin }}
+            <a href="{{ . }}">
+                <span class="icon linkedin-icon"></span>
+            </a>
+            {{ end }}
+            {{ with .Site.Params.pinterest }}
+            <a href="{{ . }}">
+                <span class="icon pinterest-icon"></span>
+            </a>
+            {{ end }}
+            {{ with .Site.Params.cv }}
+            <a href="{{ . }}">
+                <span class="icon cv-icon"></span>
+            </a>
+            {{ end }}
+        </div>
+    </div>
 </footer>
