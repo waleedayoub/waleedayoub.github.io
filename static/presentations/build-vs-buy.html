@@ -1,0 +1,799 @@
+<title>The Easy Part Got Easier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --n100:#ffffff; --n200:#f7f6f2; --n300:#ede9e1; --n400:#ddd9d0;
+  --n500:#b8b3a8; --n600:#8e8a7f; --n700:#5b6066; --n800:#3a3f42; --n900:#262b2e; --n1000:#1c2023; --n1100:#14181a;
+  --green-50:#f1faf8; --green-100:#daf1ec; --green-200:#b5e3d9; --green-400:#6cc3b6;
+  --green-500:#3f8b80; --green-600:#2d7a6f; --green-700:#1f6f66; --green-800:#175650;
+  --lime-50:#f1faf8; --lime-100:#daf1ec; --lime-300:#7fcabb; --lime-500:#3f8b80; --lime-700:#1f6f66; --lime-800:#175650; --lime-950:#0e2622;
+  --blue-50:#ebf3ff; --blue-100:#d2e2fe; --blue-300:#99c0fb; --blue-500:#2371ef; --blue-700:#0f4dae; --blue-800:#0a3982;
+  --teal-50:#f1fdfc; --teal-100:#dcf9f6; --teal-200:#baf2eb; --teal-500:#35b6a7; --teal-700:#17786d; --teal-800:#0e584f;
+  --amber-50:#fff9e0; --amber-100:#fceab1; --amber-300:#f5c346; --amber-500:#a3762a; --amber-700:#7a5920;
+  --font:'Public Sans','Helvetica Neue',Arial,sans-serif;
+  --font-display:'Newsreader',serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(0.2,0,0,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--n200); color:var(--n1100); font-family:var(--font);
+  overflow:hidden; -webkit-font-smoothing:antialiased;}
+#stage{position:fixed; inset:0;}
+.slide{
+  position:absolute; inset:0; padding:11vh 6vw 7vh; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:flex-start; gap:3.2vh;
+  opacity:0; pointer-events:none; visibility:hidden; transition:opacity 340ms var(--ease);
+  background:
+    radial-gradient(1200px 780px at 82% 8%, rgba(31,111,102,.10), transparent 62%),
+    radial-gradient(900px 620px at 6% 92%, rgba(63,139,128,.07), transparent 60%),
+    var(--n100);
+}
+.slide.on{opacity:1; pointer-events:auto; visibility:visible;}
+.slide.center{justify-content:center; padding-top:7vh;}
+.slide.tight{padding:5vh 5vw 4.5vh; gap:1.2vh;}
+.slide.tint{background:
+    radial-gradient(1100px 720px at 12% 10%, rgba(63,139,128,.16), transparent 60%),
+    radial-gradient(900px 600px at 92% 90%, rgba(31,111,102,.10), transparent 58%),
+    var(--n200);}
+.slide.qt{background:var(--n1100);}
+.slide.qt .eyebrow{color:#6cc3b6;}
+.qtext{font-size:min(clamp(18px,2.55vw,40px),7.4vh); line-height:1.32; color:#fff;
+  font-style:italic; max-width:42ch; font-weight:400;}
+.qrule{width:9vw; height:3px; background:var(--green-500); margin:3vh 0 1.8vh;}
+.qattr{font-size:min(clamp(12px,1.15vw,18px),2.3vh); color:#c2c8cf; line-height:1.4;}
+.slide.claims .col p{font-size:min(clamp(14px,1.35vw,22px),2.75vh);}
+.slide.claims .col p b.g{color:var(--green-700); font-weight:600;}
+.band{background:var(--lime-50); border:1px solid var(--lime-300); border-radius:10px;
+  padding:1.6vh 1.8vw; margin-top:2.2vh;}
+.band .bk{font-family:var(--mono); font-size:clamp(9px,.85vw,13px); letter-spacing:.14em;
+  text-transform:uppercase; color:var(--lime-800); margin-bottom:.8vh;}
+.band p{font-size:min(clamp(13px,1.2vw,20px),2.5vh); line-height:1.4; color:var(--n800);}
+.slide.cfg h1{font-size:min(clamp(24px,3.2vw,48px),7vh);}
+.slide.cfg h2, .slide.cfg h2.dim{font-size:min(clamp(16px,1.9vw,30px),4vh);
+  color:var(--green-700); margin-top:.6vh;}
+.source{font-size:min(clamp(9px,.8vw,12px),1.6vh); color:var(--n600); margin-top:.6vh;}
+.slide.snug{gap:2.1vh; padding-top:9vh;}
+.slide.mark-slide{background:
+    radial-gradient(1400px 900px at 50% 0%, rgba(31,111,102,.14), transparent 64%),
+    var(--n100);}
+
+/* type */
+h1{font-family:var(--font-display); font-size:min(clamp(38px,7.2vw,124px),15.5vh); line-height:1.0; letter-spacing:-.04em; font-weight:700; text-wrap:balance;}
+h2{font-family:var(--font-display); font-size:min(clamp(30px,5.4vw,88px),12vh); line-height:1.04; letter-spacing:-.035em; font-weight:700; text-wrap:balance;}
+h3{font-family:var(--font-display); font-size:min(clamp(21px,3.1vw,50px),7vh); line-height:1.12; letter-spacing:-.028em; font-weight:600;}
+h4{font-family:var(--font-display); font-size:min(clamp(15px,1.6vw,26px),3.2vh); line-height:1.18; letter-spacing:-.018em; font-weight:600;}
+.eyebrow{font-family:var(--mono); font-size:clamp(10px,1vw,15px); letter-spacing:.17em;
+  text-transform:uppercase; color:var(--n600); margin-bottom:2.2vh;}
+.eyebrow.g{color:var(--green-700);} .eyebrow.w{color:var(--amber-700);} .eyebrow.b{color:var(--blue-700);}
+.lead{font-size:min(clamp(16px,1.75vw,29px),4.1vh); line-height:1.4; color:var(--n800); margin-top:3vh; max-width:52ch;}
+.sm{font-size:min(clamp(13px,1.2vw,19px),2.9vh); line-height:1.45; color:var(--n800);}
+.sowhat{font-size:min(clamp(14px,1.45vw,23px),2.9vh); line-height:1.35; color:var(--n800); max-width:70ch;}
+.sowhat b{color:var(--green-700); font-weight:600;}
+
+em.g{font-style:normal; color:var(--green-700);} em.t{font-style:normal; color:var(--teal-700);}
+em.l{font-style:normal; color:var(--lime-700);} em.b{font-style:normal; color:var(--blue-700);}
+em.w{font-style:normal; color:var(--amber-700);}
+.dim{color:var(--n600);}
+
+/* chrome */
+.pager{position:fixed; right:2.2vw; bottom:3.3vh; font-family:var(--mono); font-size:12px; color:var(--n600); z-index:6;}
+.rail{position:fixed; left:0; top:0; height:4px; background:var(--green-600); width:0; z-index:8; transition:width 340ms var(--ease);}
+.acttag{position:fixed; left:2.2vw; top:3vh; font-family:var(--mono); font-size:11px; letter-spacing:.17em;
+  text-transform:uppercase; color:var(--n600); z-index:6;}
+#help{position:fixed; right:2.2vw; top:3vh; font-family:var(--mono); font-size:11px; color:var(--n500); z-index:6;}
+#notes{position:fixed; inset:auto 0 0 0; max-height:44vh; overflow-y:auto; background:var(--n1100);
+  color:#d7dce1; padding:3vh 6.5vw; font-size:16px; line-height:1.62; z-index:20; display:none;}
+#notes.on{display:block;} #notes b{color:var(--lime-300); font-family:var(--mono); font-size:11px;
+  letter-spacing:.14em; text-transform:uppercase; display:block; margin-bottom:1.4vh;}
+#notes p+p{margin-top:.9em;} #notes i{color:var(--green-400); font-style:normal;}
+
+/* claim marker slides */
+.claimno{font-family:var(--mono); font-size:clamp(12px,1.2vw,17px); letter-spacing:.2em;
+  text-transform:uppercase; color:var(--green-700); margin-bottom:2.4vh;}
+
+
+/* stat */
+.big{font-size:min(clamp(52px,13vw,200px),24vh); line-height:.85; letter-spacing:-.05em;
+  font-weight:800; font-variant-numeric:tabular-nums; color:var(--n1100);}
+.big.g{color:var(--green-600);} .big.t{color:var(--teal-700);} .big.l{color:var(--lime-700);}
+.big.b{color:var(--blue-700);} .big.w{color:var(--amber-700);}
+.statrow{display:flex; gap:5vw; align-items:flex-start; flex-wrap:nowrap;}
+.statrow>div{min-width:0; flex:1;}
+.statrow .big{font-size:min(clamp(34px,7.4vw,124px),16vh);}
+.statrow .k{font-size:min(clamp(11px,1vw,16px),2.2vh); color:var(--n800); margin-top:1.4vh; line-height:1.4;}
+
+/* columns */
+.cols{display:grid; gap:2.6vw;} .c2{grid-template-columns:1fr 1fr;}
+.c3{grid-template-columns:repeat(3,1fr);} .c4{grid-template-columns:repeat(4,1fr);}
+.col .rule{height:3px; background:var(--green-600); margin-bottom:1.6vh; border-radius:2px;}
+.col .rule.t{background:var(--teal-600,#239587);} .col .rule.b{background:var(--blue-500);}
+.col .rule.w{background:var(--amber-500);} .col .rule.l{background:var(--lime-600,#87c01b);}
+.col .k{font-family:var(--mono); font-size:clamp(10px,.92vw,13px); letter-spacing:.14em;
+  text-transform:uppercase; color:var(--n700); margin-bottom:1.1vh;}
+.col p{font-size:min(clamp(11px,1.02vw,17px),2.25vh); line-height:1.38; color:var(--n800); margin-top:.8vh;}
+.card{background:var(--n200); border:1px solid var(--n300); border-radius:14px; padding:1.9vh 1.4vw;}
+.card.g{background:var(--green-50); border-color:var(--green-200);}
+.card.l{background:var(--lime-50); border-color:var(--lime-100);}
+.card.gr{background:var(--green-50); border-color:var(--green-200);}
+.card.b{background:var(--blue-50); border-color:var(--blue-100);}
+.card.t{background:var(--teal-50); border-color:var(--teal-100);}
+.card.w{background:var(--amber-50); border-color:var(--amber-100);}
+
+ul.plain{list-style:none;} ul.plain li{position:relative; padding-left:1.3em; margin-bottom:.85vh;
+  font-size:min(clamp(11px,1.04vw,18px),2.3vh); line-height:1.34; color:var(--n800);}
+ul.plain li::before{content:""; position:absolute; left:0; top:.6em; width:6px; height:6px;
+  border-radius:50%; background:var(--green-600);}
+ul.plain li b{color:var(--n1100);}
+
+/* quote */
+.quote{border-left:4px solid var(--green-600); padding-left:1.8vw; max-width:60ch;}
+.quote p{font-size:min(clamp(17px,2vw,34px),4.6vh); line-height:1.34; font-style:italic; color:var(--n1000);}
+.quote cite{display:block; margin-top:1.8vh; font-style:normal; font-family:var(--mono);
+  font-size:clamp(10px,.9vw,14px); color:var(--n700);}
+
+/* matrix */
+.mx{display:grid; grid-template-columns:clamp(110px,12vw,200px) repeat(4,1fr); gap:6px;}
+.mx .h{font-family:var(--mono); font-size:clamp(10px,.98vw,15px); color:var(--n1100); padding-bottom:.8vh;}
+.mx .h span{display:block; color:var(--n600); font-size:.86em;}
+.mx .r{font-size:min(clamp(11px,1.02vw,17px),2.5vh); color:var(--n800); display:flex; align-items:center;}
+.mx .c{height:min(clamp(22px,4vh,40px),4vh); border-radius:4px; background:var(--n300);
+  transform:scaleX(.15); transform-origin:left; opacity:0; transition:all 440ms var(--ease);}
+.on .mx .c{transform:none; opacity:1;}
+.mx .c.p{background:var(--lime-300);} .mx .c.f{background:var(--lime-600,#87c01b);}
+
+/* pipeline */
+.pipe{display:flex; gap:4px;}
+.seg{height:min(clamp(38px,7vh,74px),7vh); border-radius:5px; display:flex; align-items:center;
+  justify-content:center; font-size:clamp(9px,.9vw,14px); font-weight:500; color:var(--blue-800);
+  background:var(--blue-100); white-space:nowrap; overflow:hidden; flex-grow:var(--g); flex-basis:0;
+  transition:flex-grow 900ms var(--ease);}
+.seg.b{background:var(--lime-500); color:var(--lime-950);}
+.seg.h{background:var(--teal-200); color:var(--teal-800);}
+.seg.f{background:repeating-linear-gradient(135deg,var(--n400) 0 4px,var(--n200) 4px 11px); color:var(--n700);
+  justify-content:flex-start; padding-left:12px;
+  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 56%,transparent 100%);
+  mask-image:linear-gradient(90deg,#000 0,#000 56%,transparent 100%);}
+.tick{width:2px; background:var(--n500); flex:0 0 2px; margin:0 4px;}
+.plabel{display:flex; justify-content:space-between; align-items:baseline; margin-top:2.6vh; margin-bottom:.8vh;}
+.plabel .y{font-family:var(--mono); font-size:clamp(13px,1.4vw,22px);}
+.plabel .n{font-family:var(--mono); font-size:clamp(9px,.88vw,13px); color:var(--n700);}
+.key{display:flex; gap:2vw; flex-wrap:wrap; margin-top:2.2vh; font-size:clamp(11px,1vw,16px); color:var(--n800);}
+.key i{display:inline-block; width:13px; height:13px; border-radius:3px; vertical-align:-2px; margin-right:7px;}
+
+/* accumulation */
+.acc{display:flex; flex-direction:column; gap:6px;}
+.arow{display:flex; align-items:center; gap:1.6vw; opacity:0; transform:translateY(6px);
+  transition:opacity 260ms var(--ease), transform 260ms var(--ease);}
+.arow.in{opacity:1; transform:none;}
+.arow .lb{flex:0 0 clamp(58px,6.4vw,100px); text-align:right; font-family:var(--mono);
+  font-size:clamp(8px,.8vw,12px); color:var(--n600);}
+.abar{flex:1; display:flex; gap:4px; min-width:0;}
+.abar>*{flex-grow:var(--g); flex-basis:0; height:min(clamp(15px,2.7vh,28px),2.7vh); border-radius:4px;
+  transition:flex-grow 900ms var(--ease);}
+.abar .sp{background:transparent; --g:var(--sb);} .acc.after .abar .sp{--g:var(--sa);}
+.abar .bd{background:var(--lime-500); --g:var(--gb);} .acc.after .abar .bd{--g:var(--ga);}
+.abar .hd{background:var(--teal-200);}
+.abar .fv{background:repeating-linear-gradient(135deg,var(--n400) 0 4px,var(--n200) 4px 11px);}
+.arow.x{display:none;} .acc.more .arow.x{display:flex;}
+
+/* stairs */
+.stairs{display:flex; align-items:flex-end; gap:1.2vw; height:31vh;}
+.st{flex:1; border-radius:6px 6px 0 0; position:relative; transform:scaleY(.05);
+  transform-origin:bottom; transition:transform 600ms var(--ease);}
+.on .st{transform:none;}
+.st .lab{position:absolute; top:100%; left:0; right:0; padding-top:1.2vh; text-align:center;}
+.st .lab b{display:block; font-size:clamp(11px,1.05vw,17px); font-weight:600;}
+.st .lab span{font-size:clamp(9px,.82vw,13px); color:var(--n700); line-height:1.35; display:block; margin-top:.5vh;}
+.st .n{position:absolute; top:1vh; left:0; right:0; text-align:center; font-family:var(--mono);
+  font-size:clamp(10px,.95vw,15px);}
+.pin{position:absolute; bottom:calc(100% + 1.2vh); left:50%; transform:translateX(-50%); white-space:nowrap;
+  font-size:clamp(9px,.86vw,13px); font-weight:600; padding:5px 11px; border-radius:99px; color:#fff;}
+
+/* squares */
+.sq{display:grid; grid-template-columns:repeat(80,1fr); gap:3px;}
+.sq i{aspect-ratio:1; border-radius:2px; background:var(--n300); opacity:0; transition:opacity 400ms var(--ease);}
+.on .sq i{opacity:1;} .sq i.o{background:var(--blue-500);}
+
+/* benchmark table */
+.bench{display:flex; flex-direction:column; gap:3px;}
+.br{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1.5fr) auto; align-items:baseline;
+  gap:1.4vw; padding:.72vh 1vw; border-radius:6px; background:var(--n200);}
+.br .bn{font-weight:600; font-size:min(clamp(12px,1.1vw,18px),2.4vh);}
+.br .bp{font-size:min(clamp(10px,.9vw,15px),1.95vh); color:var(--n700);}
+.br .bv{font-family:var(--mono); font-variant-numeric:tabular-nums; font-weight:500;
+  font-size:min(clamp(13px,1.22vw,20px),2.6vh); text-align:right;}
+.br.us{background:var(--lime-50); box-shadow:inset 3px 0 0 #87c01b;}
+.br.us .bn,.br.us .bv{color:var(--lime-800);}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+
+<div class="rail" id="rail"></div>
+<div class="acttag" id="acttag"></div>
+<div id="help">&larr; &rarr; move &middot; N notes</div>
+<div class="pager" id="pager"></div>
+<div id="notes"></div>
+<div id="stage"></div>
+<script>
+const S=[];
+function s(act,html,notes,cls){S.push({act,html,notes,cls:cls||''});}
+
+/* ══════════ OPEN ══════════ */
+s('',`<h1>Build vs Buy.<br>The easy part got easier.<br><em class="t">The hard part got harder.</em></h1>
+<p class="lead" style="max-width:none">Waleed Ayoub &middot; Product &amp; Technology Leader</p>`,
+`We are here to talk about AI labor. At some point today somebody in your organization is going to ask whether you should just build it yourselves.
+I run product and engineering for a team that builds with AI coding agents every day, probably more aggressively than almost anyone in this room. So let me start with what surprised me most.
+Writing code got dramatically easier. Everything around writing code got harder.
+But before we get into things, I wanted to start by asking everyone some questions`,'mark-slide');
+
+s('',`<div class="eyebrow">Hands up &middot; 1 of 3</div>
+<h1>Has your team vibe-coded something in the last six months?</h1>`,
+`Hands up if yes. Nearly everyone.`,'tint');
+
+s('',`<div class="eyebrow">Hands up &middot; 2 of 3</div>
+<h1>Is any of it running in production <em class="g">right now</em>?</h1>`,
+`Keep them up if it is actually in production. Far fewer.`,'tint');
+
+s('',`<div class="eyebrow">Hands up &middot; 3 of 3</div>
+<h1>Is there a <em class="t">named person</em> on call for it tonight?</h1>`,
+`And keep them up if there is a named person on call for it tonight.
+Look at the room.
+I might be oversimplifying, but the distance between the first question and this one is the whole talk.
+It is not a technology gap. Ownership over software and data contains multitudes and it is the thing that decides whether building is the right call.
+Transitions: So let’s unpack it by making 4 claims`,'tint');
+
+s('',`<div class="eyebrow g">Four claims, in the order I will make them</div>
+<div class="cols c4">
+  <div class="col"><div class="rule"></div><div class="k">01 &middot; The work</div><p>The build collapsed. Testing, migrating, instrumenting and running it did not, and every release adds <b class="g">permanently</b> to what you own.</p></div>
+  <div class="col"><div class="rule"></div><div class="k">02 &middot; What it takes</div><p>The tools are available to everyone here on identical terms. An organization that can <b class="g">actually use them</b> is not.</p></div>
+  <div class="col"><div class="rule"></div><div class="k">03 &middot; What you would own</div><p>Not a model and not a chatbot. A <b class="g">math engine</b> and a <b class="g">judgement system</b>, and the science that keeps both current.</p></div>
+  <div class="col"><div class="rule"></div><div class="k">04 &middot; What is yours</div><p>Your signals, thresholds and overrides <b class="g">genuinely differentiate you</b>. That doesn&rsquo;t need to mean &ldquo;new software.&rdquo;</p></div>
+</div>
+<div class="sowhat">Each one backed by <b>published research</b>, presented straight, including the parts that complicate the story.</div>`,
+`Four claims. For the next 30 minutes I’m going to walk through these in order so you can hold me to it.
+First, the work. Writing code got cheap. Owning what you wrote did not, and that ownership compounds.
+Second, and I did not expect to be making this one two years ago: getting any of the benefit is organizational before it is technical.
+Third, what you would actually own. Two production systems plus the research that keeps them working, and somebody funds the technical debt AND the research forever.
+Fourth, what is genuinely yours. Your data and your logic are unique. You are right about that. But it is an input, not a reason to build platforms.
+Every one gets backed by published research, some of it from people with every commercial reason to say the opposite.
+And my goal today is to …`,'claims');
+
+s('',`<h2>What I want you to leave with:</h2>
+<h1 style="margin-top:3vh"><em class="g">a straight answer for whoever says<br>"we can just build the AI labor in-house."</em></h1>`,
+`Equip you with a straight answer for the next person who tells you this can just be built in-house, because somebody will say it to you, probably this quarter.
+I’m not here to tell you not to build, in fact, I want you to build. I just want you to walk into it eyes wide open.
+Before I jump into my claims, I wanted to make a familiar analogy`,'tint');
+
+s('',`<div class="eyebrow">Four hundred spreadsheets &middot; you have already lived this once</div>
+<div class="sq" id="sq"></div>
+<div class="key" style="margin-top:2.4vh"><span><i style="background:var(--blue-500)"></i>a spreadsheet somebody still maintains</span><span><i style="background:var(--n300)"></i>one nobody does</span></div>
+<h2 style="margin-top:3vh">Anyone can build a spreadsheet.<br><em class="g">Nobody can own four hundred.</em></h2>
+<div class="sowhat">Building it was never the hard part. Owning four hundred of them forever was. <b>AI coding is Excel for software.</b></div>`,
+`Before I go anywhere technical, let me put this in your language, because you have already lived this many times.
+Everybody in this room can build a model in Excel. And every company here has four hundred spreadsheets that disagree with each other, that nobody maintains, and that break the week the person who wrote them changes jobs.
+Building the spreadsheet was never the hard part. Owning four hundred of them forever was.
+That is exactly what AI coding just did to software. The barrier to building went to almost nothing. The cost of owning did not move at all. So when someone tells you AI means you can build the AI labor yourself, the honest translation is that you can now generate four hundred spreadsheets much faster.
+Hold onto that. Everything I say next is a more precise version of it. So let’s get to claim number 1`);
+
+/* ══════════ CLAIM 1 ══════════ */
+s('Claim 1',`<div class="claimno">Claim one of four</div>
+<h1>Writing code got cheap.<br><em class="t">Owning what you wrote did not.</em></h1>
+<div class="sowhat">And ownership compounds with every release you ship.</div>`,
+`So, claim one. Writing code got cheap. Owning what you wrote did not. And ownership compounds with every release you ship.
+Let’s talk a little bit how we got here. And how quickly!`,'tint');
+
+s('Claim 1',`<div class="eyebrow">Four years, four eras &middot; stages from Anthropic's AI-native SDLC playbook</div>
+<div class="mx" id="mx"></div>
+<div class="sowhat">In four years AI went from touching <b>one part of the lifecycle to all six</b>. The right-hand column is about eighteen months old.</div>`,
+`Four years ago, AI assisted coding was autocomplete. It guessed the next line (or a few lines) while you typed, and it touched exactly one row on this chart.
+Then chat. Then coding agents that read the whole codebase, change twenty files and run the tests themselves. And now agents that work for hours unattended, review each other's work, and watch production.
+One row to all six. And the thing to hold onto: that right-hand column is about eighteen months old.
+Everything anyone tells you about what AI can build is a claim about a very new column. So where is this all going?`);
+
+s('Claim 1',`<div class="eyebrow b">2026 and beyond</div>
+<div class="cols c3">
+  <div class="col"><div class="rule b"></div><div class="k">01</div><p>Every row on that chart is reachable now, so "can AI do this part" <b class="g">stops being an interesting question</b>.</p></div>
+  <div class="col"><div class="rule b"></div><div class="k">02</div><p>One person can start ten agents before lunch. <b class="g">Nobody reviews ten agents' worth of output</b> at the old rate.</p></div>
+  <div class="col"><div class="rule b"></div><div class="k">03</div><p>Every release adds permanently to the software you have to run. Organizations that can check what an agent produced keep getting faster. <b class="g">The rest pile up code nobody has checked, and still have to run all of it.</b></p></div>
+</div>`,
+`I want to say where I think this goes, because stopping at today is a cop out when we are nine months into the year. The coverage race is over. Every row is reachable. So the question stops being whether an agent can do a stage and becomes how many loops you run at once and who checks them.
+The constraint moves from producing work to verifying it. One person can kick off ten agents before lunch. Nobody reviews ten agents' worth of output at the old rate.
+And that is why I think the gap between companies gets wider from here rather than narrower. And let me be precise about what that means, because it is the hinge of this whole talk. Every release you ship adds permanently to the pile of software you have to run.
+
+Go faster and you are not doing more work per release, you are producing more releases, and each one leaves its own permanent residue behind.
+
+So if you can check the work, you get faster. If you cannot, you are piling up code nobody has verified, and you still have to run every line of it. This is now becoming THE topic in the industry, In fact …`,'claims');
+
+s('Claim 1',`<div class="eyebrow">Anthropic &middot; the AI-native SDLC playbook</div>
+<div class="qtext">&ldquo;The bottleneck moves to the steps to the left and right of the build phase. This is mainly plan, review/test, and deploy, which still run at human speed.&rdquo;</div>
+<div class="qrule"></div>
+<div class="qattr">Anthropic, The AI-native SDLC playbook, 21 August 2026. The section is titled &ldquo;Code is no longer the bottleneck.&rdquo; claude.com/blog/the-ai-native-sdlc-playbook</div>`,
+`Anthropic published a playbook earlier this year on what an AI-native software lifecycle looks like, and the line in it that stopped me was this one. Code is no longer the bottleneck. The bottleneck moves to the steps to the left and right of the build phase, which still run at human speed.
+
+This is the company whose models write most of our code, saying the quiet part out loud. Code is no longer the bottleneck. The bottleneck just moved to everything on either side of it.
+
+I am obviously not arguing with the productivity numbers. I am telling you where the work went and how it’s compounded to make the hardest parts of building software harder.`,'qt center');
+
+s('Claim 1',`<div class="eyebrow">What happens to one change &middot; adapted from Anthropic's AI-native SDLC playbook</div>
+<div id="pipes"></div>
+<div class="key"><span><i style="background:var(--lime-500)"></i>writing the code</span><span><i style="background:var(--teal-200)"></i>making it hold up: tests, data migrations, monitoring, rollback</span><span><i style="background:var(--n400)"></i>running it, which never ends</span></div>
+<div class="sowhat">Writing the code shrank by roughly 90 percent. <b>Making it hold up did not, and the part after Ship got bigger.</b></div>
+<div class="sowhat" style="margin-top:1.6vh"><b>For example:</b> adding one field to a forecast is minutes of code now. Backfilling three years of history so the field means the same thing before and after is not, and neither is the check that catches it when a source system quietly starts sending nulls. Skip those and you have taken out a loan. <b>It is called technical debt, and AI made the loan far easier to take out than to repay.</b></div>`,
+`This is their picture with two changes of mine. Here is one change, one feature, moving from idea to live. In 2022 the green block, writing the code, was most of the work. That is what everybody optimized for and that is what AI ate.
+Now the second bar. The green is basically gone, and the change still takes almost as long to ship.
+My first change: they draw Build as one block and I split it in two, because writing the code was never the whole of building something.
+
+The teal is the other half. Writing the tests. Migrating the data without losing any of it. Instrumenting it so somebody can see why it misbehaved at three in the morning. Being able to roll it back. That half did not move, because there is still no good tooling for most of it.
+
+My second change: the block on the right with no edge on it. They name the loop in a line and move on, because their subject is how work flows through the stages. Mine is what the loop leaves behind. That block is what happens after you ship, it never ends, nobody puts it on the business case, and it got bigger.
+
+Let me make that concrete, because it is easy to nod at and hard to feel. Let me give you a very basic example:
+
+Say you want one more field on a forecast. A driver, a flag, anything. Writing that code is now minutes. What is not minutes: backfilling three years of history so that field means the same thing before and after, updating every downstream report that assumed it was not there, and adding the check that catches it when a source system quietly starts sending you nulls.
+
+You can skip all of that and ship today. And the forecast will look fine on day 1. Then, a few weeks from now your model is training on a column that means two different things depending on the date, and nobody can tell you why the numbers drifted.`);
+
+s('Claim 1',`<div class="eyebrow">Five releases. Same team. Same cadence.</div>
+<div class="acc" id="acc"></div>
+<div class="key"><span><i style="background:var(--lime-500)"></i>writing the code</span><span><i style="background:var(--teal-200)"></i>making it hold up</span><span><i style="background:var(--n400)"></i>running everything shipped so far</span></div>
+<h3 style="margin-top:2.2vh">Every release is a small purchase and a permanent interest payment.<br><em class="g">AI made the purchases cheap. It did nothing about the interest.</em></h3>
+<div class="sowhat">Watch the green collapse. <b>The chart barely changes</b>, because the green was never the part that was growing.</div>`,
+`One thing I found missing from Anthropic’s study is an emphasis on the cycle: A bar has an end. A lifecycle does not.
+
+You do not ship a planning system once and then maintain it. You keep adding to it. New products, a new region, a new business rule, a channel nobody had two years ago. Or you have to go back and rebuild something because your assumptions about it were right … and then they became wrong.
+
+Watch the grey. By release five, most of what that team does is service what it already built. Now watch what happens when AI collapses the green. It is gone, and the chart barely changes, because the green was never the part that was growing.
+And then the part that actually matters. Going faster does not just mean you finish sooner. It means you go round the loop more often. A team that ships more often does not just have more releases, it has more of them stacking on top of each other. So the grey does not just grow, it grows faster.
+
+There is a name for this and it predates AI by forty years. That is technical debt.
+Every release takes out a small loan against the future in exchange for shipping today. What AI did was make it much easier to take out the loan. It did nothing about the repayments, and it did not make any of the existing debt go away.
+
+If anything it compounds it, because you are now adding to the pile faster than you ever have. Let’s back this up with studies and data.`);
+
+s('Claim 1',`<div class="eyebrow">Google &middot; 2025 DORA state of AI-assisted software development</div>
+<div class="qtext">&ldquo;AI accelerates software development, but that acceleration can expose weaknesses downstream. Without robust control systems, like strong automated testing, mature version control practices, and fast feedback loops, an increase in change volume leads to instability.&rdquo;</div>
+<div class="qrule"></div>
+<div class="qattr">Google Cloud, Announcing the 2025 DORA Report, on the State of AI-assisted Software Development. Nearly 5,000 technology professionals. cloud.google.com/blog</div>`,
+`It’s not just Anthropic. Software development is an aggressively studied field and for good reason.
+
+An increase in change volume leads to instability.
+
+This is based on an annual study of five thousand practitioners, not a vendor. The acceleration is real and it does not come for free. Without the control systems underneath it, going faster is how you get less stable.
+
+In fact, many studies are validating this over and over again, with some weird quirks`,'qt center');
+
+s('Claim 1',`<div class="eyebrow">What three studies found when they measured it</div>
+<div class="statrow">
+  <div><div class="big t"><span data-n="19" data-suffix="%">0%</span></div>
+    <div class="k"><b>slower</b> with AI tools. A randomised trial by <b>METR</b>: 16 experienced developers, 246 real tasks from their own backlogs. They predicted 24% faster, and afterwards still believed they had been 20% faster.</div></div>
+  <div><div class="big t"><span data-n="30" data-suffix="%">0%</span></div>
+    <div class="k">report <b>little or no trust</b> in AI-generated code, though 90% use AI at work. <b>Google's DORA study</b>, ~5,000 practitioners: AI adoption still shows a negative relationship with delivery stability.</div></div>
+  <div><div class="big t"><span data-n="8" data-suffix="x">0x</span></div>
+    <div class="k">more <b>duplicated code</b> in a single year, across 211 million lines analysed by <b>GitClear</b>. Over the same period, cleaning it back up fell from 25% of all changes to under 10%. <b>The borrowing sped up and the repayments more than halved, at the same time.</b></div></div>
+</div>
+<div class="sowhat">We ship more code. <b>And we ship more bugs.</b> The scarce thing is no longer people who can write it. It is the machinery that catches it.</div>`,
+`Three studies, all pointing the same direction.
+
+The first is a randomised trial from a group called METR that I find genuinely humbling. Sixteen very experienced developers, two hundred and forty six real tasks from their own backlogs. With AI tools they were nineteen percent slower. They had predicted twenty four percent faster, and even afterwards they still believed they had been twenty percent faster. Everybody feels faster. The stopwatch disagrees.
+
+The second is Google's DORA study, nearly five thousand practitioners. Ninety percent use AI at work. Thirty percent say they have little or no trust in what it writes. And the finding that matters most for you: AI adoption still has a negative relationship with delivery stability. More throughput, less stability.
+
+The third is a code quality study across two hundred and eleven million lines. Duplicated code up eightfold in a single year. And over the same period, the work of cleaning it back up fell from a quarter of all changes to under a tenth.
+
+Hold those two numbers next to each other, because that is the finding. The rate of borrowing went up eightfold and the rate of repayment more than halved, in the same window. Not one or the other. Both at once.
+Put them together and you get the honest version.
+
+So the tldr here is We ship more code and we ship more bugs.
+
+Ok, so that’s my first claim and I’ve probably beat the horse to death at this point`);
+
+s('Claim 1',`<h2 class="dim">That was claim one.</h2>
+<h1 style="margin-top:2.5vh">So why is it so hard to get the benefits that look <em class="g">so obvious</em>?</h1>
+<div class="sowhat">The tools are available to everyone in this room on identical terms. So the difference has to be somewhere else. <b>That is claim two.</b></div>`,
+`So that was claim one. Writing code got cheap, owning it did not, and every lap leaves something behind. And the faster you can run those laps, the more of the “hard” stuff gets left behind.
+
+Which leaves an obvious question and probably the more interesting one:
+If all of that is true, and these tools are available to every single person in this room on identical terms, why is it so hard to get the benefits that look so obvious from the outside?
+
+The difference has to be somewhere other than the tools. That is claim two.`,'tint');
+
+/* ══════════ CLAIM 2 ══════════ */
+s('Claim 2',`<div class="claimno">Claim two of four</div>
+<h1>Unlocking AI labor is<br><em class="t">organizational before it is technical.</em></h1>
+<div class="sowhat">The tools are evenly distributed. The organizations that can use them are not.</div>`,
+`Claim two. Unlocking AI labor is organizational before it is technical.
+Everyone has the same tools (mostly). What is not evenly distributed is an organization that can actually use them.`,'tint');
+
+s('Claim 2',`<div class="eyebrow">An AI-native maturity curve &middot; built on Anthropic's AI-native SDLC playbook</div>
+<div class="stairs" id="stairs"></div>
+<div class="sowhat" style="margin-top:6vh">Almost every organization I talk to is at <b>level one and thinks it is finished</b>. Level one is where you get the throughput gain and the stability loss at the same time.</div>`,
+`The useful question stops being "do you use AI" and becomes "how far up this curve are you."
+For full transparency, I made this up myself based on the six stages in Anthropic's playbook I referred to earlier.
+
+Level zero, curious. Individuals experimenting on their own, nothing standard, no shared conventions. Useful, invisible, unrepeatable.
+Level one, accelerated. Agents write most of the code and everything around it is unchanged. Same review, same release process, same governance.
+Level two, encoded. Your standards, conventions and policies live in files the agent reads, so every agent works to them rather than to whatever it feels like that day.
+Level three, governed. Agents review other agents, and your rules run as code in the pipeline rather than as a meeting on Thursday.
+Level four, closed loop. Agents watch production, and what they find becomes the next piece of work without a human writing the ticket.
+
+Almost every organization I talk to is at level one and thinks it is done. Level one is the most dangerous place to stop, because it is exactly where you get the throughput gain and the stability loss at the same time.
+
+What actually separates level two from level three is not tooling, it is nerve: are you willing to let an agent's review carry real weight before a human sees the change?`);
+
+s('Claim 2',`<div class="eyebrow">Even at the frontier &middot; Anthropic's public issue tracker for Claude Code, read 16 September 2026</div>
+<h2 style="margin-bottom:.4vh; font-size:min(clamp(19px,2.9vw,42px),5.6vh)">Not even <em class="g">the company that builds the agent.</em></h2>
+<div class="cols c4">
+  <div class="col"><div class="rule"></div><div class="big g" style="font-size:min(clamp(24px,4.4vw,68px),10.5vh)">11,715</div>
+    <p>open issues on the public tracker for Claude Code, the coding agent Anthropic builds and uses on itself.</p></div>
+  <div class="col"><div class="rule"></div><div class="big g" style="font-size:min(clamp(24px,4.4vw,68px),10.5vh)">6,988</div>
+    <p>of those carry the <b>bug</b> label, rather than being questions or feature requests.</p></div>
+  <div class="col"><div class="rule"></div><div class="big g" style="font-size:min(clamp(24px,4.4vw,68px),10.5vh)">80,249</div>
+    <p>closed over the same nineteen months. <b>They are not slow.</b> Last month they closed more than arrived.</p></div>
+  <div class="col"><div class="rule"></div><div class="big g" style="font-size:min(clamp(24px,4.4vw,68px),10.5vh)">18mo</div>
+    <p>is how long the oldest still-open issue has sat there. Filed 6 March 2025.</p></div>
+</div>
+<div class="sowhat">This is the company whose models write most of our code, working on the tool they use to write it. <b>They are not at level four either. Writing the code was never the part that was scarce.</b></div>
+<div class="source">github.com/anthropics/claude-code, counted 16 September 2026. A public tracker for a tool with 145,000 stars, so volume reflects adoption as much as defects.</div>`,
+`Anthropic runs the issue tracker for Claude Code completely in the open. I counted it this morning. Eleven thousand seven hundred open issues. Just under seven thousand of those are tagged as bugs, so not questions and not feature requests.
+And I want to be fair to them, because the number that impressed me is the other one. Eighty thousand closed in nineteen months. In the last thirty days they closed more than came in. They are not slow, and the volume is simply enormous because half the industry is using this thing.
+But the oldest issue still sitting open on that tracker was filed on the sixth of March last year, two weeks after the repository opened. It is still open today.
+This is the company whose models write most of our code, working on the tool they use to write it, with every advantage that exists. They are not at level four either. Not because they cannot write the code. Because writing the code was never the part that was scarce.
+
+So if it is not the code, and it is not the tools, what is actually stopping everybody?`,'tint');
+
+s('Claim 2',`<div class="eyebrow">Anthropic &middot; the AI-native SDLC playbook</div>
+<div class="qtext">&ldquo;Governance costs increase because exceptions still route through meetings and committees that meet weekly or monthly.&rdquo;</div>
+<div class="qrule"></div>
+<div class="qattr">Anthropic, The AI-native SDLC playbook, 21 August 2026. claude.com/blog/the-ai-native-sdlc-playbook</div>`,
+`Same playbook, now on the organisational side.
+Governance costs increase because exceptions still route through meetings and committees that meet weekly or monthly. That one sentence explains why almost everybody stalls at level one.
+You can make the build ten times faster and still spend three weeks waiting on a committee.
+
+Here are the things you need to change before an agent can do useful work for you.`,'qt center');
+
+s('Claim 2',`<div class="eyebrow">Before agents can build for you, you have to be built for agents</div>
+<div class="cols c3">
+  <div class="col"><div class="k">01</div><h4>One place the agent can see everything.</h4><p>An agent working across five repositories with the glue in people's heads is working blind.</p></div>
+  <div class="col"><div class="k">02</div><h4>Your standards as files, not folklore.</h4><p>You already do the baby version of this in the custom instructions box in ChatGPT or Claude. Yours needs to be versioned and reviewed like code.</p></div>
+  <div class="col"><div class="k">03</div><h4>Every stage leaves a committed artifact.</h4><p>That chain of commits is the only audit trail you are going to get.</p></div>
+  <div class="col"><div class="k">04</div><h4>Tests the agent can run itself.</h4><p>Otherwise the only check on the agent is a human reading every line, which is the bottleneck you were removing.</p></div>
+  <div class="col"><div class="k">05</div><h4>Governance that runs as code.</h4><p>Rules that block an unsafe action while the agent is acting, not a committee three weeks behind.</p></div>
+  <div class="col"><div class="k">06</div><h4>Access for people who are not engineers.</h4><p>In planning the first useful description of what you want comes from you, not from IT.</p></div>
+</div>
+<div class="sowhat">Six of these are tooling and procurement. <b>The seventh is hiring</b>, and it is the one that stalls most programmes.</div>`,
+`When somebody says "we will just build it with agents," this is the bill nobody reads.
+
+One place the agent can see the whole thing. Your standards written down as files instead of carried by the two people who have been there longest, and you already do the baby version of this every time you fill in the custom instructions box in ChatGPT or Claude. The difference is that yours needs to be versioned, reviewed like code, and read by every agent automatically. Every stage leaving a committed artifact, because that chain is the only audit trail you get. Tests the agent can run itself. Governance running as code while the agent works. And access for the people who actually have the problem.
+
+Six of those are tooling and procurement. You can buy your way through them. The seventh you cannot.`);
+
+s('Claim 2',`<div class="eyebrow">The seventh</div>
+<h1><em class="t">Very</em> small pods, each with one lead who owns the <em class="g">what</em>, the <em class="g">why</em> and the <em class="g">how</em>.</h1>
+<div class="sowhat">Agents collapsed the distance between deciding what to build and building it. A lead who can only do one of those halves <b>now creates a handoff that should not exist.</b></div>`,
+`And the seventh is the one I would put money on being the real blocker. Talent.
+
+Very small pods. Not small. Very small. Each with one lead who owns the what, the why and the how, and who can decide without going to a committee.
+Agents collapsed the distance between deciding what to build and building it. So a lead who can only do one of those halves now creates a handoff that should not exist at all. Those people are hard to find and harder to keep, and no amount of tooling budget produces one.
+
+The organizations pulling ahead treat the coordination between those pods as its own kind of AI labor rather than as a program-management headcount line. The detailed work happens inside each workstream. Holding the workstreams against each other happens above them, and it is the layer most companies still staff the old way.`,'tint');
+
+s('Claim 2',`<div class="eyebrow">Anthropic's AI-native SDLC playbook names twelve plays &middot; what's usually missing from it</div>
+<div class="cols c3">
+  <div class="col"><div class="rule"></div><div class="k">Standard playbook</div>
+    <ul class="plain"><li>Institutional knowledge as versioned files</li><li>Skills, distributed org-wide as plugins</li><li>Parallel sessions and subagents</li><li>AI in the pull-request review loop</li><li>Continuous evals in CI</li><li>CI/CD integration and deployment</li><li>Plan mode as the default start</li></ul></div>
+  <div class="col"><div class="rule w"></div><div class="k">Usually half-finished</div>
+    <ul class="plain"><li>Intent captured as a committed artifact</li><li>Requirements and design in one session</li><li>Hooks as approval gates</li><li>Closing the loop on metrics</li></ul></div>
+  <div class="col"><div class="rule t"></div><div class="k">Not in the playbook. Needed once an agent touches a number a business acts on.</div>
+    <ul class="plain"><li><b>Agent behaviour as a typed, versioned config bundle</b> where a mistyped key fails at load</li><li><b>Backtests against real history</b> before anything touching business logic ships</li><li><b>Evals that run the real production code path, write-isolated</b>, before promotion</li><li><b>A governed merge</b>, so the agent physically cannot write straight to production tables</li></ul></div>
+</div>
+<div class="sowhat"><b>The column on the right is the one that gets skipped</b>, because no general-purpose playbook covers it, and it is exactly the part that matters once an agent's output changes a number someone acts on.</div>
+<div class="source">Plays named in Anthropic, The AI-native SDLC playbook.</div>`,
+`Anthropic's playbook names twelve plays across the six stages, so let me give you an honest scorecard of where most organizations actually land, rather than a claim about any one of them.
+Most teams that are serious about this get the first column running: institutional knowledge as versioned files, skills distributed as plugins, parallel sessions and subagents, AI in the pull request review loop, continuous evals in the pipeline, CI/CD, and plan mode as the default way work starts.
+The middle column is where most stall out half-finished: capturing intent as a committed artifact, requirements and design in one session, hooks as approval gates, and closing the loop on metrics. That last one is the honest gap, and it is the same gap that keeps most organizations off level four.
+And then the column on the right, which is the point of this slide. Four things the general playbook does not cover at all. Agent behaviour as a typed versioned file where a mistyped key fails immediately. Backtests against your own history before anything touching business logic can ship. Evals that run the real production code path, write-isolated. And a governed merge, so the agent physically cannot write to your production tables.
+A general playbook gets you to good software practice. None of those four exist unless your agent is touching a number somebody acts on.`,'tint');
+
+s('Claim 2',`<h2 class="dim">That was claim two.</h2>
+<h1 style="margin-top:2vh; font-size:min(clamp(28px,5.1vw,84px),11vh)">When you build AI labor that does quantitative planning, <em class="g">what are you actually signing up to own?</em></h1>`,
+`That was claim two. An organization that can actually use these tools turns out to be rarer than the tools.
+Which is all very interesting, and none of it matters unless it changes a decision you have to make. So let me get to the one you are actually here for.
+
+When you build AI labor that does quantitative planning, and I mean planning specifically rather than a chatbot or a copilot, what are you actually signing up to own? This is probably the “can’t i just ask claude to do this”?
+
+That is claim three, and it is the one I would want a CIO to sit with.`,'tint');
+
+/* ══════════ CLAIM 3 ══════════ */
+s('Claim 3',`<div class="claimno">Claim three of four</div>
+<h1>Not a model. Not a chatbot.<br><em class="t">Two production systems, plus the research that keeps them working.</em></h1>
+<div class="sowhat">And somebody funds the technical debt AND research / innovation forever. That part almost never makes the business case.</div>`,
+`Claim three. AI labor is not a model and it is not a chatbot. It is two production systems plus the research that keeps them working, and somebody funds that research forever.
+That last part almost never makes it onto a business case, and it is the part I want to spend the most time on.
+
+I might get a little too technical here but it’s kind of hard not to when talking about owning technical debt and AI research! So if you decide to ignore everything I say and take a nap, take away one thing: owning this is expensive, requires specialized talent and A LOT of patience.`,'tint');
+
+s('Claim 3',`<div class="eyebrow">How teams doing this tend to evolve</div>
+<div class="cols c3">
+  <div class="col"><div class="rule"></div><div class="k">Phase one</div><h4>Classic ML, generalized into a platform.</h4>
+    <p>A bench of model families, best-fit per segment. It works! But it can be painful to configure.</p></div>
+  <div class="col"><div class="rule b"></div><div class="k">Phase two</div><h4>Agents reasoning <em class="b">over</em> the math.</h4>
+    <p>Code agents orchestrate, correct and explain. They never produce the number.</p></div>
+  <div class="col"><div class="rule l"></div><div class="k">Phase three</div><h4>Generalize the <em class="l">judgement layer itself</em>.</h4>
+    <p>Foundation models are everywhere. What are they good for in quantitative planning?</p></div>
+</div>
+<div class="sowhat">Each step generalizes the thing below it. A platform generalizes the models. Agents generalize the reasoning. <b>The hardest, newest step is generalizing the judgement that picks between them.</b></div>`,
+`Let me show you the shape of how this tends to go, because the answer to what you would own depends on which era you are buying into.
+First comes classic machine learning, and then a platform to generalize it. A bench of model families, best fit per segment, ensembling, hierarchical reconciliation. That is genuinely good engineering and it works.
+And then it plateaus, for two reasons that are structural rather than fixable. It generalizes poorly across sub-domains, so what works on one category quietly fails on another. And it is blind on brand new products or segments, which is where most of the money is.
+Then a second layer: agents reasoning over the math rather than doing the math. Orchestrating, correcting, explaining, never producing the number themselves. And the research caught up in exactly that window. On OpenAI's GDPval benchmark, model win rates against human experts went from about twelve percent in mid 2024 to forty seven point six by 2025. That is the point where handing work to an agent stopped costing you more than it saved.
+
+To build through this, you have to make and re-make technology decisions and deal with the implications.`);
+
+s('Claim 3',`<div class="eyebrow">What building AI labor in-house actually means owning</div>
+<div class="cols c2">
+  <div class="col card gr"><div class="k">System one</div><h3>The math engine</h3>
+    <p class="dim" style="margin:.8vh 0 1.4vh">Mature. Well understood. Still expensive to run.</p>
+    <ul class="plain"><li>Trusted data in</li><li>A bench of models</li><li>Optimizers, not just predictors</li><li>Segmentation</li><li><b>Always chasing edge cases</b></li></ul></div>
+  <div class="col card l"><div class="k">System two</div><h3 style="color:var(--lime-700)">The governed agent harness</h3>
+    <p class="dim" style="margin:.8vh 0 1.4vh">Two years old. Changes monthly. Hardest talent to hire.</p>
+    <ul class="plain"><li>An agent that finishes the job</li><li>The right context, per business</li><li>Versioned instructions</li><li>Proof it got better</li><li><b>Always building judgement</b></li></ul></div>
+</div>
+<div class="sowhat">Two systems. Both permanent. <b>Neither is a project that finishes.</b></div>`,
+`Start with the honest inventory of what you would be taking on. When somebody says "we will build the AI labor in-house," here is what they are proposing to own.
+The left is the math engine and it is the one people picture. Getting data in and trusting it. A whole bench of models, because no single model wins across every product and every season. Optimizers as well as predictors, because the question is not only what will happen, it is what to do about it. Segmentation. And retraining forever.
+Google published a paper on this in 2015 that I still think is the best thing written on the subject. In a real machine learning system the model is a tiny box in the middle of a very large diagram, and everything else in that diagram costs money every year.
+The right is new. It barely existed two years ago. Getting an agent to finish a job that runs for hours. The right context without leaking one business into another. Versioning what you told it so that six months from now you can defend a decision to an auditor. Proving it got better before you ship. And swapping the model underneath when the frontier moves, which right now is roughly quarterly.
+Two systems. Both permanent. Neither is a project that finishes.
+
+Which brought many teams to a question that did not have a good answer twelve months ago. Foundation models are everywhere. Everyone has one. What are they actually good for in quantitative planning domains like supply and demand planning?`);
+
+s('Claim 3',`<div class="eyebrow">The two obvious answers, and why they fall short</div>
+<div class="cols c2">
+  <div class="col card"><div class="k">Option one &middot; classical ML, even a good in-house version</div>
+    <ul class="plain">
+      <li>Generalizes poorly across sub-domains</li>
+      <li><b>Blind on brand-new products</b>, which is where the money is</li>
+      <li>A data-science project per customer before it is useful</li>
+    </ul></div>
+  <div class="col card t"><div class="k">Option two &middot; the big time-series foundation models</div>
+    <ul class="plain">
+      <li>Never seen your business, and <b>cannot be steered</b></li>
+      <li>On Walmart's public retail benchmark the leading one <b>loses to seasonal naive</b></li>
+      <li>The industry's "agents" mostly wrap or patch these same models</li>
+    </ul></div>
+</div>
+<div class="sowhat">The next shortcut is to buy the model instead. <b>One is fitted to your history and hopes it generalizes. The other has never seen your history and cannot be told about it.</b> Neither is quite the right design.</div>`,
+`If a platform alone will not save you, the next hope is that a model will. There are two obvious answers and both fall short, so let me be specific about why.
+
+Option one is classical machine learning, including a good in-house ensemble. It generalizes poorly across sub-domains, so what works on one category quietly fails on another. It is blind on brand new products, which is precisely where the money is. And every customer or segment needs a data science project before it does anything useful.
+Option two is the big time-series foundation models. Several large vendors have one. They have never seen your business and there is no way to tell them about it. And the number that ends the conversation for a lot of teams: on Walmart's public retail benchmark, the leading foundation model loses to seasonal naive. Seasonal naive is "what happened this week last year." That is the bar.
+
+And the industry's agents, mostly, just wrap or patch one of those two.
+One approach is fitted to your history and hopes it generalizes. The other has never seen your history and cannot be told about it. Neither of those is quite the right answer, which is why teams doing this seriously end up looking for a third design.`,'tint');
+
+s('Claim 3',`<div class="eyebrow">An active research frontier &middot; prior-fitted networks &amp; world modeling</div>
+<h2 style="margin-bottom:.6vh; font-size:min(clamp(19px,2.9vw,42px),5.6vh)">The third design being studied right now: <em class="l">don't fit to history. Pretrain on synthetic worlds, then infer zero-shot.</em></h2>
+<div class="cols c2">
+  <div class="col card l"><div class="k">Prior-fitted networks</div>
+    <p>Train a small model purely on synthetic data sampled from a known prior. At inference, it does <b>one-shot, Bayesian-style reasoning</b> on data it has never seen, no fine-tuning required. First shown for tabular data with TabPFN, now being extended toward time series and planning.</p></div>
+  <div class="col card t"><div class="k">Temporal world modeling</div>
+    <p>Treat demand, promotions and supply as a simulate-able system rather than a dataset to fit. Generate many synthetic &ldquo;worlds&rdquo; with known ground truth, and train the model to reason about <b>which mechanism explains what it is seeing</b>, not to memorize one company's history.</p></div>
+</div>
+<div class="sowhat">This is a live, citable research area, not a vendor pitch. <b><a href="https://fmts-workshop.github.io/" target="_blank" rel="noopener">NeurIPS 2026 has a dedicated workshop on it</a></b> &mdash; forecasting and simulation, temporal data and environments, temporal models, and evaluation under distribution shift.</div>`,
+`So what does a genuine third design actually look like, and is anyone serious studying this, or is it just a vendor pitch?
+It is a real, active research area. The relevant idea is prior-fitted networks: instead of fitting a model to one company's history, you train it purely on synthetic data sampled from a known prior, and at inference time it does something like one-shot Bayesian reasoning on data it has never seen. This started in the tabular world with TabPFN, and it is now being extended toward time series and planning.
+The companion idea is treating the domain as something you can simulate. Generate many synthetic worlds with known ground truth, and train the model to reason about which underlying mechanism explains what it is seeing, rather than memorizing any one company's numbers.
+And I want to be clear this is not one company's pitch. NeurIPS, the top machine learning venue, has a dedicated workshop on exactly this in 2026: forecasting and simulation, temporal data and environments, temporal models, and evaluation under distribution shift. That is the frontier a serious build is actually competing with.`,'tint');
+
+s('Claim 3',`<div class="eyebrow">What an agent harness has to provide</div>
+<h2 style="margin-bottom:.6vh; font-size:min(clamp(19px,2.9vw,42px),5.6vh)">Judgement inside boundaries you can <em class="g">declare, version, test and audit.</em></h2>
+<div class="cols c4">
+  <div class="col"><div class="rule"></div><div class="k">01 &middot; Scope and identity</div>
+    <p>What it may see and what it may change. It acts under the identity of the person who asked, so it <b class="g">cannot reach past their permissions</b>.</p></div>
+  <div class="col"><div class="rule"></div><div class="k">02 &middot; Declared behaviour</div>
+    <p>Model, prompts, thresholds and edit policies as a typed config bundle, pinned per environment. <b class="g">A mistyped key fails at load</b>, not at 2am.</p></div>
+  <div class="col"><div class="rule"></div><div class="k">03 &middot; Proof before promotion</div>
+    <p>Anything touching business logic <b class="g">clears backtests against real history</b>, and evals run the real production code path, write-isolated.</p></div>
+  <div class="col"><div class="rule"></div><div class="k">04 &middot; A scored loop</div>
+    <p>Every decision is <b class="g">scored against actuals</b> when they land, and an override earns weight only when it helped. Unscored feedback teaches the system to repeat human error.</p></div>
+</div>
+<div class="sowhat">Ask a model and you get judgement without boundaries. Write a routine and you get boundaries without judgement. <b>The first three you can build in a quarter. The fourth only accumulates.</b></div>`,
+`This is the slide for the question you will get more than any other. Why can't I just ask Claude to do this, or write a routine that does it.
+Both are reasonable instincts and neither one is wrong. They are just different things from what you are actually asking for.
+If you ask a model, you get judgment with no boundaries. It will tell you something plausible about a business it cannot see, and there is nothing on either side of that answer.
+If you write a routine, you get boundaries with no judgment. It will run every Monday, and it will never notice that this Monday is different.
+A harness gives you both. What the agent may see and change, acting as the person who asked. What it has been told, as a typed and versioned artifact rather than a prompt somebody pasted, so you can say which instructions produced which decision. A gate, so nothing touching business logic ships without clearing a backtest against real history. And when it writes, it writes into a staging area and gets promoted by a governed merge, never straight into a plan of record.
+And I want to be honest about those first three, because they are not magic. They are good engineering. A competent team builds all of them in a quarter or two.
+The fourth one is different. Decisions get scored against actuals when they land, and an override earns weight in the model only to the extent it measurably helped. That matters more than it sounds, because the naive version of this is actively harmful: if you learn from overrides without scoring them, you are teaching the system to reproduce human error, and most overrides are not improvements.
+Knowing which ones were right requires waiting for actuals. So it only accumulates in production, cycle after cycle. That is the one thing on this slide you cannot start on Monday at any budget.`,'claims');
+
+s('Claim 3',`<div class="eyebrow">Direct build cost, both systems &middot; overrun data from Flyvbjerg, HBR</div>
+<div class="statrow">
+  <div><div class="big t"><span data-n="27" data-suffix="%">0%</span></div><div class="k">average cost overrun across <b>1,471 IT projects</b> studied</div></div>
+  <div><div class="big t">1 in 6</div><div class="k">ran roughly <b>200% over budget</b> and 70% over schedule</div></div>
+</div>
+<div class="sowhat">Neither shortcut survives scrutiny, so price the real thing honestly. <b>A build should be compared against a realistic multi-year cost, including the risk of overrun &mdash; not against zero.</b></div>
+<div class="source">Flyvbjerg &amp; Budzier, HBR 2011, 1,471 projects.</div>`,
+`Neither shortcut survives, so here is what it actually costs to get this wrong, based on a well-known study of IT projects broadly. Across nearly fifteen hundred IT projects the average cost overrun was twenty seven percent, and one in six ran about two hundred percent over budget and seventy percent over schedule.
+The point is not the precision of any one company's estimate. The point is that a build gets compared against a realistic multi-year number, including the real risk of overrun, rather than against zero, which is what usually happens in the room where this decision gets made.`,'tint');
+
+s('Claim 3',`<div class="eyebrow b">Why this matters to you rather than to me</div>
+<h1>Your planners' judgement can become <em class="b">a permanent asset.</em></h1>
+<h3 style="margin-top:2.4vh" class="dim">Instead of something the next retrain quietly overwrites.</h3>
+<div class="sowhat">An override joins the pool of evidence and <b>earns measurable weight when it is right</b>. Nobody is asking anyone to hand over what a best planner knows. Score it, and use it.</div>`,
+`And here is why that matters to you rather than to me.
+In a well-built harness, when a planner overrides the system's recommendation, that override becomes one more piece of evidence, and it earns measurable weight when it turns out to be right. Judgement does not get overwritten by the next retrain. It gets scored, and then it gets used.
+Think about what normally happens. Your best planner has years of knowledge, none of it written down, and every retrain quietly throws their corrections away. A well-designed system is one of the only ways I know of to make that judgement a permanent asset of the business instead of a personal one that walks out the door when they do.`,'tint');
+
+s('Claim 3',`<h2 class="dim">That was claim three.</h2>
+<h1 style="margin-top:2.5vh">Which leaves the question you have all been holding: <em class="g">"but our business is different."</em></h1>
+<div class="sowhat">You are right. <b>And it does not mean what you think it means.</b> That is claim four.</div>`,
+`That was claim three. Two systems plus the research, funded forever.
+Which leaves the objection I know at least half of you have been holding since I started. Our business is different. Our data is different. Our logic is different.
+You are right. And it does not mean what you think it means. That is claim four.`,'tint');
+
+/* ══════════ CLAIM 4 ══════════ */
+s('Claim 4',`<div class="claimno">Claim four of four</div>
+<h1>Your data and your logic are unique.<br><em class="t">That is an input, not a reason to build platforms.</em></h1>
+<div class="sowhat">Everything that makes you different is configuration. None of it is software.</div>`,
+`Claim four. Your data and your logic are unique. That is an input, not a reason to build platforms.`,'tint');
+
+s('Claim 4',`<div class="eyebrow">Two things get confused the moment coding gets cheap &middot; each problem on the right has its own research literature</div>
+<div class="cols c2">
+  <div class="col card g"><div class="k">The barrier &middot; what AI made cheaper</div>
+    <ul class="plain"><li>Writing the software</li><li>Getting to a first working version</li><li>A demo that looks like the real thing</li></ul></div>
+  <div class="col card t"><div class="k">The moat &middot; what AI did not touch</div>
+    <ul class="plain"><li><b>Intermittent demand</b>, where most items are mostly zeros and the standard error metrics quietly lie to you</li><li><b>New products with no history</b>, which is where the money is and where models are blindest</li><li><b>Promotions and cannibalization</b>, two separate modelling problems, not a feature you switch on</li><li><b>Coherence</b>, numbers that add up across item, category, region and channel at once</li><li><b>Override scoring</b>, knowing whether a planner's change made it better or worse</li></ul></div>
+</div>
+<div class="sowhat">Each of those is its own research problem with its own literature. <b>A generalist team finds out one at a time, in production, around month nine</b>, and each discovery costs a quarter.</div>`,
+`I want to separate two things that get conflated the moment coding gets cheap. The barrier to entry, which is what it costs to get a first version standing up. And the moat, which is what actually makes the problem hard. Only one of them moved.
+Look at the right. Intermittent demand, where most of your items are mostly zeros and the standard accuracy metrics quietly lie to you. New products with no history, which is where most of the money is and where models are blindest. Promotions and cannibalization, which are two separate modelling problems and not a feature you switch on. Coherence, getting the numbers to add up across item, category, region and channel at the same time. And override scoring, knowing whether a planner's change actually helped.
+Every one of those has its own published research literature. There are papers specifically on intermittent demand, on cannibalization, and a whole field on hierarchical reconciliation.
+A generalist team with great engineers and a coding agent does not know those are five separate problems. They find out one at a time, in production, usually around month nine, and each discovery is a quarter.
+That is what a vertical specialist actually is. Not better engineers. A team that already knows what the problems are.`);
+
+s('Claim 4',`<h1>Most problems are <em class="g">configuration masquerading as platform.</em></h1>
+<h2 style="margin-top:3vh" class="dim">None of it is software.</h2>
+<div class="cols c2" style="margin-top:4vh">
+  <div class="col card b"><div class="k">Genuinely yours, and it stays yours</div>
+    <p>Your demand signals. Your service levels. What gets flagged and at what threshold. What a planner is allowed to override. Your entire history of overrides.</p></div>
+  <div class="col card"><div class="k">What you would actually be building</div>
+    <p><b>Part commodity, part domain judgement.</b> Rebuilding the commodity half differentiates nothing. The judgement half only gets good by running against your own actuals.</p></div>
+</div>
+<div class="band"><div class="bk">What changed this year</div><p>You can now say all of it in plain language and have the system hold it. The platform underneath is something you should be able to <b class="g">take for granted</b>.</p></div>
+`,
+`So let me take the objection seriously, because you are right about the premise.
+Your demand signals are yours. Your service levels, what gets flagged and at what threshold, what a planner may override, your whole history of overrides. All of that is genuinely yours and it genuinely differentiates you.
+And all of it is configuration. None of it is software.
+What you would actually be building is the machinery that consumes it, and that machinery is two halves. One half is commodity: pipelines, orchestration, the plumbing. Rebuilding it is expensive and differentiates you from nobody. The other half is domain judgment, and that half is real, but it is also the half that only gets good by running against your own actuals, cycle after cycle. So you are not choosing between building something special and buying something generic. You are choosing whether to fund the commodity half yourself and start the judgment half from zero. So when you build a platform to hold your logic, you have converted a configuration problem into a permanent software ownership problem. That is the actual mistake, and it is a category error rather than a bad judgement call.
+In a well-built system, a customer's entire agent behaviour, down to the flagging thresholds and the subject line on a Monday email, should be a typed versioned configuration file. Not code. That is what it looks like when uniqueness lives where it belongs.
+And here is what actually changed this year, which is the part I would not have said twelve months ago. Configuration used to mean somebody's settings screens and somebody's rules language, and that is half of why teams talk themselves into building their own. That argument is gone. You can now say all of it in plain language and have the system hold it. Which means the platform underneath is something you should be able to take for granted, the way you take a database for granted.`,'cfg tint');
+
+/* ══════════ CLOSE ══════════ */
+s('Close',`<div class="eyebrow g">Back to where we started, in the same order</div>
+<div class="cols c4">
+  <div class="col"><div class="rule"></div><div class="k">01 &middot; The work</div><p>METR, Google DORA and GitClear on the research side.</p></div>
+  <div class="col"><div class="rule"></div><div class="k">02 &middot; What it takes</div><p>What the playbook covers, what stalls half-finished, and what has to be added by hand.</p></div>
+  <div class="col"><div class="rule"></div><div class="k">03 &middot; What you would own</div><p>Two permanent systems, and a build cost you should price honestly rather than against zero.</p></div>
+  <div class="col"><div class="rule"></div><div class="k">04 &middot; What is yours</div><p>Five domain problems with their own literatures, and configuration rather than a reason to build platforms.</p></div>
+</div>
+<div class="sowhat">I promised I would back every one of those with published research rather than assertion. <b>I hope you will hold me to whether I did.</b></div>`,
+`So, back to where we started, in the same order.
+Writing code got cheap and owning it did not. Getting any of the benefit is organizational before it is technical. What you would own is two production systems plus the research that keeps them working, funded forever. And your data and your logic are an input, not a reason to build platforms.
+I promised I would back every one of those with independent research rather than assertion. I hope you will hold me to whether I did.`);
+
+s('Close',`<div class="eyebrow">Before anyone authorizes a build</div>
+<div class="cols c2" style="gap:2.6vh 4vw">
+  <div class="col"><div class="k">01</div><h4>Who owns this in two years?</h4><p>Name the person, not the team.</p></div>
+  <div class="col"><div class="k">02</div><h4>How will we know it got better, before we ship it?</h4><p>If the answer is "the planners will tell us," you are running the evaluation in production, on your own P&amp;L.</p></div>
+  <div class="col"><div class="k">03</div><h4>What happens when the business changes?</h4><p>It will. Ask whether that is a config change or a rebuild.</p></div>
+  <div class="col"><div class="k">04</div><h4>Who is on call for it tonight?</h4><p>The question from the top of this talk. It has not got easier.</p></div>
+</div>
+<div class="col" style="margin-top:2.6vh; max-width:56%"><div class="k">05</div><h4>What would three years of a specialist have cost?</h4><p>That is the number a build should be compared against. Not zero.</p></div>
+<div class="col band" style="margin-top:1.6vh; max-width:56%"><div class="k">06</div><h4>Is this configuration? And if so, where do we say it?</h4><p>If saying it needs a platform we have not built, we are building software to hold a sentence.</p></div>
+<div class="sowhat">Ask these in the room where the decision gets made and <b>the decision mostly makes itself.</b></div>`,
+`I am not going to end by telling you not to build. You will make that call with people who know your situation far better than I do.
+What I would leave you with is six questions. Ask them in the room where the decision gets made and the decision mostly makes itself.
+Who is on call in year three. Name the person, not the team. How will we know it got better before we ship it, rather than finding out from a planner in month four. What happens when the model underneath changes next quarter, and it will. Who owns it when the person who built it leaves. And what does a wrong forecast cost while we are learning, because that is the number a build should be compared against, not zero.
+And I would add a sixth, because it follows from everything in claim four. Is this configuration? And if so, where do we say it? If saying it out loud requires a platform you have not built yet, you are proposing to build software to hold a sentence.`,'tint');
+
+s('Close',`<h1>Every one of you will end up with <em class="g">AI labor</em> in your planning function.</h1>
+<h2 style="margin-top:3vh" class="dim">The only question is whether you also own the factory that makes it.</h2>`,
+`Every one of you is going to end up with AI labor in your planning function. That part is not really in question any more.
+The only question is whether you also own the factory that makes it, forever, on top of everything else you are already responsible for.`);
+
+s('',`<h1>The question was never "can we build it."</h1>
+<h2 style="margin-top:3.5vh"><em class="g">It's "which expert do we trust here, and what evidence would change our mind."</em></h2>
+<p class="lead" style="max-width:none">Thank you. &nbsp;&middot;&nbsp; Waleed Ayoub</p>`,
+`And the last thing, which is the thing I actually believe. It is not about finding the smartest forecaster in the room. It is about knowing which expert to trust given the evidence in front of you. That is a pretty good description of a good planner, and a pretty good description of how to make this decision too.
+The question was never whether you can build it. Of course you can build it. The question is which expert you should trust here, and what evidence would change your mind.
+Thank you.`,'mark-slide');
+
+/* ══════════ RENDER + BEHAVIOUR ══════════ */
+const stage=document.getElementById('stage');
+S.forEach((d,i)=>{const el=document.createElement('section');
+const hasBlock=/class="(cols|mx|pipe|acc|stairs|sq|statrow)|id="(mx|pipes|acc|stairs|sq)"/.test(d.html);
+el.className='slide '+d.cls+(hasBlock?'':' center');el.innerHTML=d.html;stage.appendChild(el);d.el=el;});
+
+const ERA=[['2022','Autocomplete'],['2023','Chat'],['2024&ndash;25','Coding agents'],['2026 and beyond','Autonomous teammates']];
+const ROWS=[['Plan the work',[0,0,1,2]],['Design it',[0,1,1,2]],['Write the code',[1,2,2,2]],['Test it',[0,1,2,2]],['Review and ship it',[0,0,1,2]],['Run it in production',[0,0,0,2]]];
+const mx=document.getElementById('mx');
+if(mx){mx.insertAdjacentHTML('beforeend','<div></div>');
+ERA.forEach(e=>mx.insertAdjacentHTML('beforeend',`<div class="h">${e[0]}<span>${e[1]}</span></div>`));
+ROWS.forEach(r=>{mx.insertAdjacentHTML('beforeend',`<div class="r">${r[0]}</div>`);
+r[1].forEach((v,k)=>mx.insertAdjacentHTML('beforeend',`<div class="c ${v===2?'f':v===1?'p':''}" style="transition-delay:${k*85+40}ms"></div>`));});}
+
+const pp=document.getElementById('pipes');
+if(pp){const bar2=(y,note,g,sp,hold,rev)=>`<div class="plabel"><span class="y">${y}</span><span class="n">${note}</span></div>
+<div class="pipe"><div class="seg" style="--g:12">Plan</div><div class="seg" style="--g:9">Design</div>
+<div class="seg b" style="--g:${g}">${g>10?'Write code':''}</div><div class="seg h" style="--g:${hold}">Make it hold up</div>
+<div class="seg" style="--g:${rev}">Review</div><div class="seg" style="--g:16">Ship</div>
+<div class="tick"></div><div class="seg f" style="--g:${sp}">Run and maintain</div></div>`;
+pp.innerHTML=bar2('2022','writing the code is most of the work',32,24,18,13)+bar2('2026','one block collapsed. one block doubled.',3,47,19,18);}
+
+const ACC=[[26,131,162],[52,105,136],[78,79,110],[104,53,84],[130,27,58]],EXTRA=[[156,32,32],[182,6,6]];
+const acc=document.getElementById('acc');
+if(acc){const row=(i,r,sb,sa,x)=>`<div class="arow ${x?'x':''}"><div class="lb">Release ${i}</div><div class="abar">
+<div class="bd" style="--gb:${x?3:34};--ga:3"></div><div class="hd" style="--g:19"></div>
+<div class="fv" style="--g:${r}"></div><div class="sp" style="--sb:${sb};--sa:${sa}"></div></div></div>`;
+acc.innerHTML=ACC.map((a,i)=>row(i+1,a[0],a[1],a[2],false)).join('')+EXTRA.map((a,i)=>row(i+6,a[0],a[1],a[2],true)).join('');}
+
+const ST=[[12,'Curious','individuals experiment,<br>nothing is standard','#ecedee','#4b515c'],
+          [36,'Accelerated','agents write the code,<br>everything else unchanged','#dcf9f6','#0e584f'],
+          [58,'Encoded','your standards live in files<br>every agent reads','#baf2eb','#0e584f'],
+          [80,'Governed','agents review agents,<br>rules run as code','#6cc3b6','#0e2622'],
+          [100,'Closed loop','agents watch production and<br>open the next piece of work','#1f6f66','#eafaf7']];
+const stw=document.getElementById('stairs');
+if(stw){ST.forEach((t,i)=>{const pin=i===1?'<div class="pin" style="background:#2371ef">Most organizations are here</div>':'';
+stw.insertAdjacentHTML('beforeend',`<div class="st" style="height:${t[0]}%;background:${t[3]};transition-delay:${i*100}ms">
+${pin}<div class="n" style="color:${t[4]}">${i}</div><div class="lab"><b>${t[1]}</b><span>${t[2]}</span></div></div>`);});}
+
+const sq=document.getElementById('sq');
+if(sq){const own={17:1,43:1,88:1,121:1,156:1,199:1,233:1,260:1,301:1,334:1,362:1,388:1};let h='';
+for(let i=0;i<400;i++)h+=`<i class="${own[i]?'o':''}" style="transition-delay:${(i%80)*4+Math.floor(i/80)*22}ms"></i>`;sq.innerHTML=h;}
+
+function count(el){const t=parseFloat(el.dataset.n),dec=parseInt(el.dataset.dec||0);
+const pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';let st=null;
+function step(ts){if(!st)st=ts;const p=Math.min((ts-st)/900,1),e=1-Math.pow(1-p,3);
+const v=t*e;el.textContent=pre+(dec?v.toFixed(dec):Math.round(v).toLocaleString('en-US'))+suf;if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+
+let accT=[],accLoop=null;
+function accPlay(){const st=document.getElementById('acc');if(!st)return;
+accT.forEach(clearTimeout);accT=[];
+st.classList.remove('after','more');
+const rows=[...st.querySelectorAll('.arow')];
+rows.forEach(r=>r.classList.remove('in'));
+const base=rows.filter(r=>!r.classList.contains('x')),extra=rows.filter(r=>r.classList.contains('x'));
+base.forEach((r,i)=>accT.push(setTimeout(()=>r.classList.add('in'),120+i*300)));
+const t=120+base.length*300+400;
+accT.push(setTimeout(()=>st.classList.add('after'),t));
+accT.push(setTimeout(()=>{st.classList.add('more');
+  extra.forEach((r,i)=>accT.push(setTimeout(()=>r.classList.add('in'),i*260)));},t+750));
+}
+function accStart(){accStop();accPlay();accLoop=setInterval(accPlay,4600);}
+function accStop(){if(accLoop){clearInterval(accLoop);accLoop=null;}accT.forEach(clearTimeout);accT=[];}
+
+let cur=-1;
+const rail=document.getElementById('rail'),pager=document.getElementById('pager'),
+      acttag=document.getElementById('acttag'),notes=document.getElementById('notes');
+function go(n){n=Math.max(0,Math.min(S.length-1,n));if(n===cur)return;
+if(cur>=0)S[cur].el.classList.remove('on');
+accStop();
+cur=n;const d=S[cur];d.el.classList.add('on');
+rail.style.width=((cur+1)/S.length*100)+'%';pager.textContent=(cur+1)+' / '+S.length;
+acttag.innerHTML=d.act||'';
+notes.innerHTML='<b>Say</b>'+d.notes.split('\n').map(p=>'<p>'+p+'</p>').join('');
+d.el.querySelectorAll('[data-n]').forEach(el=>{el.textContent=(el.dataset.prefix||'')+'0'+(el.dataset.suffix||'');count(el);});
+if(d.el.querySelector('#acc'))setTimeout(accStart,300);
+location.hash=cur+1;}
+addEventListener('keydown',e=>{
+if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(cur+1);}
+else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1);}
+else if(e.key==='Home')go(0);else if(e.key==='End')go(S.length-1);
+else if(e.key==='n'||e.key==='N')notes.classList.toggle('on');});
+addEventListener('click',e=>{if(e.target.closest('#notes'))return;go(cur+(e.clientX<innerWidth*0.25?-1:1));});
+go(Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
+</script>
