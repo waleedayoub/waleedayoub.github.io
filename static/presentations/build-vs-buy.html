@@ -6,9 +6,9 @@
 :root{
   --n100:#ffffff; --n200:#f7f6f2; --n300:#ede9e1; --n400:#ddd9d0;
   --n500:#b8b3a8; --n600:#8e8a7f; --n700:#5b6066; --n800:#3a3f42; --n900:#262b2e; --n1000:#1c2023; --n1100:#14181a;
-  --green-50:#f1faf8; --green-100:#daf1ec; --green-200:#b5e3d9; --green-400:#6cc3b6;
-  --green-500:#3f8b80; --green-600:#2d7a6f; --green-700:#1f6f66; --green-800:#175650;
-  --lime-50:#f1faf8; --lime-100:#daf1ec; --lime-300:#7fcabb; --lime-500:#3f8b80; --lime-700:#1f6f66; --lime-800:#175650; --lime-950:#0e2622;
+  --green-50:#eef4f8; --green-100:#d9e7f0; --green-200:#b3cfe0; --green-400:#7ab3d9;
+  --green-500:#4a7fa8; --green-600:#3a6f97; --green-700:#2c5f8a; --green-800:#204a6e;
+  --lime-50:#eef4f8; --lime-100:#d9e7f0; --lime-300:#8fb8d9; --lime-500:#4a7fa8; --lime-700:#2c5f8a; --lime-800:#204a6e; --lime-950:#12293d;
   --blue-50:#ebf3ff; --blue-100:#d2e2fe; --blue-300:#99c0fb; --blue-500:#2371ef; --blue-700:#0f4dae; --blue-800:#0a3982;
   --teal-50:#f1fdfc; --teal-100:#dcf9f6; --teal-200:#baf2eb; --teal-500:#35b6a7; --teal-700:#17786d; --teal-800:#0e584f;
   --amber-50:#fff9e0; --amber-100:#fceab1; --amber-300:#f5c346; --amber-500:#a3762a; --amber-700:#7a5920;
@@ -27,19 +27,19 @@ body{background:var(--n200); color:var(--n1100); font-family:var(--font);
   display:flex; flex-direction:column; justify-content:flex-start; gap:3.2vh;
   opacity:0; pointer-events:none; visibility:hidden; transition:opacity 340ms var(--ease);
   background:
-    radial-gradient(1200px 780px at 82% 8%, rgba(31,111,102,.10), transparent 62%),
-    radial-gradient(900px 620px at 6% 92%, rgba(63,139,128,.07), transparent 60%),
+    radial-gradient(1200px 780px at 82% 8%, rgba(44,95,138,.10), transparent 62%),
+    radial-gradient(900px 620px at 6% 92%, rgba(74,127,168,.07), transparent 60%),
     var(--n100);
 }
 .slide.on{opacity:1; pointer-events:auto; visibility:visible;}
 .slide.center{justify-content:center; padding-top:7vh;}
 .slide.tight{padding:5vh 5vw 4.5vh; gap:1.2vh;}
 .slide.tint{background:
-    radial-gradient(1100px 720px at 12% 10%, rgba(63,139,128,.16), transparent 60%),
-    radial-gradient(900px 600px at 92% 90%, rgba(31,111,102,.10), transparent 58%),
+    radial-gradient(1100px 720px at 12% 10%, rgba(74,127,168,.16), transparent 60%),
+    radial-gradient(900px 600px at 92% 90%, rgba(44,95,138,.10), transparent 58%),
     var(--n200);}
 .slide.qt{background:var(--n1100);}
-.slide.qt .eyebrow{color:#6cc3b6;}
+.slide.qt .eyebrow{color:#7ab3d9;}
 .qtext{font-size:min(clamp(18px,2.55vw,40px),7.4vh); line-height:1.32; color:#fff;
   font-style:italic; max-width:42ch; font-weight:400;}
 .qrule{width:9vw; height:3px; background:var(--green-500); margin:3vh 0 1.8vh;}
@@ -57,7 +57,7 @@ body{background:var(--n200); color:var(--n1100); font-family:var(--font);
 .source{font-size:min(clamp(9px,.8vw,12px),1.6vh); color:var(--n600); margin-top:.6vh;}
 .slide.snug{gap:2.1vh; padding-top:9vh;}
 .slide.mark-slide{background:
-    radial-gradient(1400px 900px at 50% 0%, rgba(31,111,102,.14), transparent 64%),
+    radial-gradient(1400px 900px at 50% 0%, rgba(44,95,138,.14), transparent 64%),
     var(--n100);}
 
 /* type */
@@ -110,7 +110,7 @@ em.w{font-style:normal; color:var(--amber-700);}
 .c3{grid-template-columns:repeat(3,1fr);} .c4{grid-template-columns:repeat(4,1fr);}
 .col .rule{height:3px; background:var(--green-600); margin-bottom:1.6vh; border-radius:2px;}
 .col .rule.t{background:var(--teal-600,#239587);} .col .rule.b{background:var(--blue-500);}
-.col .rule.w{background:var(--amber-500);} .col .rule.l{background:var(--lime-600,#2d7a6f);}
+.col .rule.w{background:var(--amber-500);} .col .rule.l{background:var(--lime-600,#3a6f97);}
 .col .k{font-family:var(--mono); font-size:clamp(10px,.92vw,13px); letter-spacing:.14em;
   text-transform:uppercase; color:var(--n700); margin-bottom:1.1vh;}
 .col p{font-size:min(clamp(11px,1.02vw,17px),2.25vh); line-height:1.38; color:var(--n800); margin-top:.8vh;}
@@ -142,7 +142,7 @@ ul.plain li b{color:var(--n1100);}
 .mx .c{height:min(clamp(22px,4vh,40px),4vh); border-radius:4px; background:var(--n300);
   transform:scaleX(.15); transform-origin:left; opacity:0; transition:all 440ms var(--ease);}
 .on .mx .c{transform:none; opacity:1;}
-.mx .c.p{background:var(--lime-300);} .mx .c.f{background:var(--lime-600,#2d7a6f);}
+.mx .c.p{background:var(--lime-300);} .mx .c.f{background:var(--lime-600,#3a6f97);}
 
 /* pipeline */
 .pipe{display:flex; gap:4px;}
@@ -205,7 +205,7 @@ ul.plain li b{color:var(--n1100);}
 .br .bp{font-size:min(clamp(10px,.9vw,15px),1.95vh); color:var(--n700);}
 .br .bv{font-family:var(--mono); font-variant-numeric:tabular-nums; font-weight:500;
   font-size:min(clamp(13px,1.22vw,20px),2.6vh); text-align:right;}
-.br.us{background:var(--lime-50); box-shadow:inset 3px 0 0 #2d7a6f;}
+.br.us{background:var(--lime-50); box-shadow:inset 3px 0 0 #3a6f97;}
 .br.us .bn,.br.us .bv{color:var(--lime-800);}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
@@ -742,10 +742,10 @@ if(acc){const row=(i,r,sb,sa,x)=>`<div class="arow ${x?'x':''}"><div class="lb">
 acc.innerHTML=ACC.map((a,i)=>row(i+1,a[0],a[1],a[2],false)).join('')+EXTRA.map((a,i)=>row(i+6,a[0],a[1],a[2],true)).join('');}
 
 const ST=[[12,'Curious','individuals experiment,<br>nothing is standard','#ecedee','#4b515c'],
-          [36,'Accelerated','agents write the code,<br>everything else unchanged','#dcf9f6','#0e584f'],
-          [58,'Encoded','your standards live in files<br>every agent reads','#baf2eb','#0e584f'],
-          [80,'Governed','agents review agents,<br>rules run as code','#6cc3b6','#0e2622'],
-          [100,'Closed loop','agents watch production and<br>open the next piece of work','#1f6f66','#eafaf7']];
+          [36,'Accelerated','agents write the code,<br>everything else unchanged','#d9e7f0','#204a6e'],
+          [58,'Encoded','your standards live in files<br>every agent reads','#b3cfe0','#204a6e'],
+          [80,'Governed','agents review agents,<br>rules run as code','#7ab3d9','#12293d'],
+          [100,'Closed loop','agents watch production and<br>open the next piece of work','#2c5f8a','#eaf2f8']];
 const stw=document.getElementById('stairs');
 if(stw){ST.forEach((t,i)=>{const pin=i===1?'<div class="pin" style="background:#2371ef">Most organizations are here</div>':'';
 stw.insertAdjacentHTML('beforeend',`<div class="st" style="height:${t[0]}%;background:${t[3]};transition-delay:${i*100}ms">
