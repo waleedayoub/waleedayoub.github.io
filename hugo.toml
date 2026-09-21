@@ -47,6 +47,12 @@ theme = "drishtikon"
     url        = "/about/"
     weight     = 2
 
+  [[menu.main]]
+    identifier = "speaking"
+    name       = "speaking"
+    url        = "/speaking/"
+    weight     = 3
+
 [markup]
   defaultMarkdownHandler = "goldmark"
   [markup.goldmark]
